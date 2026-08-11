@@ -19,8 +19,8 @@ const Home = () => {
     return (
         <div className="min-h-screen text-slate-800 selection:bg-indigo-500/20">
             <Seo
-                title="Senior Frontend Engineer & Digital Consultant"
-                description="Patric Phinehas Raj — Senior Frontend Engineer at Bosch and freelance digital consultant. I build fast, accessible web apps and lead product teams, from B2C marketplaces to healthcare dispatch systems and brand websites."
+                title="Senior Fullstack Developer & Digital Consultant"
+                description="Patric Phinehas Raj — Senior Fullstack Developer at Bosch and freelance digital consultant. I build fast, accessible web apps and lead product teams, from B2C marketplaces to healthcare dispatch systems and brand websites."
                 path="/"
             />
             <PersonJsonLd />

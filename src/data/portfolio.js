@@ -2,8 +2,8 @@ import { Github, Linkedin, Mail, Phone, MapPin } from 'lucide-react';
 
 export const personalInfo = {
     name: "Patric Phinehas Raj",
-    role: "Senior Frontend Engineer",
-    summary: "Results-driven Frontend Engineer with over 5 years of experience in developing scalable, high-performance web applications. Adept at leading teams, mentoring junior engineers, and integrating modern JavaScript frameworks. Passionate about creating seamless user experiences through Angular, React, and modern frontend technologies. Experienced in Agile development, CI/CD, and integrating AI solutions to enhance efficiency. Also gives guest lectures at engineering colleges, sharing industry insights with the next generation of developers.",
+    role: "Senior Fullstack Developer",
+    summary: "Results-driven Fullstack Developer with over 5 years of experience in developing scalable, high-performance web applications. Adept at leading teams, mentoring junior engineers, and integrating modern JavaScript frameworks. Passionate about creating seamless user experiences through Angular, React, and modern frontend technologies. Experienced in Agile development, CI/CD, and integrating AI solutions to enhance efficiency. Also gives guest lectures at engineering colleges, sharing industry insights with the next generation of developers.",
     email: "patricphinehas@gmail.com",
     phone: "+91-9597567751",
     linkedin: "https://www.linkedin.com/in/patricphinehas/",
@@ -42,7 +42,7 @@ export const skills = [
 export const experience = [
     {
         id: 1,
-        role: "Senior Frontend Engineer",
+        role: "Senior Fullstack Developer",
         company: "Bosch Global Software Technologies",
         period: "September 2022 – Present",
         description: [

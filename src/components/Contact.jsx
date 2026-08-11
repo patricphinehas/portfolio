@@ -69,10 +69,10 @@ const Contact = () => {
                     className="text-center"
                 >
                     <h2 className="text-5xl md:text-7xl font-bold mb-8">
-                        Let's work <br /> <span className="gradient-text">together.</span>
+                        Available for <br /> <span className="gradient-text">Hire</span>
                     </h2>
                     <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
-                        I'm currently looking for new opportunities. Whether you have a question or just want to say hi, I'll try my best to get back to you!
+                        Reach out for project strategy and execution.
                     </p>
                     <p className="text-sm font-semibold text-indigo-600 mb-12">
                         {responsePromise.headline} — {responsePromise.detail}

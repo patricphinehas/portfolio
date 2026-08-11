@@ -10,6 +10,7 @@ import {
   Minus,
   Plus,
   Search,
+  Share2,
   SlidersHorizontal,
   Users,
   UtensilsCrossed,
@@ -27,6 +28,30 @@ import {
   suggestDishes,
 } from '../utils/letsCookFilters';
 import Seo from '../components/Seo';
+
+/** Deep link for a recipe: `/lets-cook?recipe={id}` (same as openRecipe / Seo path). */
+function recipePageUrl(recipeId) {
+  if (typeof window === 'undefined') return `/lets-cook?recipe=${recipeId}`;
+  const url = new URL('/lets-cook', window.location.origin);
+  url.searchParams.set('recipe', recipeId);
+  return url.toString();
+}
+
+/** WhatsApp click-to-chat body using currently displayed (scaled) amounts. */
+function buildWhatsAppRecipeMessage({ title, pax, ingredients, pageUrl }) {
+  const lines = [`Recipe: ${title}`, `Pax: ${pax}`, ''];
+
+  if (ingredients?.length) {
+    lines.push('Ingredients:');
+    for (const ing of ingredients) {
+      lines.push(`- ${formatAmount(ing.amount, ing.unit)} ${ing.name}`.replace(/\s+/g, ' ').trim());
+    }
+    lines.push('');
+  }
+
+  lines.push(pageUrl);
+  return lines.join('\n');
+}
 
 function MacroStat({ label, value, unit = '' }) {
   return (
@@ -289,6 +314,22 @@ const LetsCook = () => {
     if (!canScale || !scaledIngredients.length) return null;
     return estimateRecipeNutrition(scaledIngredients, pax);
   }, [canScale, scaledIngredients, pax]);
+
+  const shareRecipeOnWhatsApp = () => {
+    if (!selectedRecipe) return;
+    const pageUrl = recipePageUrl(selectedRecipe.id);
+    const message = buildWhatsAppRecipeMessage({
+      title: selectedRecipe.title,
+      pax: canScale ? pax : selectedRecipe.basePax,
+      ingredients: canScale ? scaledIngredients : [],
+      pageUrl,
+    });
+    window.open(
+      `https://wa.me/?text=${encodeURIComponent(message)}`,
+      '_blank',
+      'noopener,noreferrer'
+    );
+  };
 
   return (
     <div className="min-h-screen text-slate-800 selection:bg-indigo-500/20">
@@ -791,6 +832,15 @@ const LetsCook = () => {
                         </p>
                       </div>
 
+                      <button
+                        type="button"
+                        onClick={shareRecipeOnWhatsApp}
+                        className="mb-6 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition hover:border-emerald-300 hover:bg-emerald-100"
+                      >
+                        <Share2 size={16} aria-hidden />
+                        Send to WhatsApp
+                      </button>
+
                       {scaledNutrition?.available && (
                         <div className="mb-6 rounded-xl border border-indigo-100 bg-indigo-50/60 px-3 py-3">
                           <div className="mb-2 flex items-baseline justify-between gap-2">
@@ -875,6 +925,14 @@ const LetsCook = () => {
                         Structured quantities were not detected for this post. Open the original
                         for the full ingredient list and method.
                       </p>
+                      <button
+                        type="button"
+                        onClick={shareRecipeOnWhatsApp}
+                        className="mb-4 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-emerald-200 bg-emerald-50 px-4 py-3 text-sm font-semibold text-emerald-800 transition hover:border-emerald-300 hover:bg-emerald-100"
+                      >
+                        <Share2 size={16} aria-hidden />
+                        Send to WhatsApp
+                      </button>
                       {selectedRecipe.sourceUrl && (
                         <a
                           href={selectedRecipe.sourceUrl}

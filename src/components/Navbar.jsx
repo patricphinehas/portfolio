@@ -57,7 +57,7 @@ const Navbar = () => {
                                 </a>
                             ))}
                             <a href="#contact" className="px-6 py-2.5 rounded-full bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all transform hover:-translate-y-0.5">
-                                Let's Talk
+                                Get in Touch
                             </a>
                         </div>
 

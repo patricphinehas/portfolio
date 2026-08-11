@@ -112,7 +112,7 @@ const Hero = () => {
                             PR
                         </div>
                         <div className="inline-block px-4 py-1.5 rounded-full border border-indigo-500/30 bg-indigo-500/10 text-indigo-700 text-sm font-medium tracking-wide">
-                            Available for New Challenges
+                            Available for Hire
                         </div>
                     </motion.div>
 
@@ -132,7 +132,7 @@ const Hero = () => {
                         className="flex flex-wrap gap-4 pt-4"
                     >
                         <a href="#contact" className="btn btn-primary group">
-                            Let's Talk
+                            Get in Touch
                             <ArrowRight size={18} className="group-hover:translate-x-1 transition-transform" />
                         </a>
                         {features.showSelectedWorks && (

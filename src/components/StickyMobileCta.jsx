@@ -33,7 +33,7 @@ const StickyMobileCta = () => {
                             href="#contact"
                             className="flex-1 btn btn-primary justify-center"
                         >
-                            <Mail size={18} /> Let's Talk
+                            <Mail size={18} /> Get in Touch
                         </a>
                         <a
                             href={`tel:${personalInfo.phone}`}

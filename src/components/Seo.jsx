@@ -16,7 +16,7 @@ const Seo = ({
     image = DEFAULT_IMAGE,
     noindex = false,
 }) => {
-    const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Senior Frontend Engineer & Digital Consultant`;
+    const fullTitle = title ? `${title} | ${SITE_NAME}` : `${SITE_NAME} — Senior Fullstack Developer & Digital Consultant`;
     const canonical = `${SITE_URL}${path}`;
 
     return (
