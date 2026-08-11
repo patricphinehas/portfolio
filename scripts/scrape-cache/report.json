@@ -1,0 +1,20 @@
+{
+  "totalCatalog": 346,
+  "totalRecipes": 346,
+  "structured": 312,
+  "withIngredients": 320,
+  "withImage": 343,
+  "categories": {
+    "vegetarian": 71,
+    "chicken": 38,
+    "sweets": 128,
+    "condiments": 12,
+    "breakfast": 23,
+    "egg": 22,
+    "drinks": 3,
+    "other": 1,
+    "mutton": 22,
+    "snacks": 9,
+    "seafood": 17
+  }
+}

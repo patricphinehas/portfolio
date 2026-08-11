@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Menu, X } from 'lucide-react';
+import { Menu, CloseCross } from './icons/KoboyoIcons';
 import { motion, AnimatePresence } from 'framer-motion';
+import { features } from '../config/features';
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -16,12 +17,12 @@ const Navbar = () => {
 
     const navLinks = [
         { name: 'Home', href: '#home' },
-        { name: 'Projects', href: '#projects' },
         { name: 'Skills', href: '#skills' },
-        { name: 'Certifications', href: '#certifications' },
-        { name: 'Experience', href: '#experience' }
-
-    ];
+        { name: 'Experience', href: '#experience' },
+        features.showSelectedWorks && { name: 'Projects', href: '#projects' },
+        features.showCaseStudies && { name: 'Case Studies', href: '#case-studies' },
+        { name: 'FAQ', href: '#faq' },
+    ].filter(Boolean);
 
     return (
         <>
@@ -34,12 +35,12 @@ const Navbar = () => {
                 <div className={`container mx-auto px-4 ${scrolled ? 'max-w-5xl' : 'max-w-7xl'} transition-all duration-500`}>
                     <div
                         className={`flex justify-between items-center transition-all duration-300 ${scrolled
-                            ? 'bg-black/80 backdrop-blur-xl rounded-full py-3 px-6 border border-white/10 shadow-2xl shadow-indigo-500/10'
-                            : 'bg-white/5 backdrop-blur-md rounded-2xl py-4 px-8 border border-white/5'
+                            ? 'bg-white/80 backdrop-blur-xl rounded-full py-3 px-6 border border-black/5 shadow-2xl shadow-indigo-500/10'
+                            : 'bg-white/40 backdrop-blur-md rounded-2xl py-4 px-8 border border-black/5'
                             }`}
                     >
 
-                        <a href="#home" className="text-2xl font-bold font-outfit tracking-tighter hover:text-indigo-400 transition-colors flex items-center gap-1">
+                        <a href="#home" className="text-2xl font-bold font-outfit tracking-tighter text-slate-900 hover:text-indigo-600 transition-colors flex items-center gap-1">
                             Patric<span className="text-indigo-500 text-3xl">.</span>
                         </a>
 
@@ -49,7 +50,7 @@ const Navbar = () => {
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className="text-sm font-medium text-gray-300 hover:text-white relative group py-1"
+                                    className="text-sm font-medium text-gray-600 hover:text-slate-900 relative group py-1"
                                 >
                                     {link.name}
                                     <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-300 group-hover:w-full"></span>
@@ -62,10 +63,10 @@ const Navbar = () => {
 
                         {/* Mobile Toggle */}
                         <button
-                            className="md:hidden p-2 rounded-lg bg-white/5 hover:bg-white/10 text-gray-300 hover:text-white transition-colors border border-white/5"
+                            className="md:hidden p-2 rounded-lg bg-black/5 hover:bg-black/10 text-gray-600 hover:text-slate-900 transition-colors border border-black/5"
                             onClick={() => setIsOpen(!isOpen)}
                         >
-                            {isOpen ? <X size={24} /> : <Menu size={24} />}
+                            {isOpen ? <CloseCross size={22} /> : <Menu size={24} />}
                         </button>
                     </div>
                 </div>
@@ -78,14 +79,14 @@ const Navbar = () => {
                         initial={{ opacity: 0, y: -20 }}
                         animate={{ opacity: 1, y: 0 }}
                         exit={{ opacity: 0, y: -20 }}
-                        className="fixed inset-0 z-40 bg-black/95 pt-24 md:hidden"
+                        className="fixed inset-0 z-40 bg-white/98 backdrop-blur-xl pt-24 md:hidden"
                     >
                         <div className="container mx-auto px-6 flex flex-col gap-8">
                             {navLinks.map((link) => (
                                 <a
                                     key={link.name}
                                     href={link.href}
-                                    className="text-3xl font-bold text-gray-300 hover:text-white hover:pl-4 transition-all"
+                                    className="text-3xl font-bold text-gray-600 hover:text-slate-900 hover:pl-4 transition-all"
                                     onClick={() => setIsOpen(false)}
                                 >
                                     {link.name}
