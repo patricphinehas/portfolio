@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { personalInfo } from '../data/portfolio';
 import { Mail } from './icons/KoboyoIcons';
 
 /**
@@ -28,21 +27,12 @@ const StickyMobileCta = () => {
                     transition={{ duration: 0.3 }}
                     className="fixed bottom-0 left-0 right-0 z-40 md:hidden p-3 bg-white/90 backdrop-blur-xl border-t border-black/5 shadow-[0_-4px_20px_rgba(0,0,0,0.08)]"
                 >
-                    <div className="flex items-center gap-3">
-                        <a
-                            href="#contact"
-                            className="flex-1 btn btn-primary justify-center"
-                        >
-                            <Mail size={18} /> Get in Touch
-                        </a>
-                        <a
-                            href={`tel:${personalInfo.phone}`}
-                            className="btn btn-outline px-4"
-                            aria-label="Call"
-                        >
-                            Call
-                        </a>
-                    </div>
+                    <a
+                        href="#contact"
+                        className="btn btn-primary w-full justify-center"
+                    >
+                        <Mail size={18} /> Get in Touch
+                    </a>
                 </motion.div>
             )}
         </AnimatePresence>

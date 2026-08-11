@@ -16,7 +16,6 @@ const PersonJsonLd = () => {
         "jobTitle": personalInfo.role,
         "description": personalInfo.summary,
         "email": personalInfo.email,
-        "telephone": personalInfo.phone,
         "url": SITE_URL,
         "image": `${SITE_URL}/profile.jpg`,
         "address": {
