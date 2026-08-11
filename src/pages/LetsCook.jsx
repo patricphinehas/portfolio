@@ -29,28 +29,66 @@ import {
 } from '../utils/letsCookFilters';
 import Seo from '../components/Seo';
 
+const appBase = (import.meta.env.BASE_URL || '/').replace(/\/?$/, '/');
+
+/** Max decoded message length so `api.whatsapp.com/send?text=` stays under ~2–3k URL chars. */
+const WHATSAPP_MESSAGE_MAX = 1800;
+
 /** Deep link for a recipe: `/lets-cook?recipe={id}` (same as openRecipe / Seo path). */
 function recipePageUrl(recipeId) {
-  if (typeof window === 'undefined') return `/lets-cook?recipe=${recipeId}`;
-  const url = new URL('/lets-cook', window.location.origin);
+  const path = `${appBase}lets-cook`.replace(/\/{2,}/g, '/');
+  if (typeof window === 'undefined') return `${path}?recipe=${recipeId}`;
+  const url = new URL(path, window.location.origin);
   url.searchParams.set('recipe', recipeId);
   return url.toString();
 }
 
-/** WhatsApp click-to-chat body using currently displayed (scaled) amounts. */
-function buildWhatsAppRecipeMessage({ title, pax, ingredients, pageUrl }) {
-  const lines = [`Recipe: ${title}`, `Pax: ${pax}`, ''];
+function formatIngredientLine(ing) {
+  return `- ${formatAmount(ing.amount, ing.unit)} ${ing.name}`.replace(/\s+/g, ' ').trim();
+}
 
-  if (ingredients?.length) {
-    lines.push('Ingredients:');
-    for (const ing of ingredients) {
-      lines.push(`- ${formatAmount(ing.amount, ing.unit)} ${ing.name}`.replace(/\s+/g, ' ').trim());
-    }
-    lines.push('');
+/**
+ * WhatsApp body: recipe name, pax, scaled ingredients, page URL.
+ * Truncates the ingredient list to fit URL length limits while always keeping
+ * the header + deep link (never send link-only).
+ */
+function buildWhatsAppRecipeMessage({ title, pax, ingredients, pageUrl }) {
+  const header = [`Recipe: ${title || 'Untitled'}`, `Pax: ${pax ?? ''}`, ''];
+  const linkBlock = pageUrl ? ['', pageUrl] : [];
+  const list = Array.isArray(ingredients) ? ingredients : [];
+
+  const withLink = (bodyLines) => [...bodyLines, ...linkBlock].join('\n');
+
+  if (!list.length) {
+    return withLink(header).trimEnd();
   }
 
-  lines.push(pageUrl);
-  return lines.join('\n');
+  const lines = [...header, 'Ingredients:'];
+  let omitted = 0;
+
+  for (let i = 0; i < list.length; i++) {
+    const line = formatIngredientLine(list[i]);
+    const remaining = list.length - i - 1;
+    const note =
+      remaining > 0
+        ? `\n…and ${remaining} more (see link)`
+        : '';
+    const candidate = withLink([...lines, line]) + note;
+    if (candidate.length > WHATSAPP_MESSAGE_MAX) {
+      omitted = list.length - i;
+      break;
+    }
+    lines.push(line);
+  }
+
+  if (omitted > 0) {
+    const note = `…and ${omitted} more (see link)`;
+    if (withLink([...lines, note]).length <= WHATSAPP_MESSAGE_MAX) {
+      lines.push(note);
+    }
+  }
+
+  return withLink(lines);
 }
 
 function MacroStat({ label, value, unit = '' }) {
@@ -318,17 +356,20 @@ const LetsCook = () => {
   const shareRecipeOnWhatsApp = () => {
     if (!selectedRecipe) return;
     const pageUrl = recipePageUrl(selectedRecipe.id);
+    // Prefer live scaled list from the aside; fall back to base ingredients if state lags.
+    const ingredientsForShare =
+      (canScale && scaledIngredients.length > 0
+        ? scaledIngredients
+        : selectedRecipe.ingredients) || [];
     const message = buildWhatsAppRecipeMessage({
       title: selectedRecipe.title,
-      pax: canScale ? pax : selectedRecipe.basePax,
-      ingredients: canScale ? scaledIngredients : [],
+      pax: canScale ? pax : selectedRecipe.basePax || 1,
+      ingredients: ingredientsForShare,
       pageUrl,
     });
-    window.open(
-      `https://wa.me/?text=${encodeURIComponent(message)}`,
-      '_blank',
-      'noopener,noreferrer'
-    );
+    // api.whatsapp.com/send keeps the text= body more reliably than wa.me/?text= (no phone).
+    const shareUrl = `https://api.whatsapp.com/send?text=${encodeURIComponent(message)}`;
+    window.open(shareUrl, '_blank', 'noopener,noreferrer');
   };
 
   return (
@@ -395,7 +436,7 @@ const LetsCook = () => {
                       aria-label="Steffi Akka' — visit steffisrecipes.com"
                     >
                       <RecipeImage
-                        src="/lets-cook/steffi-akka.jpg"
+                        src={`${appBase}lets-cook/steffi-akka.jpg`}
                         alt="Steffi Akka'"
                         className="h-16 w-16 sm:h-20 sm:w-20 object-cover"
                         fallbackClassName="h-16 w-16 sm:h-20 sm:w-20"

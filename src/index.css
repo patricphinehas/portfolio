@@ -95,13 +95,22 @@
   display: inline-flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.5rem;
+  padding: 0.7rem 1.25rem;
   border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
   transition: var(--transition-normal);
   border: none;
-  font-size: 1rem;
+  font-size: 0.9375rem;
+  line-height: 1.25;
+  white-space: nowrap;
+}
+
+@media (min-width: 640px) {
+  .btn {
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+  }
 }
 
 .btn-primary {
