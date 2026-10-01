@@ -1,221 +1,387 @@
-import React, { useMemo } from 'react';
-import { personalInfo } from '../data/portfolio';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import {
+    motion,
+    useAnimationFrame,
+    useMotionValue,
+    useSpring,
+    useTransform,
+} from 'framer-motion';
 import { Linkedin } from 'lucide-react';
-import { ArrowRight, DeveloperLaptop } from './icons/KoboyoIcons';
-import { motion } from 'framer-motion';
-import { SiReact, SiAngular, SiTypescript, SiPython, SiNodedotjs, SiDocker, SiMongodb, SiFigma, SiTailwindcss, SiGit, SiAwsamplify, SiPostgresql } from 'react-icons/si';
+import {
+    SiReact, SiAngular, SiTypescript, SiJavascript, SiNextdotjs, SiNodedotjs,
+    SiPython, SiVuedotjs, SiTailwindcss, SiExpress, SiFastapi, SiGraphql, SiMongodb, SiPostgresql, SiDocker, SiFigma,
+    SiGit, SiGithub, SiAmazonwebservices, SiFirebase, SiRedis, SiMysql, SiTensorflow, SiPandas, SiThreedotjs,
+    SiJest, SiCypress, SiVite, SiPostman, SiSass,
+} from 'react-icons/si';
+import { personalInfo } from '../data/portfolio';
+import { ArrowRight } from './icons/KoboyoIcons';
 import { features } from '../config/features';
+import { TEAL, CORAL, sectionGrid } from './SectionIntro';
 
-const Hero = () => {
-    const techIcons = [
-        { Icon: SiReact, color: '#61DAFB', name: 'React' },
-        { Icon: SiAngular, color: '#DD0031', name: 'Angular' },
-        { Icon: SiTypescript, color: '#3178C6', name: 'TypeScript' },
-        { Icon: SiPython, color: '#3776AB', name: 'Python' },
-        { Icon: SiNodedotjs, color: '#339933', name: 'Node.js' },
-        { Icon: SiDocker, color: '#2496ED', name: 'Docker' },
-        { Icon: SiMongodb, color: '#47A248', name: 'MongoDB' },
-        { Icon: SiFigma, color: '#F24E1E', name: 'Figma' },
-        { Icon: SiTailwindcss, color: '#06B6D4', name: 'Tailwind' },
-        { Icon: SiGit, color: '#F05032', name: 'Git' },
-        { Icon: SiAwsamplify, color: '#FF9900', name: 'AWS' },
-        { Icon: SiPostgresql, color: '#4169E1', name: 'PostgreSQL' },
-    ];
+// radius is a fraction of the field's half-width; speed is radians per second (negative = counter-clockwise).
+const RINGS = [
+    {
+        radius: 0.34, speed: 0.22, tile: 60, icon: 30,
+        items: [
+            { Icon: SiReact, color: '#61DAFB', name: 'React' },
+            { Icon: SiAngular, color: '#DD0031', name: 'Angular' },
+            { Icon: SiTypescript, color: '#3178C6', name: 'TypeScript' },
+            { Icon: SiJavascript, color: '#E8C400', name: 'JavaScript' },
+            { Icon: SiNextdotjs, color: '#111111', name: 'Next.js' },
+            { Icon: SiNodedotjs, color: '#339933', name: 'Node.js' },
+        ],
+    },
+    {
+        radius: 0.63, speed: -0.14, tile: 54, icon: 26,
+        items: [
+            { Icon: SiPython, color: '#3776AB', name: 'Python' },
+            { Icon: SiVuedotjs, color: '#4FC08D', name: 'Vue.js' },
+            { Icon: SiTailwindcss, color: '#06B6D4', name: 'Tailwind' },
+            { Icon: SiExpress, color: '#111111', name: 'Express' },
+            { Icon: SiFastapi, color: '#009688', name: 'FastAPI' },
+            { Icon: SiGraphql, color: '#E10098', name: 'GraphQL' },
+            { Icon: SiMongodb, color: '#47A248', name: 'MongoDB' },
+            { Icon: SiPostgresql, color: '#4169E1', name: 'PostgreSQL' },
+            { Icon: SiDocker, color: '#2496ED', name: 'Docker' },
+            { Icon: SiFigma, color: '#F24E1E', name: 'Figma' },
+        ],
+    },
+    {
+        radius: 0.91, speed: 0.08, tile: 48, icon: 22,
+        items: [
+            { Icon: SiGit, color: '#F05032', name: 'Git' },
+            { Icon: SiGithub, color: '#181717', name: 'GitHub' },
+            { Icon: SiAmazonwebservices, color: '#FF9900', name: 'AWS' },
+            { Icon: SiFirebase, color: '#DD2C00', name: 'Firebase' },
+            { Icon: SiRedis, color: '#DC382D', name: 'Redis' },
+            { Icon: SiMysql, color: '#4479A1', name: 'MySQL' },
+            { Icon: SiTensorflow, color: '#FF6F00', name: 'TensorFlow' },
+            { Icon: SiPandas, color: '#150458', name: 'Pandas' },
+            { Icon: SiThreedotjs, color: '#111111', name: 'Three.js' },
+            { Icon: SiJest, color: '#C21325', name: 'Jest' },
+            { Icon: SiCypress, color: '#17202C', name: 'Cypress' },
+            { Icon: SiVite, color: '#646CFF', name: 'Vite' },
+            { Icon: SiPostman, color: '#FF6C37', name: 'Postman' },
+            { Icon: SiSass, color: '#CC6699', name: 'Sass' },
+        ],
+    },
+];
 
-    const randomizedIcons = useMemo(() => {
-        return techIcons.map((icon) => ({
-            ...icon,
-            left: `${Math.random() * 90 + 5}%`,
-            top: `${Math.random() * 80 + 10}%`,
-            delay: Math.random() * 2,
-            duration: 4 + Math.random() * 3,
-        }));
+const allTech = RINGS.flatMap((r) => r.items);
+
+const REPEL_RADIUS = 150;
+const REPEL_PUSH = 60;
+const SPRING = { stiffness: 170, damping: 17, mass: 0.6 };
+
+const OrbitTile = ({ tech, ring, slot, index, clock, mouseX, mouseY, sizeRef }) => {
+    const base = (slot / ring.items.length) * Math.PI * 2;
+    const phase = index * 2.399;
+
+    // Orbit position plus a small per-icon wobble so the paths don't look mechanical.
+    const orbit = (axis) => (t) => {
+        const half = sizeRef.current / 2;
+        const angle = base + t * ring.speed + Math.cos(t * 0.7 + phase) * 0.05;
+        const r = ring.radius * half + Math.sin(t * 0.9 + phase) * 10;
+        return half + r * (axis === 'x' ? Math.cos(angle) : Math.sin(angle));
+    };
+    const ox = useTransform(clock, orbit('x'));
+    const oy = useTransform(clock, orbit('y'));
+
+    const repel = (axis) => ([x, y, mx, my]) => {
+        const dx = x - mx;
+        const dy = y - my;
+        const d = Math.hypot(dx, dy);
+        if (!d || d > REPEL_RADIUS) return 0;
+        return ((axis === 'x' ? dx : dy) / d) * (1 - d / REPEL_RADIUS) ** 2 * REPEL_PUSH;
+    };
+    const proximity = ([x, y, mx, my]) => {
+        const d = Math.hypot(x - mx, y - my);
+        return d > REPEL_RADIUS ? 1 : 1 + 0.4 * (1 - d / REPEL_RADIUS);
+    };
+    const inputs = [ox, oy, mouseX, mouseY];
+    const rx = useSpring(useTransform(inputs, repel('x')), SPRING);
+    const ry = useSpring(useTransform(inputs, repel('y')), SPRING);
+    const scale = useSpring(useTransform(inputs, proximity), SPRING);
+
+    const x = useTransform([ox, rx], ([a, b]) => a + b - ring.tile / 2);
+    const y = useTransform([oy, ry], ([a, b]) => a + b - ring.tile / 2);
+
+    return (
+        <motion.div className="absolute left-0 top-0" style={{ x, y, scale }}>
+            <motion.div
+                initial={{ opacity: 0, scale: 0.4 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.3 + index * 0.03, type: 'spring', stiffness: 260, damping: 18 }}
+                className="group relative flex items-center justify-center rounded-2xl border border-slate-900/5 bg-white shadow-[0_8px_24px_rgba(36,80,72,0.14)]"
+                style={{ width: ring.tile, height: ring.tile }}
+            >
+                <tech.Icon size={ring.icon} color={tech.color} />
+                <span className="pointer-events-none absolute top-full z-10 mt-2 whitespace-nowrap rounded-full bg-slate-900 px-2.5 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
+                    {tech.name}
+                </span>
+            </motion.div>
+        </motion.div>
+    );
+};
+
+const OrbitField = () => {
+    const fieldRef = useRef(null);
+    const sizeRef = useRef(1);
+    const clock = useMotionValue(0);
+    const speed = useSpring(1, { stiffness: 40, damping: 20 });
+    const mouseX = useMotionValue(-9999);
+    const mouseY = useMotionValue(-9999);
+    useLayoutEffect(() => {
+        const measure = () => {
+            sizeRef.current = fieldRef.current.offsetWidth;
+        };
+        measure();
+        const ro = new ResizeObserver(measure);
+        ro.observe(fieldRef.current);
+        return () => ro.disconnect();
+    }, []);
+
+    useAnimationFrame((_, delta) => {
+        clock.set(clock.get() + (delta / 1000) * speed.get());
+    });
+
+    const onMove = (e) => {
+        const rect = fieldRef.current.getBoundingClientRect();
+        mouseX.set(e.clientX - rect.left);
+        mouseY.set(e.clientY - rect.top);
+    };
+    const onEnter = () => speed.set(0.2);
+    const onLeave = () => {
+        speed.set(1);
+        mouseX.set(-9999);
+        mouseY.set(-9999);
+    };
+
+    let index = 0;
+    return (
+        <div
+            ref={fieldRef}
+            onMouseMove={onMove}
+            onMouseEnter={onEnter}
+            onMouseLeave={onLeave}
+            className="relative mx-auto aspect-square w-full max-w-[640px]"
+        >
+            {RINGS.map((ring) => (
+                <div
+                    key={ring.radius}
+                    className="absolute rounded-full border border-dashed border-[#249D8F]/25"
+                    style={{ inset: `${(1 - ring.radius) * 50}%` }}
+                />
+            ))}
+
+            <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
+                <motion.div
+                    className="absolute inset-0 rounded-full"
+                    style={{ backgroundColor: TEAL }}
+                    animate={{ scale: [1, 1.6], opacity: [0.35, 0] }}
+                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
+                />
+                <div
+                    className="relative flex h-28 w-28 flex-col items-center justify-center rounded-full text-white shadow-[0_20px_50px_rgba(36,157,143,0.35)]"
+                    style={{ backgroundColor: TEAL }}
+                >
+                    <span className="text-3xl font-extrabold leading-none">PR</span>
+                    <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em] opacity-80">Fullstack</span>
+                </div>
+            </div>
+
+            {RINGS.map((ring) =>
+                ring.items.map((tech, slot) => (
+                    <OrbitTile
+                        key={tech.name}
+                        tech={tech}
+                        ring={ring}
+                        slot={slot}
+                        index={index++}
+                        clock={clock}
+                        mouseX={mouseX}
+                        mouseY={mouseY}
+                        sizeRef={sizeRef}
+                    />
+                ))
+            )}
+        </div>
+    );
+};
+
+const techByName = Object.fromEntries(allTech.map((t) => [t.name, t]));
+
+// Smaller screens: no orbit, so the tiles keep swapping places instead.
+const JuggleStrip = () => {
+    const [order, setOrder] = useState(() => allTech.map((t) => t.name));
+    const [hops, setHops] = useState({});
+    const orderRef = useRef(order);
+
+    useEffect(() => {
+        const id = setInterval(() => {
+            const next = [...orderRef.current];
+            const moved = [];
+            for (let k = 0; k < 2; k++) {
+                const a = Math.floor(Math.random() * next.length);
+                const b = Math.floor(Math.random() * next.length);
+                [next[a], next[b]] = [next[b], next[a]];
+                moved.push(next[a], next[b]);
+            }
+            orderRef.current = next;
+            setOrder(next);
+            setHops((h) => {
+                const n = { ...h };
+                moved.forEach((name) => (n[name] = (n[name] || 0) + 1));
+                return n;
+            });
+        }, 1400);
+        return () => clearInterval(id);
     }, []);
 
     return (
-        <section
-            id="home"
-            className="relative flex min-h-[100svh] items-center overflow-hidden pt-24 pb-12 sm:pt-28 sm:pb-16"
-        >
-            <div className="pointer-events-none absolute top-[-10%] left-[-20%] -z-10 h-[280px] w-[280px] rounded-full bg-indigo-400/20 blur-[100px] sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
-            <div className="pointer-events-none absolute right-[-15%] bottom-[-10%] -z-10 h-[240px] w-[240px] rounded-full bg-purple-400/20 blur-[100px] sm:h-[500px] sm:w-[500px] sm:blur-[120px]" />
-
-            <div className="absolute inset-0 -z-5 pointer-events-none hidden lg:block">
-                {randomizedIcons.map((item, index) => (
-                    <motion.div
-                        key={index}
-                        className="absolute"
-                        style={{ left: item.left, top: item.top }}
-                        initial={{ opacity: 0, scale: 0 }}
-                        animate={{
-                            opacity: [0.05, 0.15, 0.05],
-                            scale: [0.9, 1, 0.9],
-                            y: [0, -20, 0],
-                            rotate: [0, 5, -5, 0],
-                        }}
-                        transition={{
-                            opacity: {
-                                duration: item.duration,
-                                repeat: Infinity,
-                                ease: 'easeInOut',
-                                delay: item.delay,
-                            },
-                            scale: {
-                                duration: item.duration + 1,
-                                repeat: Infinity,
-                                ease: 'easeInOut',
-                                delay: item.delay,
-                            },
-                            y: {
-                                duration: item.duration + 2,
-                                repeat: Infinity,
-                                ease: 'easeInOut',
-                                delay: item.delay,
-                            },
-                            rotate: {
-                                duration: item.duration + 3,
-                                repeat: Infinity,
-                                ease: 'easeInOut',
-                                delay: item.delay,
-                            },
-                        }}
+        <ul className="mt-10 flex flex-wrap gap-2.5" aria-label="Core stack">
+            {order.map((name) => {
+                const { Icon, color } = techByName[name];
+                return (
+                    <motion.li
+                        key={name}
+                        layout
+                        transition={{ layout: { type: 'spring', stiffness: 260, damping: 16 } }}
+                        title={name}
+                        className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-900/5 bg-white shadow-sm"
                     >
-                        <item.Icon size={60} color={item.color} />
-                    </motion.div>
-                ))}
-            </div>
-
-            <div className="container mx-auto grid w-full items-center gap-8 px-4 sm:gap-10 lg:grid-cols-2 lg:gap-12">
-                <motion.div
-                    initial={{ opacity: 0, x: -40 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    transition={{ duration: 0.8, ease: 'easeOut' }}
-                    className="min-w-0 space-y-5 sm:space-y-6 lg:max-w-xl"
-                >
-                    <motion.div
-                        initial={{ opacity: 0, y: 16 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ delay: 0.1 }}
-                        className="flex flex-wrap items-center gap-3"
-                    >
-                        <div
-                            className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 text-sm font-bold text-white ring-2 ring-white/70 sm:h-12 sm:w-12"
-                            role="img"
-                            aria-label={`Profile photo placeholder for ${personalInfo.name}`}
+                        <motion.span
+                            key={hops[name] || 0}
+                            className="flex"
+                            animate={hops[name] ? { y: [0, -14, 0], rotate: [0, -14, 0] } : undefined}
+                            transition={{ duration: 0.6, ease: 'easeOut' }}
                         >
-                            PR
-                        </div>
-                        <div className="inline-block rounded-full border border-indigo-500/30 bg-indigo-500/10 px-3.5 py-1.5 text-xs font-medium tracking-wide text-indigo-700 sm:px-4 sm:text-sm">
-                            Available for Hire
-                        </div>
-                    </motion.div>
+                            <Icon size={22} color={color} />
+                        </motion.span>
+                    </motion.li>
+                );
+            })}
+        </ul>
+    );
+};
 
-                    <div className="space-y-3 sm:space-y-4">
-                        <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-indigo-600 sm:text-xs">
-                            {personalInfo.name}
-                        </p>
-                        <h1 className="text-[2.35rem] font-extrabold leading-[1.08] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl">
-                            Building
-                            <br />
-                            <span className="gradient-text pb-1">Digital Experiences</span>
-                        </h1>
-                        <p className="max-w-xl text-base leading-relaxed text-gray-600 sm:text-lg md:text-xl md:font-light">
-                            {personalInfo.role} focused on accessible, pixel-perfect interfaces.
-                        </p>
-                    </div>
+const EASE = [0.22, 1, 0.36, 1];
 
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        transition={{ delay: 0.55 }}
-                        className="flex flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap sm:gap-3 sm:pt-2"
+const stagger = {
+    hidden: {},
+    show: { transition: { staggerChildren: 0.12, delayChildren: 0.15 } },
+};
+
+const rise = {
+    hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
+    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: EASE } },
+};
+
+const wordUp = {
+    hidden: { y: '110%' },
+    show: { y: '0%', transition: { duration: 0.8, ease: EASE } },
+};
+
+// The mask needs bottom padding so descenders (g) aren't clipped.
+const MaskedWord = ({ children, className = '', style }) => (
+    <span className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-bottom">
+        <motion.span variants={wordUp} className={`inline-block ${className}`} style={style}>
+            {children}
+        </motion.span>
+    </span>
+);
+
+const Hero = () => {
+    const loop = (animation, transition) => ({ animate: animation, transition });
+
+    return (
+        <section className="py-12 sm:py-16">
+            <div className={`${sectionGrid} items-center`}>
+                <motion.div variants={stagger} initial="hidden" animate="show" className="min-w-0 xl:col-span-6">
+                    <motion.p variants={rise} className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
+                        <motion.span
+                            className="inline-block h-px w-10 origin-left"
+                            style={{ backgroundColor: TEAL }}
+                            initial={{ scaleX: 0 }}
+                            animate={{ scaleX: 1 }}
+                            transition={{ delay: 0.5, duration: 0.8, ease: EASE }}
+                        />
+                        {personalInfo.name}
+                    </motion.p>
+
+                    <motion.h1
+                        variants={stagger}
+                        className="mt-4 text-5xl font-extrabold leading-[1.02] tracking-tight text-slate-900 sm:text-6xl xl:text-7xl"
                     >
-                        <a href="#contact" className="btn btn-primary group w-full justify-center sm:w-auto">
+                        <MaskedWord>Building</MaskedWord>
+                        <br />
+                        <span className="relative inline-block">
+                            <MaskedWord style={{ color: TEAL }}>Digital</MaskedWord>{' '}
+                            <MaskedWord style={{ color: TEAL }}>Experiences</MaskedWord>
+                            <motion.span
+                                aria-hidden="true"
+                                className="absolute -bottom-1 left-0 h-1.5 w-full origin-left rounded-full"
+                                style={{ backgroundColor: CORAL }}
+                                initial={{ scaleX: 0 }}
+                                animate={{ scaleX: 1 }}
+                                transition={{ delay: 1, duration: 0.9, ease: EASE }}
+                            >
+                                <motion.span
+                                    className="block h-full w-full rounded-full"
+                                    style={{ backgroundColor: CORAL }}
+                                    {...loop({ opacity: [1, 0.45, 1] }, { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 2 })}
+                                />
+                            </motion.span>
+                        </span>
+                    </motion.h1>
+
+                    <motion.p variants={rise} className="mt-7 max-w-xl text-lg leading-relaxed text-gray-600">
+                        {personalInfo.role} focused on accessible, pixel-perfect interfaces.
+                    </motion.p>
+
+                    <motion.div variants={rise} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                        <a href="#contact" className="btn btn-primary group relative justify-center">
+                            <motion.span
+                                aria-hidden="true"
+                                className="pointer-events-none absolute inset-0 rounded-full border-2"
+                                style={{ borderColor: TEAL }}
+                                initial={{ opacity: 0 }}
+                                {...loop(
+                                    { scale: [1, 1.18], opacity: [0.7, 0] },
+                                    { duration: 1.6, repeat: Infinity, repeatDelay: 2.4, ease: 'easeOut', delay: 1.6 }
+                                )}
+                            />
                             Get in Touch
                             <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                         </a>
                         {features.showSelectedWorks && (
-                            <a href="#projects" className="btn btn-outline w-full justify-center sm:w-auto">
+                            <a href="#portfolio" className="btn btn-outline justify-center">
                                 View My Work
                             </a>
                         )}
-                        <a
-                            href={personalInfo.linkedin}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="btn btn-outline w-full justify-center sm:w-auto"
-                        >
+                        <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-outline justify-center">
                             <Linkedin size={18} /> LinkedIn
                         </a>
                     </motion.div>
+
+                    <motion.p variants={rise} className="mt-8 flex items-center gap-2.5 text-sm text-slate-500">
+                        <span className="relative flex h-2 w-2">
+                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ backgroundColor: TEAL }} />
+                            <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: TEAL }} />
+                        </span>
+                        <span className="font-medium" style={{ color: TEAL }}>Available for hire</span>
+                        <span aria-hidden="true">·</span>
+                        {personalInfo.location}
+                    </motion.p>
+
+                    <motion.div variants={rise} className="xl:hidden">
+                        <JuggleStrip />
+                    </motion.div>
                 </motion.div>
 
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.92 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    transition={{ duration: 0.8 }}
-                    className="relative hidden justify-center lg:flex"
-                >
-                    <div className="relative aspect-square w-full max-w-lg">
-                        <motion.div
-                            animate={{ rotate: 360 }}
-                            transition={{ duration: 20, repeat: Infinity, ease: 'linear' }}
-                            className="absolute inset-0 rounded-full border border-dashed border-black/10"
-                        />
-                        <motion.div
-                            animate={{ rotate: -360 }}
-                            transition={{ duration: 30, repeat: Infinity, ease: 'linear' }}
-                            className="absolute inset-12 rounded-full border border-black/10"
-                        />
-
-                        <motion.div
-                            initial={{ opacity: 0, y: 30 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            transition={{ duration: 0.8, delay: 0.5 }}
-                            className="absolute -bottom-6 -left-4 z-20 md:-left-12"
-                        >
-                            <motion.div
-                                animate={{ y: [0, -12, 0], rotate: [0, -2, 0] }}
-                                transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-                                className="text-indigo-500 drop-shadow-[0_15px_25px_rgba(99,102,241,0.35)]"
-                            >
-                                <DeveloperLaptop className="h-auto w-28 md:w-36" />
-                            </motion.div>
-                        </motion.div>
-
-                        <div className="absolute top-1/2 left-1/2 w-4/5 -translate-x-1/2 -translate-y-1/2">
-                            <div className="glass-card relative z-10 rotate-[-6deg] border-indigo-500/20 bg-white/70 p-8 transition-transform duration-500 hover:rotate-0">
-                                <div className="mb-6 flex items-center justify-between">
-                                    <div className="flex gap-2">
-                                        <div className="h-3 w-3 rounded-full bg-red-400" />
-                                        <div className="h-3 w-3 rounded-full bg-amber-400" />
-                                        <div className="h-3 w-3 rounded-full bg-green-400" />
-                                    </div>
-                                    <div className="font-mono text-xs text-gray-400">portfolio.tsx</div>
-                                </div>
-                                <div className="space-y-3 font-mono text-sm">
-                                    <div className="flex gap-2">
-                                        <span className="text-purple-600">const</span>
-                                        <span className="text-blue-600">developer</span>
-                                        <span className="text-slate-900">=</span>
-                                        <span className="text-amber-600">{'{'}</span>
-                                    </div>
-                                    <div className="pl-4 text-gray-700">
-                                        name: <span className="text-green-600">"{personalInfo.name}"</span>,
-                                    </div>
-                                    <div className="pl-4 text-gray-700">
-                                        role: <span className="text-green-600">"{personalInfo.role}"</span>,
-                                    </div>
-                                    <div className="pl-4 text-gray-700">
-                                        passion: <span className="text-green-600">"Building Amazing Things"</span>
-                                    </div>
-                                    <div className="text-amber-600">{'}'}</div>
-                                </div>
-                                <div className="absolute -right-6 -bottom-6 -z-10 h-24 w-24 rounded-2xl bg-gradient-to-br from-indigo-500 to-purple-500 opacity-60 blur-xl" />
-                            </div>
-                        </div>
-                    </div>
-                </motion.div>
+                <div className="hidden xl:col-span-6 xl:block">
+                    <OrbitField />
+                </div>
             </div>
         </section>
     );

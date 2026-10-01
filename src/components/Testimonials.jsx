@@ -5,15 +5,22 @@ import { Sparkles } from './icons/KoboyoIcons';
 
 const Testimonials = () => {
     return (
-        <section id="testimonials" className="section">
+        <section className="py-10 md:py-14">
             <div className="container mx-auto px-4">
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     viewport={{ once: true }}
-                    className="section-title"
+                    transition={{ delay: 0.1, type: 'spring', stiffness: 150 }}
+                    className="section-title text-slate-900 mb-16"
                 >
-                    What Clients <span className="gradient-text">Say</span>
+                    What Clients <motion.span
+                        style={{ color: '#249D8F', display: 'inline-block' }}
+                        initial={{ opacity: 0, scale: 0.5, rotate: -180 }}
+                        whileInView={{ opacity: 1, scale: 1, rotate: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2, type: 'spring', stiffness: 200, damping: 20 }}
+                    >Say</motion.span>
                 </motion.h2>
 
                 <div className="grid md:grid-cols-3 gap-6 max-w-6xl mx-auto">

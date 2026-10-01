@@ -1,10 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { personalInfo, responsePromise } from '../data/portfolio';
-import { ChefHat, Linkedin } from 'lucide-react';
+import { ArrowUpRight, ChefHat, Linkedin } from 'lucide-react';
 import { Mail } from './icons/KoboyoIcons';
-import { motion, useInView } from 'framer-motion';
+import { motion } from 'framer-motion';
 import { features } from '../config/features';
+import SectionIntro, { TEAL, CREAM, sectionGrid } from './SectionIntro';
 
 const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT;
 
@@ -15,9 +16,11 @@ const footerLinks = [
     { label: 'FAQ', href: '#faq' },
 ].filter(Boolean);
 
+const inputClass =
+    'w-full rounded-xl border border-slate-900/10 bg-white px-4 py-3 text-sm outline-none transition-colors focus:border-[#249D8F]';
+const labelClass = 'mb-1.5 block text-xs font-semibold uppercase tracking-wide text-gray-500';
+
 const Contact = () => {
-    const ref = useRef(null);
-    const isInView = useInView(ref, { once: true });
     const navigate = useNavigate();
 
     const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -56,123 +59,95 @@ const Contact = () => {
         }
     };
 
+    const links = [
+        { label: 'Email directly', href: `mailto:${personalInfo.email}`, Icon: Mail },
+        { label: 'LinkedIn', href: personalInfo.linkedin, Icon: Linkedin, external: true },
+    ];
+
     return (
-        <footer id="contact" className="section pb-12 pt-32 relative overflow-hidden">
-            {/* Footer Gradients */}
-            <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-[500px] bg-gradient-to-t from-indigo-200/30 to-transparent -z-10 pointer-events-none" />
-
-            <div className="container mx-auto px-4" ref={ref}>
-                <motion.div
-                    initial={{ opacity: 0, y: 30 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8 }}
-                    className="text-center"
-                >
-                    <h2 className="text-5xl md:text-7xl font-bold mb-8">
-                        Available for <br /> <span className="gradient-text">Hire</span>
-                    </h2>
-                    <p className="text-xl text-gray-600 max-w-2xl mx-auto mb-4">
+        <footer className="py-10 md:py-14">
+            <div className={sectionGrid}>
+                <div className="xl:col-span-5">
+                    <SectionIntro label="Contact" title={<>Available<br />for hire</>}>
                         Reach out for project strategy and execution.
+                    </SectionIntro>
+                    <p className="mt-4 text-sm font-semibold" style={{ color: TEAL }}>
+                        {responsePromise.headline}
                     </p>
-                    <p className="text-sm font-semibold text-indigo-600 mb-12">
-                        {responsePromise.headline} — {responsePromise.detail}
-                    </p>
-                </motion.div>
 
-                {/* Contact form */}
+                    <ul className="mt-8 border-t border-slate-900/10">
+                        {links.map(({ label, href, Icon, external }) => (
+                            <li key={label} className="border-b border-slate-900/10">
+                                <a
+                                    href={href}
+                                    {...(external && { target: '_blank', rel: 'noopener noreferrer' })}
+                                    className="group flex items-center gap-4 py-4 font-semibold text-slate-800 transition-colors hover:text-[#249D8F]"
+                                >
+                                    <Icon size={20} style={{ color: TEAL }} />
+                                    <span className="flex-1">{label}</span>
+                                    <ArrowUpRight size={18} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                                </a>
+                            </li>
+                        ))}
+                        <li className="border-b border-slate-900/10">
+                            <Link
+                                to="/lets-cook"
+                                className="group flex items-center gap-4 py-4 font-semibold text-slate-800 transition-colors hover:text-[#249D8F]"
+                            >
+                                <ChefHat size={20} style={{ color: TEAL }} />
+                                <span className="flex-1">Let&apos;s Cook (bonus)</span>
+                                <ArrowUpRight size={18} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                            </Link>
+                        </li>
+                    </ul>
+                </div>
+
                 <motion.form
                     onSubmit={handleSubmit}
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={isInView ? { opacity: 1, y: 0 } : {}}
-                    transition={{ duration: 0.8, delay: 0.1 }}
-                    className="glass-card max-w-xl mx-auto p-8 mb-16 text-left"
+                    initial={{ opacity: 0, y: 24 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true }}
+                    transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+                    className="h-fit rounded-3xl p-6 md:p-10 xl:col-span-7"
+                    style={{ backgroundColor: CREAM }}
                 >
-                    <div className="grid sm:grid-cols-2 gap-4 mb-4">
+                    <h3 className="text-2xl font-bold tracking-tight text-slate-900">Tell me about your project</h3>
+                    <p className="mt-1 text-sm text-gray-600">{responsePromise.detail}</p>
+
+                    <div className="mt-8 grid gap-4 sm:grid-cols-2">
                         <div>
-                            <label htmlFor="name" className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5">Name</label>
-                            <input
-                                id="name" name="name" type="text" required
-                                value={form.name} onChange={handleChange}
-                                className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-2.5 text-sm outline-none focus:border-indigo-500 transition-colors"
-                                placeholder="Your name"
-                            />
+                            <label htmlFor="name" className={labelClass}>Name</label>
+                            <input id="name" name="name" type="text" required value={form.name} onChange={handleChange} className={inputClass} placeholder="Your name" />
                         </div>
                         <div>
-                            <label htmlFor="email" className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5">Email</label>
-                            <input
-                                id="email" name="email" type="email" required
-                                value={form.email} onChange={handleChange}
-                                className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-2.5 text-sm outline-none focus:border-indigo-500 transition-colors"
-                                placeholder="you@example.com"
-                            />
+                            <label htmlFor="email" className={labelClass}>Email</label>
+                            <input id="email" name="email" type="email" required value={form.email} onChange={handleChange} className={inputClass} placeholder="you@example.com" />
                         </div>
                     </div>
-                    <div className="mb-4">
-                        <label htmlFor="message" className="block text-xs font-semibold uppercase tracking-wide text-gray-500 mb-1.5">Message</label>
-                        <textarea
-                            id="message" name="message" rows={4} required
-                            value={form.message} onChange={handleChange}
-                            className="w-full rounded-xl border border-black/10 bg-white/70 px-4 py-2.5 text-sm outline-none focus:border-indigo-500 transition-colors resize-none"
-                            placeholder="Tell me a bit about your project..."
-                        />
+                    <div className="mt-4">
+                        <label htmlFor="message" className={labelClass}>Message</label>
+                        <textarea id="message" name="message" rows={5} required value={form.message} onChange={handleChange} className={`${inputClass} resize-none`} placeholder="Tell me a bit about your project..." />
                     </div>
-                    {error && <p className="text-sm text-red-600 mb-4">{error}</p>}
+                    {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
                     <button
                         type="submit"
                         disabled={status === 'sending'}
-                        className="btn btn-primary w-full justify-center disabled:opacity-60"
+                        className="btn btn-primary mt-6 w-full justify-center disabled:opacity-60 sm:w-auto"
                     >
                         {status === 'sending' ? 'Sending…' : 'Send Message'}
                     </button>
                 </motion.form>
 
-                <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-16">
-                    <a
-                        href={`mailto:${personalInfo.email}`}
-                        className="btn btn-outline text-base px-8 py-4 inline-flex"
-                    >
-                        <Mail className="mr-3" /> Email Directly
-                    </a>
-                    <Link
-                        to="/lets-cook"
-                        className="btn btn-outline text-base px-8 py-4 inline-flex border-2 hover:bg-indigo-50"
-                    >
-                        <ChefHat className="mr-3" size={20} /> Let&apos;s Cook (bonus)
-                    </Link>
-                </div>
-
-                <div className="flex justify-center gap-6 mb-16">
-                    <a
-                        href={personalInfo.linkedin}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-4 rounded-full bg-black/5 hover:bg-indigo-500 hover:text-white text-gray-600 transition-all duration-300 transform hover:-translate-y-2 hover:scale-110"
-                        aria-label="LinkedIn profile"
-                    >
-                        <Linkedin size={24} />
-                    </a>
-                    <a
-                        href={`mailto:${personalInfo.email}`}
-                        className="p-4 rounded-full bg-black/5 hover:bg-pink-500 hover:text-white text-gray-600 transition-all duration-300 transform hover:-translate-y-2 hover:scale-110"
-                        aria-label="Send an email"
-                    >
-                        <Mail size={24} />
-                    </a>
-                </div>
-
-                {/* Internal links / sitemap footer */}
-                <nav aria-label="Footer" className="flex flex-wrap justify-center gap-x-8 gap-y-3 text-sm text-gray-500 border-t border-black/10 pt-10 pb-6 max-w-4xl mx-auto">
-                    {footerLinks.map((link) => (
-                        <a key={link.href} href={link.href} className="hover:text-indigo-600 transition-colors">
-                            {link.label}
-                        </a>
-                    ))}
-                    <Link to="/privacy-policy" className="hover:text-indigo-600 transition-colors">Privacy Policy</Link>
-                </nav>
-
-                <div className="text-gray-500 text-sm flex flex-col md:flex-row justify-between items-center gap-4 max-w-4xl mx-auto">
-                    <p>© {new Date().getFullYear()} {personalInfo.name}. All rights reserved.</p>
-                    <p>{personalInfo.location}</p>
+                <div className="flex flex-col gap-4 border-t border-slate-900/10 pt-8 text-sm text-gray-500 md:flex-row md:items-center md:justify-between xl:col-span-12">
+                    <p>© {new Date().getFullYear()} {personalInfo.name} · {personalInfo.location}</p>
+                    <nav aria-label="Footer" className="flex flex-wrap gap-x-6 gap-y-2">
+                        {footerLinks.map((link) => (
+                            <a key={link.href} href={link.href} className="transition-colors hover:text-[#249D8F]">
+                                {link.label}
+                            </a>
+                        ))}
+                        <Link to="/privacy-policy" className="transition-colors hover:text-[#249D8F]">Privacy Policy</Link>
+                    </nav>
                 </div>
             </div>
         </footer>

@@ -1,23 +1,37 @@
 import React from 'react';
 import Seo from '../components/Seo';
-import Navbar from '../components/Navbar';
+import PageSidebar from '../components/PageSidebar';
+import StackCard from '../components/StackCard';
 import Hero from '../components/Hero';
 import Skills from '../components/Skills';
 import Certifications from '../components/Certifications';
 import Experience from '../components/Experience';
-import Projects from '../components/Projects';
+import Education from '../components/Education';
+import PortfolioGrid from '../components/PortfolioGrid';
 import CaseStudies from '../components/CaseStudies';
 import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
-import LocationMap from '../components/LocationMap';
 import Contact from '../components/Contact';
 import StickyMobileCta from '../components/StickyMobileCta';
 import PersonJsonLd from '../components/PersonJsonLd';
 import { features } from '../config/features';
 
+const sections = [
+    { id: 'hero', Component: Hero },
+    { id: 'skills', Component: Skills },
+    { id: 'certifications', Component: Certifications },
+    { id: 'experience', Component: Experience },
+    { id: 'education', Component: Education },
+    features.showSelectedWorks && { id: 'portfolio', Component: PortfolioGrid },
+    features.showCaseStudies && { id: 'case-studies', Component: CaseStudies },
+    features.showTestimonials && { id: 'testimonials', Component: Testimonials },
+    { id: 'faq', Component: FAQ },
+    { id: 'contact', Component: Contact },
+].filter(Boolean);
+
 const Home = () => {
     return (
-        <div className="min-h-screen text-slate-800 selection:bg-indigo-500/20">
+        <div className="min-h-screen text-slate-800 selection:bg-[#249D8F]/20">
             <Seo
                 title="Senior Fullstack Developer & Digital Consultant"
                 description="Patric Phinehas Raj — Senior Fullstack Developer at Bosch and freelance digital consultant. I build fast, accessible web apps and lead product teams, from B2C marketplaces to healthcare dispatch systems and brand websites."
@@ -25,18 +39,15 @@ const Home = () => {
             />
             <PersonJsonLd />
 
-            <Navbar />
-            <Hero />
-            <Skills />
-            <Certifications />
-            <Experience />
-            {features.showSelectedWorks && <Projects />}
-            {features.showCaseStudies && <CaseStudies />}
-            {features.showTestimonials && <Testimonials />}
-            <LocationMap />
-            <FAQ />
-            <Contact />
-            <StickyMobileCta />
+            <PageSidebar sectionIds={sections.map((s) => s.id)} />
+            <main className="relative transition-[margin] duration-300 lg:ml-[var(--sidebar-w,80px)]">
+                {sections.map(({ id, Component }, index) => (
+                    <StackCard key={id} id={id} index={index} isLast={index === sections.length - 1}>
+                        <Component />
+                    </StackCard>
+                ))}
+                <StickyMobileCta />
+            </main>
 
             <div
                 className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100] mix-blend-multiply"

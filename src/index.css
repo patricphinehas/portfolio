@@ -3,20 +3,23 @@
 
 @layer base {
   :root {
-    /* Colors - Premium Light Palette */
-    --bg-dark: #f7f7fb;
-    --bg-card: rgba(255, 255, 255, 0.6);
-    --bg-card-hover: rgba(255, 255, 255, 0.85);
+    /* Colors - Warm Premium Palette */
+    --bg-dark: #FDF0D5;
+    --bg-card: rgba(255, 255, 255, 0.8);
+    --bg-card-hover: rgba(255, 255, 255, 0.95);
 
-    --primary: #6366f1;
-    /* Indigo 500 */
-    --primary-glow: rgba(99, 102, 241, 0.3);
-    --secondary: #a855f7;
-    /* Purple 500 */
+    --primary: #249D8F;
+    /* Teal 500 */
+    --primary-glow: rgba(36, 157, 143, 0.15);
+    --secondary: #E9C46A;
+    /* Gold 500 */
+    --accent: #E76F51;
+    /* Coral 500 */
 
-    /* Gradients */
-    --gradient-main: linear-gradient(to right, #6366f1, #a855f7, #ec4899);
-    --gradient-text: linear-gradient(to right, #4338ca, #a21caf);
+    /* Solid Colors */
+    --accent-primary: #249D8F;
+    --accent-secondary: #E9C46A;
+    --accent-tertiary: #E76F51;
 
     /* Spacing */
     --spacing-xs: 0.5rem;
@@ -39,10 +42,7 @@
     background-color: var(--bg-dark);
     color: #1e293b;
     line-height: 1.7;
-    overflow-x: hidden;
-    background-image:
-      radial-gradient(circle at 15% 50%, rgba(99, 102, 241, 0.10) 0%, transparent 25%),
-      radial-gradient(circle at 85% 30%, rgba(168, 85, 247, 0.10) 0%, transparent 25%);
+    overflow-x: clip;
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -51,20 +51,31 @@
 
 /* Utilities */
 .gradient-text {
-  background: var(--gradient-main);
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
+  color: var(--primary);
   display: inline-block;
 }
 
 .section {
-  padding: var(--spacing-lg) 0;
+  padding: 4rem 0;
+}
+
+.no-scrollbar {
+  scrollbar-width: none;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.stack-card {
+  background: #FFFCF5;
+  border-top: 1px solid rgba(36, 157, 143, 0.16);
+  box-shadow: 0 -16px 40px rgba(36, 80, 72, 0.14);
 }
 
 .section-title {
   font-size: 3.5rem;
-  margin-bottom: var(--spacing-lg);
+  margin-bottom: 3rem;
   text-align: center;
   position: relative;
   font-weight: 800;
@@ -73,7 +84,7 @@
 
 /* Glassmorphism Refined */
 .glass-card {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.75) 0%, rgba(255, 255, 255, 0.45) 100%);
+  background: rgba(255, 255, 255, 0.85);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
   border: 1px solid rgba(15, 23, 42, 0.06);
@@ -84,9 +95,9 @@
 }
 
 .glass-card:hover {
-  background: linear-gradient(145deg, rgba(255, 255, 255, 0.9) 0%, rgba(255, 255, 255, 0.6) 100%);
+  background: #ffffff;
   transform: translateY(-5px) scale(1.01);
-  border-color: rgba(99, 102, 241, 0.2);
+  border-color: rgba(36, 157, 143, 0.25);
   box-shadow: 0 20px 40px rgba(15, 23, 42, 0.1);
 }
 
@@ -99,7 +110,7 @@
   border-radius: 50px;
   font-weight: 600;
   cursor: pointer;
-  transition: var(--transition-normal);
+  transition: var(--transition-fast);
   border: none;
   font-size: 0.9375rem;
   line-height: 1.25;
@@ -114,14 +125,15 @@
 }
 
 .btn-primary {
-  background: var(--gradient-main);
+  background: #249D8F;
   color: white;
-  box-shadow: 0 4px 15px rgba(59, 130, 246, 0.3);
+  box-shadow: 0 4px 15px rgba(36, 157, 143, 0.4);
 }
 
 .btn-primary:hover {
+  background: #1a7e75;
   transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+  box-shadow: 0 8px 25px rgba(36, 157, 143, 0.6);
 }
 
 .btn-outline {
@@ -131,7 +143,7 @@
 }
 
 .btn-outline:hover {
-  background: rgba(59, 130, 246, 0.1);
+  background: rgba(36, 157, 143, 0.1);
 }
 
 /* Animations */

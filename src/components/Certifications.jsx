@@ -1,75 +1,67 @@
 import React from 'react';
-import { certifications } from '../data/portfolio';
-import { Award, ExternalLink, Calendar } from './icons/KoboyoIcons';
 import { motion } from 'framer-motion';
-import { Carousel, CarouselSlide } from './ui/Carousel';
+import { certifications } from '../data/portfolio';
+import { ExternalLink } from './icons/KoboyoIcons';
+import SectionIntro, { TEAL, CREAM, sectionGrid, pad } from './SectionIntro';
 
-const Certifications = () => {
-    return (
-        <section id="certifications" className="section bg-black/[0.02]">
-            <div className="container mx-auto px-4">
-                <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="section-title"
+const Certifications = () => (
+    <section className="py-10 md:py-14">
+        <div className={sectionGrid}>
+            <div className="xl:col-span-4">
+                <SectionIntro
+                    label="Certifications"
+                    title={<>Licenses &amp;<br />Certifications</>}
                 >
-                    Licenses & <span className="gradient-text">Certifications</span>
-                </motion.h2>
-
-                <Carousel className="max-w-5xl mx-auto">
-                    {certifications.map((cert, index) => (
-                        <CarouselSlide key={cert.id} className="flex-[0_0_88%] sm:flex-[0_0_60%] lg:flex-[0_0_48%]">
-                            <motion.div
-                                initial={{ opacity: 0, y: 20 }}
-                                whileInView={{ opacity: 1, y: 0 }}
-                                viewport={{ once: true }}
-                                transition={{ delay: (index % 2) * 0.1 }}
-                                className="glass-card p-6 hover:border-indigo-500/30 group h-full"
-                            >
-                                <div className="flex items-start justify-between mb-4">
-                                    <div className="flex items-start gap-3">
-                                        <div className="p-2 rounded-lg bg-indigo-500/10 text-indigo-600 group-hover:bg-indigo-500/20 transition-colors">
-                                            <Award size={24} />
-                                        </div>
-                                        <div>
-                                            <h3 className="text-xl font-bold text-slate-900 mb-1 group-hover:text-indigo-600 transition-colors">
-                                                {cert.title}
-                                            </h3>
-                                            <p className="text-indigo-600 font-medium">{cert.issuer}</p>
-                                        </div>
-                                    </div>
-                                    <a
-                                        href={cert.credentialUrl}
-                                        className="p-2 rounded-lg bg-black/[0.03] hover:bg-black/[0.06] text-gray-500 hover:text-slate-900 transition-colors"
-                                        aria-label="View credential"
-                                    >
-                                        <ExternalLink size={18} />
-                                    </a>
-                                </div>
-
-                                <div className="flex items-center gap-2 text-sm text-gray-500 mb-4">
-                                    <Calendar size={14} />
-                                    <span>{cert.date}</span>
-                                </div>
-
-                                <div className="flex flex-wrap gap-2">
-                                    {cert.skills.map((skill, idx) => (
-                                        <span
-                                            key={idx}
-                                            className="px-3 py-1 rounded-lg text-xs bg-indigo-500/10 border border-indigo-500/20 text-indigo-700"
-                                        >
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
-                            </motion.div>
-                        </CarouselSlide>
-                    ))}
-                </Carousel>
+                    {certifications.length} credentials that back up the day-to-day work.
+                </SectionIntro>
             </div>
-        </section>
-    );
-};
+
+            <ul className="grid gap-4 sm:grid-cols-2 xl:col-span-8">
+                {certifications.map((cert, i) => (
+                    <motion.li
+                        key={cert.id}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: i * 0.06, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                        className="flex flex-col rounded-3xl p-6 md:p-7"
+                        style={{ backgroundColor: CREAM }}
+                    >
+                        <div className="flex items-start justify-between gap-4">
+                            <span className="font-mono text-sm" style={{ color: TEAL }}>{pad(i + 1)}</span>
+                            {cert.credentialUrl && cert.credentialUrl !== '#' && (
+                                <a
+                                    href={cert.credentialUrl}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    aria-label={`View ${cert.title} credential`}
+                                    className="rounded-full p-2 transition-colors hover:bg-white"
+                                    style={{ color: TEAL }}
+                                >
+                                    <ExternalLink size={18} />
+                                </a>
+                            )}
+                        </div>
+                        <h3 className="mt-3 text-xl font-bold tracking-tight text-slate-900">{cert.title}</h3>
+                        <p className="mt-1 text-sm text-gray-600">
+                            {cert.issuer} · {cert.date}
+                        </p>
+                        <div className="mt-auto flex flex-wrap gap-2 pt-5">
+                            {cert.skills.map((skill) => (
+                                <span
+                                    key={skill}
+                                    className="rounded-full bg-white px-3 py-1 text-xs font-medium"
+                                    style={{ color: TEAL }}
+                                >
+                                    {skill}
+                                </span>
+                            ))}
+                        </div>
+                    </motion.li>
+                ))}
+            </ul>
+        </div>
+    </section>
+);
 
 export default Certifications;

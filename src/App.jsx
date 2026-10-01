@@ -5,6 +5,7 @@ import ThankYou from './pages/ThankYou';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import NotFound from './pages/NotFound';
 import GoogleAnalytics from './components/GoogleAnalytics';
+import { Agentation } from 'agentation';
 
 const LetsCook = lazy(() => import('./pages/LetsCook'));
 
@@ -27,6 +28,9 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
+      {process.env.NODE_ENV === 'development' && (
+        <Agentation endpoint="http://localhost:4747" />
+      )}
     </>
   );
 }

@@ -37,7 +37,7 @@ export const Carousel = ({ children, autoplay = false, delay = 5000, className =
                 <button
                     onClick={scrollPrev}
                     aria-label="Previous slide"
-                    className="p-3 rounded-full bg-white/80 border border-black/5 shadow-md hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all text-slate-700"
+                    className="p-3 rounded-full bg-white/80 border border-black/5 shadow-md hover:bg-[#249D8F] hover:text-white hover:border-[#249D8F] transition-all text-slate-700"
                 >
                     <ChevronLeft size={20} />
                 </button>
@@ -48,7 +48,7 @@ export const Carousel = ({ children, autoplay = false, delay = 5000, className =
                             key={index}
                             onClick={() => scrollTo(index)}
                             aria-label={`Go to slide ${index + 1}`}
-                            className={`h-2 rounded-full transition-all duration-300 ${index === selectedIndex ? 'w-8 bg-indigo-500' : 'w-2 bg-black/15 hover:bg-black/25'
+                            className={`h-2 rounded-full transition-all duration-300 ${index === selectedIndex ? 'w-8 bg-[#249D8F]' : 'w-2 bg-black/15 hover:bg-black/25'
                                 }`}
                         />
                     ))}
@@ -57,7 +57,7 @@ export const Carousel = ({ children, autoplay = false, delay = 5000, className =
                 <button
                     onClick={scrollNext}
                     aria-label="Next slide"
-                    className="p-3 rounded-full bg-white/80 border border-black/5 shadow-md hover:bg-indigo-500 hover:text-white hover:border-indigo-500 transition-all text-slate-700"
+                    className="p-3 rounded-full bg-white/80 border border-black/5 shadow-md hover:bg-[#249D8F] hover:text-white hover:border-[#249D8F] transition-all text-slate-700"
                 >
                     <ChevronRight size={20} />
                 </button>
