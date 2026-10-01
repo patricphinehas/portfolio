@@ -2,6 +2,7 @@ import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
     motion,
     useAnimationFrame,
+    useInView,
     useMotionValue,
     useSpring,
     useTransform,
@@ -71,43 +72,36 @@ const allTech = RINGS.flatMap((r) => r.items);
 
 const REPEL_RADIUS = 150;
 const REPEL_PUSH = 60;
-const SPRING = { stiffness: 170, damping: 17, mass: 0.6 };
+const MOUSE_SPRING = { stiffness: 220, damping: 26, mass: 0.6 };
 
-const OrbitTile = ({ tech, ring, slot, index, clock, mouseX, mouseY, sizeRef }) => {
+// Smoothing happens once on the shared mouse values, not per tile: per-tile springs fed by a value
+// that changes every frame restart every frame, which is what made the hero stutter.
+const OrbitTile = ({ tech, ring, slot, index, clock, mouseX, mouseY, influence, sizeRef }) => {
     const base = (slot / ring.items.length) * Math.PI * 2;
     const phase = index * 2.399;
+    const half = ring.tile / 2;
 
-    // Orbit position plus a small per-icon wobble so the paths don't look mechanical.
-    const orbit = (axis) => (t) => {
-        const half = sizeRef.current / 2;
+    const place = ([t, mx, my, k]) => {
+        const c = sizeRef.current / 2;
         const angle = base + t * ring.speed + Math.cos(t * 0.7 + phase) * 0.05;
-        const r = ring.radius * half + Math.sin(t * 0.9 + phase) * 10;
-        return half + r * (axis === 'x' ? Math.cos(angle) : Math.sin(angle));
-    };
-    const ox = useTransform(clock, orbit('x'));
-    const oy = useTransform(clock, orbit('y'));
-
-    const repel = (axis) => ([x, y, mx, my]) => {
-        const dx = x - mx;
-        const dy = y - my;
+        const r = ring.radius * c + Math.sin(t * 0.9 + phase) * 10;
+        const ox = c + r * Math.cos(angle);
+        const oy = c + r * Math.sin(angle);
+        const dx = ox - mx;
+        const dy = oy - my;
         const d = Math.hypot(dx, dy);
-        if (!d || d > REPEL_RADIUS) return 0;
-        return ((axis === 'x' ? dx : dy) / d) * (1 - d / REPEL_RADIUS) ** 2 * REPEL_PUSH;
+        const f = d && d < REPEL_RADIUS ? (1 - d / REPEL_RADIUS) * k : 0;
+        const push = (f * f * REPEL_PUSH) / (d || 1);
+        return { x: ox + dx * push - half, y: oy + dy * push - half, s: 1 + 0.4 * f };
     };
-    const proximity = ([x, y, mx, my]) => {
-        const d = Math.hypot(x - mx, y - my);
-        return d > REPEL_RADIUS ? 1 : 1 + 0.4 * (1 - d / REPEL_RADIUS);
-    };
-    const inputs = [ox, oy, mouseX, mouseY];
-    const rx = useSpring(useTransform(inputs, repel('x')), SPRING);
-    const ry = useSpring(useTransform(inputs, repel('y')), SPRING);
-    const scale = useSpring(useTransform(inputs, proximity), SPRING);
 
-    const x = useTransform([ox, rx], ([a, b]) => a + b - ring.tile / 2);
-    const y = useTransform([oy, ry], ([a, b]) => a + b - ring.tile / 2);
+    const inputs = [clock, mouseX, mouseY, influence];
+    const x = useTransform(inputs, (v) => place(v).x);
+    const y = useTransform(inputs, (v) => place(v).y);
+    const scale = useTransform(inputs, (v) => place(v).s);
 
     return (
-        <motion.div className="absolute left-0 top-0" style={{ x, y, scale }}>
+        <motion.div className="absolute left-0 top-0 will-change-transform" style={{ x, y, scale }}>
             <motion.div
                 initial={{ opacity: 0, scale: 0.4 }}
                 animate={{ opacity: 1, scale: 1 }}
@@ -129,8 +123,11 @@ const OrbitField = () => {
     const sizeRef = useRef(1);
     const clock = useMotionValue(0);
     const speed = useSpring(1, { stiffness: 40, damping: 20 });
-    const mouseX = useMotionValue(-9999);
-    const mouseY = useMotionValue(-9999);
+    const mouseX = useSpring(0, MOUSE_SPRING);
+    const mouseY = useSpring(0, MOUSE_SPRING);
+    const influence = useSpring(0, { stiffness: 120, damping: 20 });
+    const inView = useInView(fieldRef, { margin: '100px' });
+
     useLayoutEffect(() => {
         const measure = () => {
             sizeRef.current = fieldRef.current.offsetWidth;
@@ -142,7 +139,7 @@ const OrbitField = () => {
     }, []);
 
     useAnimationFrame((_, delta) => {
-        clock.set(clock.get() + (delta / 1000) * speed.get());
+        if (inView) clock.set(clock.get() + (delta / 1000) * speed.get());
     });
 
     const onMove = (e) => {
@@ -150,11 +147,16 @@ const OrbitField = () => {
         mouseX.set(e.clientX - rect.left);
         mouseY.set(e.clientY - rect.top);
     };
-    const onEnter = () => speed.set(0.2);
+    const onEnter = (e) => {
+        const rect = fieldRef.current.getBoundingClientRect();
+        mouseX.jump(e.clientX - rect.left);
+        mouseY.jump(e.clientY - rect.top);
+        speed.set(0.2);
+        influence.set(1);
+    };
     const onLeave = () => {
         speed.set(1);
-        mouseX.set(-9999);
-        mouseY.set(-9999);
+        influence.set(0);
     };
 
     let index = 0;
@@ -201,6 +203,7 @@ const OrbitField = () => {
                         clock={clock}
                         mouseX={mouseX}
                         mouseY={mouseY}
+                        influence={influence}
                         sizeRef={sizeRef}
                     />
                 ))

@@ -1,9 +1,13 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { motion, animate } from 'framer-motion';
+import { motion, animate, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft, ChevronRight, House, Code, Award, Briefcase, GraduationCap,
-  LayoutGrid, FileText, Quote, CircleHelp, Mail,
+  LayoutGrid, FileText, Quote, CircleHelp, Mail, Menu, X,
 } from 'lucide-react';
+import { personalInfo } from '../data/portfolio';
+
+// Centre of the floating menu button (bottom-5 right-5, 56px tall), so the menu grows out of it.
+const MENU_ORIGIN = 'calc(100% - 3.5rem) calc(100% - 3.5rem)';
 
 const ALL_SECTIONS = [
   { id: 'hero', label: 'Home', icon: House },
@@ -43,6 +47,25 @@ const PageSidebar = ({ sectionIds }) => {
   useEffect(() => {
     document.documentElement.style.setProperty('--sidebar-w', isMinimized ? '80px' : '224px');
   }, [isMinimized]);
+
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e) => e.key === 'Escape' && setMenuOpen(false);
+    document.body.style.overflow = 'hidden';
+    window.addEventListener('keydown', onKey);
+    return () => {
+      document.body.style.overflow = '';
+      window.removeEventListener('keydown', onKey);
+    };
+  }, [menuOpen]);
+
+  const goTo = (sectionId) => {
+    setMenuOpen(false);
+    // Let the menu start closing before the page springs to the section.
+    setTimeout(() => scrollToSection(sectionId), 250);
+  };
 
   const scrollAnim = useRef(null);
 
@@ -175,36 +198,88 @@ const PageSidebar = ({ sectionIds }) => {
         )}
       </motion.div>
 
-      {/* Mobile Bottom Navigation */}
-      <motion.div
-        initial={{ opacity: 0, y: 60 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="lg:hidden fixed bottom-0 left-0 right-0 z-40"
-        style={{ backgroundColor: '#FDF0D5', borderTop: '2px solid rgba(36, 157, 143, 0.15)' }}
-      >
-        <div className="flex overflow-x-auto px-2 py-2 gap-2">
-          {sections.map((section) => (
-            <motion.button
-              key={section.id}
-              onClick={() => scrollToSection(section.id)}
-              whileTap={{ scale: 0.95 }}
-              className={`px-4 py-2 rounded-lg font-medium text-sm whitespace-nowrap transition-all ${
-                activeSection === section.id
-                  ? 'text-white'
-                  : 'text-gray-700 border border-gray-300'
-              }`}
-              style={
-                activeSection === section.id
-                  ? { backgroundColor: '#249D8F' }
-                  : {}
-              }
+      {/* Mobile: floating menu button + full-screen menu */}
+      <div className="lg:hidden">
+        <AnimatePresence>
+          {menuOpen && (
+            <motion.div
+              id="mobile-menu"
+              className="fixed inset-0 z-50 flex flex-col overflow-y-auto px-6 pb-28 pt-14"
+              style={{ backgroundColor: '#FFFCF5' }}
+              initial={{ clipPath: `circle(0% at ${MENU_ORIGIN})` }}
+              animate={{ clipPath: `circle(150% at ${MENU_ORIGIN})` }}
+              exit={{ clipPath: `circle(0% at ${MENU_ORIGIN})` }}
+              transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
-              {section.label}
-            </motion.button>
-          ))}
-        </div>
-      </motion.div>
+              <p className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
+                <span className="inline-block h-px w-10" style={{ backgroundColor: '#249D8F' }} />
+                {personalInfo.name}
+              </p>
+              <nav className="mt-8 border-t border-slate-900/10">
+                {sections.map((section, idx) => {
+                  const isActive = activeSection === section.id;
+                  return (
+                    <motion.button
+                      key={section.id}
+                      onClick={() => goTo(section.id)}
+                      aria-current={isActive ? 'true' : undefined}
+                      initial={{ opacity: 0, y: 16 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ delay: 0.12 + idx * 0.04, duration: 0.35 }}
+                      className="flex w-full items-baseline gap-4 border-b border-slate-900/10 py-4 text-left"
+                    >
+                      <span className="font-mono text-xs text-slate-400">{String(idx + 1).padStart(2, '0')}</span>
+                      <span
+                        className={`flex-1 text-2xl font-bold tracking-tight ${isActive ? '' : 'text-slate-900'}`}
+                        style={isActive ? { color: '#249D8F' } : undefined}
+                      >
+                        {section.label}
+                      </span>
+                      {isActive && <span className="h-2 w-2 rounded-full" style={{ backgroundColor: '#E76F51' }} />}
+                    </motion.button>
+                  );
+                })}
+              </nav>
+              {sectionIds.includes('contact') && (
+                <motion.button
+                  onClick={() => goTo('contact')}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.12 + sections.length * 0.04, duration: 0.35 }}
+                  className="btn btn-primary mt-8 justify-center self-start"
+                >
+                  <Mail size={18} /> Get in Touch
+                </motion.button>
+              )}
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <motion.button
+          onClick={() => setMenuOpen((o) => !o)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+          aria-label={menuOpen ? 'Close menu' : 'Open menu'}
+          initial={{ opacity: 0, scale: 0.6 }}
+          animate={{ opacity: 1, scale: 1 }}
+          whileTap={{ scale: 0.92 }}
+          className="fixed bottom-5 right-5 z-[60] flex h-14 w-14 items-center justify-center rounded-full text-white shadow-[0_10px_30px_rgba(36,157,143,0.4)]"
+          style={{ backgroundColor: '#249D8F' }}
+        >
+          <AnimatePresence mode="wait" initial={false}>
+            <motion.span
+              key={menuOpen ? 'close' : 'open'}
+              initial={{ opacity: 0, rotate: -90 }}
+              animate={{ opacity: 1, rotate: 0 }}
+              exit={{ opacity: 0, rotate: 90 }}
+              transition={{ duration: 0.18 }}
+              className="flex"
+            >
+              {menuOpen ? <X size={22} /> : <Menu size={22} />}
+            </motion.span>
+          </AnimatePresence>
+        </motion.button>
+      </div>
     </>
   );
 };

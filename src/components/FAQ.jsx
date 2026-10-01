@@ -20,7 +20,12 @@ const faqJsonLd = {
 const FAQ = () => {
     const [openIndex, setOpenIndex] = useState(0);
     const sectionRef = useRef(null);
-    const stamped = useInView(sectionRef, { once: true, amount: 0.75 });
+    const sealRowRef = useRef(null);
+    // On phones the section is taller than the screen and never reaches 75% visible, so also fire from the seal's own row.
+    // amount: 1 is unreliable (sub-pixel clipping keeps the ratio just under 1), so use half.
+    const sectionReady = useInView(sectionRef, { once: true, amount: 0.75 });
+    const sealReady = useInView(sealRowRef, { once: true, amount: 0.5 });
+    const stamped = sectionReady || sealReady;
 
     return (
         <section ref={sectionRef} className="py-10 md:py-14">
@@ -33,12 +38,13 @@ const FAQ = () => {
                         The things people usually ask before we start working together.
                     </SectionIntro>
                     <motion.div
+                        ref={sealRowRef}
                         className="mt-10 flex items-center gap-6"
                         animate={stamped ? { x: [0, -5, 4, -2, 0] } : undefined}
                         transition={{ delay: 0.28, duration: 0.35 }}
                     >
                         <motion.div
-                            className="relative h-40 w-40 shrink-0"
+                            className="relative h-32 w-32 shrink-0 sm:h-40 sm:w-40"
                             aria-hidden="true"
                             initial={{ scale: 2.4, opacity: 0, rotate: -40 }}
                             animate={stamped ? { scale: 1, opacity: 1, rotate: -15 } : undefined}
@@ -74,7 +80,7 @@ const FAQ = () => {
                                 className="absolute inset-[23%] flex flex-col items-center justify-center rounded-full text-white"
                                 style={{ backgroundColor: TEAL }}
                             >
-                                <span className="text-3xl font-extrabold leading-none">24h</span>
+                                <span className="text-2xl font-extrabold leading-none sm:text-3xl">24h</span>
                                 <span className="mt-1 text-[10px] font-semibold uppercase tracking-[0.2em]">reply</span>
                             </div>
                         </motion.div>
