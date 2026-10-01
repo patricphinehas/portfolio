@@ -1,4 +1,4 @@
-import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
+import React, { useLayoutEffect, useRef } from 'react';
 import {
     motion,
     useAnimationFrame,
@@ -212,61 +212,38 @@ const OrbitField = () => {
     );
 };
 
-const techByName = Object.fromEntries(allTech.map((t) => [t.name, t]));
+const MARQUEE_ROWS = [0, 1, 2].map((r) => allTech.filter((_, i) => i % 3 === r));
+const MARQUEE_SECONDS = [24, 30, 27];
 
-// Smaller screens: no orbit, so the tiles keep swapping places instead.
-const JuggleStrip = () => {
-    const [order, setOrder] = useState(() => allTech.map((t) => t.name));
-    const [hops, setHops] = useState({});
-    const orderRef = useRef(order);
-
-    useEffect(() => {
-        const id = setInterval(() => {
-            const next = [...orderRef.current];
-            const moved = [];
-            for (let k = 0; k < 2; k++) {
-                const a = Math.floor(Math.random() * next.length);
-                const b = Math.floor(Math.random() * next.length);
-                [next[a], next[b]] = [next[b], next[a]];
-                moved.push(next[a], next[b]);
-            }
-            orderRef.current = next;
-            setOrder(next);
-            setHops((h) => {
-                const n = { ...h };
-                moved.forEach((name) => (n[name] = (n[name] || 0) + 1));
-                return n;
-            });
-        }, 1400);
-        return () => clearInterval(id);
-    }, []);
-
-    return (
-        <ul className="mt-10 flex flex-wrap gap-2.5" aria-label="Core stack">
-            {order.map((name) => {
-                const { Icon, color } = techByName[name];
-                return (
-                    <motion.li
-                        key={name}
-                        layout
-                        transition={{ layout: { type: 'spring', stiffness: 260, damping: 16 } }}
-                        title={name}
-                        className="flex h-11 w-11 items-center justify-center rounded-xl border border-slate-900/5 bg-white shadow-sm"
-                    >
-                        <motion.span
-                            key={hops[name] || 0}
-                            className="flex"
-                            animate={hops[name] ? { y: [0, -14, 0], rotate: [0, -14, 0] } : undefined}
-                            transition={{ duration: 0.6, ease: 'easeOut' }}
-                        >
-                            <Icon size={22} color={color} />
-                        </motion.span>
-                    </motion.li>
-                );
-            })}
-        </ul>
-    );
-};
+// Smaller screens: no orbit, so the logos scroll as a banner instead, alternate rows in opposite directions.
+// Each row is repeated four times and shifted by -50%, so half the track is always wider than the banner (tablets included)
+// and the loop is seamless; spacing is padding, not gap, so the halves match exactly.
+const MarqueeRows = () => (
+    <div className="mt-10 space-y-2.5 overflow-hidden" aria-label="Core stack">
+        {MARQUEE_ROWS.map((row, r) => (
+            <div key={r} className="overflow-hidden">
+                <ul
+                    className="marquee-track flex w-max"
+                    style={{
+                        animationDuration: `${MARQUEE_SECONDS[r]}s`,
+                        animationDirection: r % 2 ? 'reverse' : 'normal',
+                    }}
+                >
+                    {[...row, ...row, ...row, ...row].map(({ Icon, color, name }, i) => (
+                        <li key={`${name}-${i}`} className="pr-2.5" aria-hidden={i >= row.length || undefined}>
+                            <span
+                                title={name}
+                                className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-900/5 bg-white shadow-sm"
+                            >
+                                <Icon size={24} color={color} />
+                            </span>
+                        </li>
+                    ))}
+                </ul>
+            </div>
+        ))}
+    </div>
+);
 
 const EASE = [0.22, 1, 0.36, 1];
 
@@ -378,7 +355,7 @@ const Hero = () => {
                     </motion.p>
 
                     <motion.div variants={rise} className="xl:hidden">
-                        <JuggleStrip />
+                        <MarqueeRows />
                     </motion.div>
                 </motion.div>
 

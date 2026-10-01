@@ -135,6 +135,8 @@ const PageSidebar = ({ sectionIds }) => {
           )}
           <motion.button
             onClick={() => setIsMinimized(!isMinimized)}
+            aria-label={isMinimized ? 'Expand sidebar' : 'Collapse sidebar'}
+            aria-expanded={!isMinimized}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             className="p-2 rounded-lg hover:bg-white/50 transition-colors ml-auto"
@@ -228,7 +230,7 @@ const PageSidebar = ({ sectionIds }) => {
                       transition={{ delay: 0.12 + idx * 0.04, duration: 0.35 }}
                       className="flex w-full items-baseline gap-4 border-b border-slate-900/10 py-4 text-left"
                     >
-                      <span className="font-mono text-xs text-slate-400">{String(idx + 1).padStart(2, '0')}</span>
+                      <span className="font-mono text-xs text-slate-500">{String(idx + 1).padStart(2, '0')}</span>
                       <span
                         className={`flex-1 text-2xl font-bold tracking-tight ${isActive ? '' : 'text-slate-900'}`}
                         style={isActive ? { color: '#249D8F' } : undefined}

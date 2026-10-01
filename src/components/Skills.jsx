@@ -59,14 +59,14 @@ const Skills = () => {
                                                 transition={{ type: 'spring', stiffness: 450, damping: 35 }}
                                             />
                                         )}
-                                        <span className="font-mono text-xs text-slate-400">{pad(i + 1)}</span>
+                                        <span className="font-mono text-xs text-slate-500">{pad(i + 1)}</span>
                                         <span
                                             className={`flex-1 text-sm font-semibold transition-colors ${isActive ? '' : 'text-slate-600'}`}
                                             style={isActive ? { color: TEAL } : undefined}
                                         >
                                             {g.category}
                                         </span>
-                                        <span className="font-mono text-xs text-slate-400">{g.items.length}</span>
+                                        <span className="font-mono text-xs text-slate-500">{g.items.length}</span>
                                     </button>
                                 </li>
                             );

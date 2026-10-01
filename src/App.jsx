@@ -5,9 +5,12 @@ import ThankYou from './pages/ThankYou';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import NotFound from './pages/NotFound';
 import GoogleAnalytics from './components/GoogleAnalytics';
-import { Agentation } from 'agentation';
-
 const LetsCook = lazy(() => import('./pages/LetsCook'));
+
+// Dev-only feedback tool; the DEV check lets Vite drop it from the production bundle entirely.
+const Agentation = import.meta.env.DEV
+  ? lazy(() => import('agentation').then((m) => ({ default: m.Agentation })))
+  : null;
 
 function App() {
   return (
@@ -28,8 +31,10 @@ function App() {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </Suspense>
-      {process.env.NODE_ENV === 'development' && (
-        <Agentation endpoint="http://localhost:4747" />
+      {Agentation && (
+        <Suspense fallback={null}>
+          <Agentation endpoint="http://localhost:4747" />
+        </Suspense>
       )}
     </>
   );

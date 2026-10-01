@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Suspense, lazy } from 'react';
 import Seo from '../components/Seo';
 import PageSidebar from '../components/PageSidebar';
 import StackCard from '../components/StackCard';
@@ -13,6 +13,9 @@ import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import PersonJsonLd from '../components/PersonJsonLd';
+
+// Loaded separately so the ~450-entry list and card code stay out of the first page load.
+const PokeParade = lazy(() => import('../components/PokeParade'));
 import { features } from '../config/features';
 
 const sections = [
@@ -46,6 +49,9 @@ const Home = () => {
                     </StackCard>
                 ))}
             </main>
+            <Suspense fallback={null}>
+                <PokeParade />
+            </Suspense>
 
             <div
                 className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100]"
