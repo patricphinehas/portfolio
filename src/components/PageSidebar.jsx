@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, animate, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft, ChevronRight, House, Code, Award, Briefcase, GraduationCap,
-  LayoutGrid, FileText, Quote, CircleHelp, Mail, Menu, X,
+  LayoutGrid, FileText, Quote, CircleHelp, Mail, Menu, X, Gamepad2,
 } from 'lucide-react';
 import { personalInfo } from '../data/portfolio';
 
@@ -19,6 +19,7 @@ const ALL_SECTIONS = [
   { id: 'case-studies', label: 'Case Studies', icon: FileText },
   { id: 'testimonials', label: 'Testimonials', icon: Quote },
   { id: 'faq', label: 'FAQ', icon: CircleHelp },
+  { id: 'pokedex', label: 'Pokédex', icon: Gamepad2 },
   { id: 'contact', label: 'Contact', icon: Mail },
 ];
 

@@ -16,6 +16,7 @@ import PersonJsonLd from '../components/PersonJsonLd';
 
 // Loaded separately so the ~450-entry list and card code stay out of the first page load.
 const PokeParade = lazy(() => import('../components/PokeParade'));
+const Pokedex = lazy(() => import('../components/Pokedex'));
 import { features } from '../config/features';
 
 const sections = [
@@ -28,6 +29,7 @@ const sections = [
     features.showCaseStudies && { id: 'case-studies', Component: CaseStudies },
     features.showTestimonials && { id: 'testimonials', Component: Testimonials },
     { id: 'faq', Component: FAQ },
+    { id: 'pokedex', Component: Pokedex },
     { id: 'contact', Component: Contact },
 ].filter(Boolean);
 
@@ -45,7 +47,9 @@ const Home = () => {
             <main className="relative transition-[margin] duration-300 lg:ml-[var(--sidebar-w,80px)]">
                 {sections.map(({ id, Component }, index) => (
                     <StackCard key={id} id={id} index={index} isLast={index === sections.length - 1}>
-                        <Component />
+                        <Suspense fallback={<div className="min-h-[60vh]" />}>
+                            <Component />
+                        </Suspense>
                     </StackCard>
                 ))}
             </main>
