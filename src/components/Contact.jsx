@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { personalInfo, responsePromise } from '../data/portfolio';
-import { ArrowUpRight, ChefHat, Linkedin } from 'lucide-react';
+import { ArrowUpRight, BookOpen, ChefHat, Linkedin } from 'lucide-react';
 import { Mail } from './icons/KoboyoIcons';
 import { motion } from 'framer-motion';
 import { features } from '../config/features';
@@ -26,6 +26,18 @@ const Contact = () => {
     const [form, setForm] = useState({ name: '', email: '', message: '' });
     const [status, setStatus] = useState('idle'); // idle | sending | error
     const [error, setError] = useState('');
+    const [studyGate, setStudyGate] = useState(false);
+    const [studyPw, setStudyPw] = useState('');
+    const [studyBad, setStudyBad] = useState(false);
+
+    const unlockStudy = (e) => {
+        e.preventDefault();
+        if (studyPw !== '1234') {
+            setStudyBad(true);
+            return;
+        }
+        window.location.assign(`${import.meta.env.BASE_URL}study/index.html`);
+    };
 
     const handleChange = (e) => {
         setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
@@ -98,6 +110,39 @@ const Contact = () => {
                                 <span className="flex-1">Let&apos;s Cook (bonus)</span>
                                 <ArrowUpRight size={18} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                             </Link>
+                        </li>
+                        <li className="border-b border-slate-900/10">
+                            {studyGate ? (
+                                <form onSubmit={unlockStudy} className="flex items-center gap-2 py-3">
+                                    <BookOpen size={20} style={{ color: TEAL }} />
+                                    <input
+                                        type="password"
+                                        autoFocus
+                                        value={studyPw}
+                                        onChange={(e) => {
+                                            setStudyPw(e.target.value);
+                                            setStudyBad(false);
+                                        }}
+                                        placeholder="Password"
+                                        aria-label="Study desk password"
+                                        className="min-w-0 flex-1 rounded-lg border border-slate-900/10 bg-white px-3 py-2 text-sm outline-none focus:border-[#249D8F]"
+                                    />
+                                    <button type="submit" className="text-sm font-semibold" style={{ color: TEAL }}>
+                                        Open
+                                    </button>
+                                    {studyBad && <span className="text-xs text-red-600">Wrong password</span>}
+                                </form>
+                            ) : (
+                                <button
+                                    type="button"
+                                    onClick={() => setStudyGate(true)}
+                                    className="group flex w-full items-center gap-4 py-4 text-left font-semibold text-slate-800 transition-colors hover:text-[#249D8F]"
+                                >
+                                    <BookOpen size={20} style={{ color: TEAL }} />
+                                    <span className="flex-1">Study desk</span>
+                                    <ArrowUpRight size={18} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                                </button>
+                            )}
                         </li>
                     </ul>
                 </div>
