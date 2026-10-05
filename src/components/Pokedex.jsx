@@ -15,12 +15,6 @@ const REGIONS = [
 ];
 const inRegion = (r) => (p) => p.dex >= r.from && p.dex <= r.to;
 
-// Not-yet-found Pokémon render as a white shape with a thin grey outline.
-const OUTLINE = [
-    'brightness(0) invert(1)',
-    ...['1px 0', '-1px 0', '0 1px', '0 -1px'].map((o) => `drop-shadow(${o} 0 #94a3b8)`),
-].join(' ');
-
 const Pokedex = () => {
     const { caught } = usePokedex();
     const [regionId, setRegionId] = useState('kanto');
@@ -86,7 +80,7 @@ const Pokedex = () => {
                     <ul className="mt-6 grid grid-cols-5 gap-2 sm:grid-cols-8 lg:grid-cols-10" role="tabpanel">
                         {list.map((p) => {
                             return (
-                                <li key={p.dex}>
+                                <li key={p.dex} style={{ contentVisibility: 'auto', containIntrinsicSize: '80px' }}>
                                     {caught[p.dex] ? (
                                         <motion.button
                                             onClick={() => setSelected(p)}
@@ -100,6 +94,7 @@ const Pokedex = () => {
                                                 src={staticSprite(p)}
                                                 alt=""
                                                 loading="lazy"
+                                                decoding="async"
                                                 className="h-full w-full object-contain"
                                                 style={{ imageRendering: 'pixelated' }}
                                             />
@@ -114,8 +109,9 @@ const Pokedex = () => {
                                                 src={staticSprite(p)}
                                                 alt=""
                                                 loading="lazy"
-                                                className="h-full w-full object-contain"
-                                                style={{ filter: OUTLINE, imageRendering: 'pixelated' }}
+                                                decoding="async"
+                                                className="h-full w-full object-contain opacity-20"
+                                                style={{ imageRendering: 'pixelated' }}
                                             />
                                         </div>
                                     )}

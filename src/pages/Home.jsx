@@ -1,4 +1,5 @@
-import React, { Suspense, lazy } from 'react';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { animate } from 'framer-motion';
 import Seo from '../components/Seo';
 import PageSidebar from '../components/PageSidebar';
 import StackCard from '../components/StackCard';
@@ -33,7 +34,45 @@ const sections = [
     { id: 'contact', Component: Contact },
 ].filter(Boolean);
 
+const sectionIds = sections.map(({ id }) => id);
+
 const Home = () => {
+    useEffect(() => {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        let animation;
+        const stop = () => animation?.stop();
+        const settleCard = () => {
+            if (animation) return;
+            const viewport = window.innerHeight;
+            const entering = sectionIds
+                .map((id) => document.getElementById(id)?.getBoundingClientRect().top)
+                .find((top) => top > 1 && top < viewport - 1);
+            if (entering === undefined) return;
+
+            const target = window.scrollY + entering - (entering >= viewport / 2 ? viewport : 0);
+            animation = animate(window.scrollY, target, {
+                type: 'spring',
+                stiffness: 150,
+                damping: 20,
+                restDelta: 0.5,
+                onUpdate: (value) => window.scrollTo(0, value),
+                onComplete: () => { animation = undefined; },
+                onStop: () => { animation = undefined; },
+            });
+        };
+
+        window.addEventListener('scrollend', settleCard);
+        window.addEventListener('wheel', stop, { passive: true });
+        window.addEventListener('touchstart', stop, { passive: true });
+        return () => {
+            animation?.stop();
+            window.removeEventListener('scrollend', settleCard);
+            window.removeEventListener('wheel', stop);
+            window.removeEventListener('touchstart', stop);
+        };
+    }, []);
+
     return (
         <div className="min-h-screen text-slate-800 selection:bg-[#249D8F]/20">
             <Seo
@@ -43,7 +82,7 @@ const Home = () => {
             />
             <PersonJsonLd />
 
-            <PageSidebar sectionIds={sections.map((s) => s.id)} />
+            <PageSidebar sectionIds={sectionIds} />
             <main className="relative transition-[margin] duration-300 lg:ml-[var(--sidebar-w,80px)]">
                 {sections.map(({ id, Component }, index) => (
                     <StackCard key={id} id={id} index={index} isLast={index === sections.length - 1}>
