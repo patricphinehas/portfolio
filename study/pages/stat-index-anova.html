@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#efe8dc">
+<script>document.documentElement.classList.add("js")</script>
+<title>ANOVA, time series and index numbers · SSC CGL Study</title>
+<link rel="stylesheet" href="../assets/study.css">
+</head>
+<body data-subject="stats">
+<header class="topbar">
+<a class="brand" href="../index.html"><strong>SSC CGL Study Desk</strong><span>Open index.html to see the full checklist</span></a>
+<div class="top-actions"><button class="nav-toggle" type="button" aria-controls="topic-nav" aria-expanded="false">Topics</button><label class="done-pill"><input type="checkbox" data-topic="stat-index-anova"> Mark done</label></div>
+</header>
+<div class="shell">
+<aside class="side" id="topic-nav"><nav aria-label="Topics">
+<a class="brand" href="../index.html" style="margin-bottom:0.6rem"><strong>All topics</strong><span>Checklist and exam pattern</span></a>
+<input class="nav-filter" id="nav-filter" type="search" placeholder="Find a topic" aria-label="Find a topic">
+<details class="subj"><summary>Quantitative Aptitude</summary>
+<a class="nav-link" href="number-systems.html">Number systems</a>
+<a class="nav-link" href="percentages.html">Percentages</a>
+<a class="nav-link" href="ratio-proportion.html">Ratio and proportion</a>
+<a class="nav-link" href="averages.html">Averages</a>
+<a class="nav-link" href="interest.html">Simple and compound interest</a>
+<a class="nav-link" href="profit-loss.html">Profit, loss and discount</a>
+<a class="nav-link" href="partnership.html">Partnership</a>
+<a class="nav-link" href="mixture-alligation.html">Mixture and alligation</a>
+<a class="nav-link" href="time-speed.html">Time, speed and distance</a>
+<a class="nav-link" href="time-work.html">Time and work</a>
+<a class="nav-link" href="algebra.html">Algebra, surds and linear graphs</a>
+<a class="nav-link" href="geometry.html">Geometry</a>
+<a class="nav-link" href="mensuration.html">Mensuration</a>
+<a class="nav-link" href="trigonometry.html">Trigonometry and heights</a>
+<a class="nav-link" href="data-interpretation.html">Tables, graphs and basic statistics</a>
+<a class="nav-link" href="probability.html">Simple probability</a>
+</details>
+<details class="subj"><summary>Reasoning</summary>
+<a class="nav-link" href="analogy.html">Analogy</a>
+<a class="nav-link" href="classification.html">Classification</a>
+<a class="nav-link" href="series.html">Series</a>
+<a class="nav-link" href="coding-decoding.html">Coding and decoding</a>
+<a class="nav-link" href="blood-relations.html">Blood relations</a>
+<a class="nav-link" href="direction-sense.html">Direction sense</a>
+<a class="nav-link" href="syllogism.html">Syllogism and conclusions</a>
+<a class="nav-link" href="venn-diagrams.html">Venn diagrams</a>
+<a class="nav-link" href="spatial-figures.html">Figures, folding and cubes</a>
+<a class="nav-link" href="problem-solving.html">Ranking, order and arithmetical reasoning</a>
+<a class="nav-link" href="word-operations.html">Word building, signs and matching</a>
+</details>
+<details class="subj"><summary>English</summary>
+<a class="nav-link" href="spot-the-error.html">Spot the error</a>
+<a class="nav-link" href="fill-blanks.html">Fill in the blanks</a>
+<a class="nav-link" href="synonyms-antonyms.html">Synonyms and antonyms</a>
+<a class="nav-link" href="spellings-homonyms.html">Spellings and homonyms</a>
+<a class="nav-link" href="idioms.html">Idioms and phrases</a>
+<a class="nav-link" href="one-word.html">One-word substitution</a>
+<a class="nav-link" href="sentence-improvement.html">Sentence improvement</a>
+<a class="nav-link" href="active-passive.html">Active and passive voice</a>
+<a class="nav-link" href="narration.html">Direct and indirect speech</a>
+<a class="nav-link" href="para-jumbles.html">Para jumbles</a>
+<a class="nav-link" href="cloze.html">Cloze test</a>
+<a class="nav-link" href="reading-comprehension.html">Reading comprehension</a>
+</details>
+<details class="subj"><summary>General Awareness</summary>
+<a class="nav-link" href="polity.html">Indian polity</a>
+<a class="nav-link" href="ancient-medieval.html">Ancient and medieval India</a>
+<a class="nav-link" href="modern-history.html">Modern Indian history</a>
+<a class="nav-link" href="geography.html">Geography</a>
+<a class="nav-link" href="economy.html">Indian economy</a>
+<a class="nav-link" href="physics.html">Physics for General Awareness</a>
+<a class="nav-link" href="chemistry.html">Chemistry for General Awareness</a>
+<a class="nav-link" href="biology.html">Biology for General Awareness</a>
+<a class="nav-link" href="culture-static.html">Culture and static GK</a>
+<a class="nav-link" href="current-affairs.html">Current affairs: how to revise</a>
+</details>
+<details class="subj"><summary>Computer and DEST</summary>
+<a class="nav-link" href="computer-basics.html">Computer basics</a>
+<a class="nav-link" href="ms-office.html">Operating system and MS Office</a>
+<a class="nav-link" href="internet-email.html">Internet and email</a>
+<a class="nav-link" href="networking-security.html">Networking and cyber security</a>
+<a class="nav-link" href="dest.html">Data entry speed test</a>
+</details>
+<details class="subj" open><summary>Statistics</summary>
+<a class="nav-link" href="stat-data.html">Collection and presentation of data</a>
+<a class="nav-link" href="stat-tendency-dispersion.html">Central tendency and dispersion</a>
+<a class="nav-link" href="stat-moments-skewness.html">Moments, skewness and kurtosis</a>
+<a class="nav-link" href="stat-correlation.html">Correlation and regression</a>
+<a class="nav-link" href="stat-probability.html">Probability and distributions</a>
+<a class="nav-link" href="stat-sampling-inference.html">Sampling and inference</a>
+<a class="nav-link active" href="stat-index-anova.html">ANOVA, time series and index numbers</a>
+</details>
+<details class="subj"><summary>Finance and Economics</summary>
+<a class="nav-link" href="accounting-principles.html">Accounting principles</a>
+<a class="nav-link" href="accounts-books.html">Books, errors and final accounts</a>
+<a class="nav-link" href="microeconomics.html">Microeconomics</a>
+<a class="nav-link" href="indian-economy-paper.html">Indian economy</a>
+<a class="nav-link" href="money-governance.html">Money, banking and governance</a>
+</details>
+</nav></aside>
+<main>
+<article class="article">
+<p class="kicker">Statistics (Paper-II) · Tier-II Paper-II, JSO and Statistical Investigator only</p>
+<h1>ANOVA, time series and index numbers</h1>
+<p>The last block of Paper-II is three tools that each have a standard setup. ANOVA compares means of several groups. A time series is a variable recorded in time order. An index number is a single figure that stands for the change in a group of prices or quantities.</p>
+<p>Fisher’s index is the one called ideal, because it meets the time-reversal and factor-reversal tests. Laspeyres and Paasche fail both tests.</p>
+<h2>What SSC lists</h2>
+<ul class="ssc-list"><li>One-way and two-way analysis of variance.</li>
+<li>Components of a time series, trend and seasonal variation.</li>
+<li>Index numbers: Laspeyres, Paasche, Fisher, base shifting and splicing.</li>
+<li>A cost of living index as a weighted price index of a consumption basket.</li></ul>
+<h2>Rules and formulas</h2>
+<div class="rule-grid"><section class="rule"><h3>ANOVA</h3><div class="formula">One-way ANOVA compares means of several groups classified by one factor.<br>Two-way ANOVA has two factors.<br>The test statistic is an F ratio: variation between groups relative to variation within groups.<br>A large F is evidence that the group means are not all equal, if the model assumptions hold.</div></section><section class="rule"><h3>Time series</h3><div class="formula">The four components are trend, seasonal variation, cyclical variation and irregular variation.<br>A moving average smooths a series to show the trend. A short average follows the series more closely. A long average smooths more.<br>Seasonal variation repeats within the year: a festival month, a harvest.</div></section><section class="rule"><h3>Index numbers</h3><div class="formula">A simple aggregative price index is (ΣP1 / ΣP0) × 100.<br>Laspeyres uses base-year quantities: (Σ P1 Q0 / Σ P0 Q0) × 100.<br>Paasche uses current quantities: (Σ P1 Q1 / Σ P0 Q1) × 100.<br>Fisher’s index is the square root of the product of Laspeyres and Paasche.</div></section><section class="rule"><h3>Using an index</h3><div class="formula">Base shifting: new index = (old index / old index in the new base period) × 100.<br>Splicing joins a series onto an older series when the basket changes.<br>A cost of living index applies weights from a household budget to price relatives. It is a consumer price index in spirit.</div></section><section class="rule"><h3>Quick methods</h3><div class="formula">Price relative = P₁/P₀ × 100.<br>Time reversal: P₀₁ × P₁₀ = 1. Factor reversal: P₀₁ × Q₀₁ = ΣP₁Q₁/ΣP₀Q₀.<br>One-way ANOVA df: between k − 1, within N − k, total N − 1.<br>F = MSB/MSW, each mean square = sum of squares / its df.<br>Real (deflated) value = money value / price index × 100.</div></section></div>
+<h2>Common traps</h2>
+<div class="traps"><div class="trap"><p>Laspeyres holds quantities at the base year. Paasche uses the current year. Swapping them is the standard trap.</p></div>
+<div class="trap"><p>Fisher’s index is the geometric mean of the other two, which is the square root of the product, not the ordinary average.</p></div>
+<div class="trap"><p>ANOVA compares means. It is not a correlation coefficient.</p></div>
+<div class="trap"><p>A moving average of an even number of terms needs a centering step if you want the average to sit on a real time point. A 3-term average already sits on the middle term.</p></div></div>
+<h2>Worked examples</h2>
+<p class="note">Read the solution only after you have tried the question. Options are in exam style.</p>
+<article class="qcard">
+<p class="qstem"><span class="qn">Example 1</span><br>Laspeyres’ price index uses quantities of</p>
+
+<ol class="opts" type="A">
+<li>the current year</li>
+<li>the base year</li>
+<li>a future year</li>
+<li>no year</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>The weights are Q0.</li>
+<li>That is the base period.</li></ol>
+<p class="answer">Answer: <strong>B</strong>. Paasche is the one that uses Q1.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 2</span><br>If Laspeyres is 125 and Paasche is 80, Fisher’s index is</p>
+
+<ol class="opts" type="A">
+<li>100</li>
+<li>102.5</li>
+<li>205</li>
+<li>45</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>Fisher = √(125 × 80) = √10000 = 100.</li>
+<li>The ordinary average would be 102.5, which is the trap.</li></ol>
+<p class="answer">Answer: <strong>A</strong>. The square root of the product is the geometric mean.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 3</span><br>The four components of a time series include</p>
+
+<ol class="opts" type="A">
+<li>mean, median, mode and range</li>
+<li>trend, seasonal, cyclical and irregular</li>
+<li>Type I and Type II only</li>
+<li>LAN and WAN</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>Trend is the long movement.</li>
+<li>Seasonal repeats within the year, cyclical is a longer swing, and irregular is the leftover.</li></ol>
+<p class="answer">Answer: <strong>B</strong>. Mean and median are not the components.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 4</span><br>One-way ANOVA is used to compare</p>
+
+<ol class="opts" type="A">
+<li>several group means</li>
+<li>two spelling mistakes</li>
+<li>a URL and a file</li>
+<li>the keys of a keyboard</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>One factor divides the data into groups.</li>
+<li>The question is whether the means differ.</li></ol>
+<p class="answer">Answer: <strong>A</strong>. The statistic is F.</p>
+</div>
+</article>
+<h2>Practice yourself</h2>
+<p class="note">Attempt these without opening the answer. Then check the toggle.</p>
+<article class="practice-item">
+<p class="qstem"><span class="qn">Practice 1</span><br>Paasche’s price index uses</p>
+
+<ol class="opts" type="A">
+<li>Q0</li>
+<li>Q1</li>
+<li>only prices of one year</li>
+<li>ranks</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. Current-year quantities.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 2</span><br>A 3-term moving average of 4, 7 and 10, centred on the middle term, is</p>
+
+<ol class="opts" type="A">
+<li>4</li>
+<li>7</li>
+<li>10</li>
+<li>21</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. (4+7+10)/3 = 7.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 3</span><br>To shift an index to a new base, you divide by</p>
+
+<ol class="opts" type="A">
+<li>the old index of the new base period</li>
+<li>the sample size always</li>
+<li>the standard deviation</li>
+<li>Q3</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>A</strong>. Then multiply by 100.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 4</span><br>Fisher’s index is called ideal in textbooks because it</p>
+
+<ol class="opts" type="A">
+<li>uses no prices</li>
+<li>satisfies the time-reversal and factor-reversal tests</li>
+<li>is always 100</li>
+<li>ignores quantities</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. That is the textbook reason. Laspeyres and Paasche fail both tests.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 5</span><br>A price rises from Rs 40 to Rs 50. The price relative is</p>
+
+<ol class="opts" type="A">
+<li>25</li>
+<li>80</li>
+<li>125</li>
+<li>150</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>C</strong>. 50/40 × 100 = 125.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 6</span><br>One-way ANOVA with 4 groups and 20 observations has within-groups df</p>
+
+<ol class="opts" type="A">
+<li>3</li>
+<li>16</li>
+<li>19</li>
+<li>20</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. N − k = 20 − 4 = 16.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 7</span><br>A salary of Rs 30000 when the CPI is 150 (base 100) has a real value of</p>
+
+<ol class="opts" type="A">
+<li>Rs 20000</li>
+<li>Rs 30000</li>
+<li>Rs 45000</li>
+<li>Rs 15000</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>A</strong>. 30000/150 × 100 = 20000.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 8</span><br>MSB = 24 and MSW = 6. F is</p>
+
+<ol class="opts" type="A">
+<li>18</li>
+<li>4</li>
+<li>30</li>
+<li>144</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. 24/6 = 4.</p>
+</details>
+</article>
+<nav class="pager"><a href="stat-sampling-inference.html">← Sampling and inference</a><a href="../index.html">Back to checklist →</a></nav>
+</article>
+</main>
+</div>
+<script src="../assets/study.js"></script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#efe8dc">
+<script>document.documentElement.classList.add("js")</script>
+<title>Sampling and inference · SSC CGL Study</title>
+<link rel="stylesheet" href="../assets/study.css">
+</head>
+<body data-subject="stats">
+<header class="topbar">
+<a class="brand" href="../index.html"><strong>SSC CGL Study Desk</strong><span>Open index.html to see the full checklist</span></a>
+<div class="top-actions"><button class="nav-toggle" type="button" aria-controls="topic-nav" aria-expanded="false">Topics</button><label class="done-pill"><input type="checkbox" data-topic="stat-sampling-inference"> Mark done</label></div>
+</header>
+<div class="shell">
+<aside class="side" id="topic-nav"><nav aria-label="Topics">
+<a class="brand" href="../index.html" style="margin-bottom:0.6rem"><strong>All topics</strong><span>Checklist and exam pattern</span></a>
+<input class="nav-filter" id="nav-filter" type="search" placeholder="Find a topic" aria-label="Find a topic">
+<details class="subj"><summary>Quantitative Aptitude</summary>
+<a class="nav-link" href="number-systems.html">Number systems</a>
+<a class="nav-link" href="percentages.html">Percentages</a>
+<a class="nav-link" href="ratio-proportion.html">Ratio and proportion</a>
+<a class="nav-link" href="averages.html">Averages</a>
+<a class="nav-link" href="interest.html">Simple and compound interest</a>
+<a class="nav-link" href="profit-loss.html">Profit, loss and discount</a>
+<a class="nav-link" href="partnership.html">Partnership</a>
+<a class="nav-link" href="mixture-alligation.html">Mixture and alligation</a>
+<a class="nav-link" href="time-speed.html">Time, speed and distance</a>
+<a class="nav-link" href="time-work.html">Time and work</a>
+<a class="nav-link" href="algebra.html">Algebra, surds and linear graphs</a>
+<a class="nav-link" href="geometry.html">Geometry</a>
+<a class="nav-link" href="mensuration.html">Mensuration</a>
+<a class="nav-link" href="trigonometry.html">Trigonometry and heights</a>
+<a class="nav-link" href="data-interpretation.html">Tables, graphs and basic statistics</a>
+<a class="nav-link" href="probability.html">Simple probability</a>
+</details>
+<details class="subj"><summary>Reasoning</summary>
+<a class="nav-link" href="analogy.html">Analogy</a>
+<a class="nav-link" href="classification.html">Classification</a>
+<a class="nav-link" href="series.html">Series</a>
+<a class="nav-link" href="coding-decoding.html">Coding and decoding</a>
+<a class="nav-link" href="blood-relations.html">Blood relations</a>
+<a class="nav-link" href="direction-sense.html">Direction sense</a>
+<a class="nav-link" href="syllogism.html">Syllogism and conclusions</a>
+<a class="nav-link" href="venn-diagrams.html">Venn diagrams</a>
+<a class="nav-link" href="spatial-figures.html">Figures, folding and cubes</a>
+<a class="nav-link" href="problem-solving.html">Ranking, order and arithmetical reasoning</a>
+<a class="nav-link" href="word-operations.html">Word building, signs and matching</a>
+</details>
+<details class="subj"><summary>English</summary>
+<a class="nav-link" href="spot-the-error.html">Spot the error</a>
+<a class="nav-link" href="fill-blanks.html">Fill in the blanks</a>
+<a class="nav-link" href="synonyms-antonyms.html">Synonyms and antonyms</a>
+<a class="nav-link" href="spellings-homonyms.html">Spellings and homonyms</a>
+<a class="nav-link" href="idioms.html">Idioms and phrases</a>
+<a class="nav-link" href="one-word.html">One-word substitution</a>
+<a class="nav-link" href="sentence-improvement.html">Sentence improvement</a>
+<a class="nav-link" href="active-passive.html">Active and passive voice</a>
+<a class="nav-link" href="narration.html">Direct and indirect speech</a>
+<a class="nav-link" href="para-jumbles.html">Para jumbles</a>
+<a class="nav-link" href="cloze.html">Cloze test</a>
+<a class="nav-link" href="reading-comprehension.html">Reading comprehension</a>
+</details>
+<details class="subj"><summary>General Awareness</summary>
+<a class="nav-link" href="polity.html">Indian polity</a>
+<a class="nav-link" href="ancient-medieval.html">Ancient and medieval India</a>
+<a class="nav-link" href="modern-history.html">Modern Indian history</a>
+<a class="nav-link" href="geography.html">Geography</a>
+<a class="nav-link" href="economy.html">Indian economy</a>
+<a class="nav-link" href="physics.html">Physics for General Awareness</a>
+<a class="nav-link" href="chemistry.html">Chemistry for General Awareness</a>
+<a class="nav-link" href="biology.html">Biology for General Awareness</a>
+<a class="nav-link" href="culture-static.html">Culture and static GK</a>
+<a class="nav-link" href="current-affairs.html">Current affairs: how to revise</a>
+</details>
+<details class="subj"><summary>Computer and DEST</summary>
+<a class="nav-link" href="computer-basics.html">Computer basics</a>
+<a class="nav-link" href="ms-office.html">Operating system and MS Office</a>
+<a class="nav-link" href="internet-email.html">Internet and email</a>
+<a class="nav-link" href="networking-security.html">Networking and cyber security</a>
+<a class="nav-link" href="dest.html">Data entry speed test</a>
+</details>
+<details class="subj" open><summary>Statistics</summary>
+<a class="nav-link" href="stat-data.html">Collection and presentation of data</a>
+<a class="nav-link" href="stat-tendency-dispersion.html">Central tendency and dispersion</a>
+<a class="nav-link" href="stat-moments-skewness.html">Moments, skewness and kurtosis</a>
+<a class="nav-link" href="stat-correlation.html">Correlation and regression</a>
+<a class="nav-link" href="stat-probability.html">Probability and distributions</a>
+<a class="nav-link active" href="stat-sampling-inference.html">Sampling and inference</a>
+<a class="nav-link" href="stat-index-anova.html">ANOVA, time series and index numbers</a>
+</details>
+<details class="subj"><summary>Finance and Economics</summary>
+<a class="nav-link" href="accounting-principles.html">Accounting principles</a>
+<a class="nav-link" href="accounts-books.html">Books, errors and final accounts</a>
+<a class="nav-link" href="microeconomics.html">Microeconomics</a>
+<a class="nav-link" href="indian-economy-paper.html">Indian economy</a>
+<a class="nav-link" href="money-governance.html">Money, banking and governance</a>
+</details>
+</nav></aside>
+<main>
+<article class="article">
+<p class="kicker">Statistics (Paper-II) · Tier-II Paper-II, JSO and Statistical Investigator only</p>
+<h1>Sampling and inference</h1>
+<p>Sampling is how you pick the units. Inference is what you claim about the population after you have seen the sample. A parameter describes the population. A statistic describes the sample.</p>
+<p>The syllabus asks for the named sampling designs, the properties of a good estimator, and the tests based on Z, t, chi-square and F. State the conditions. Do not invent a critical value you have not looked up.</p>
+<h2>What SSC lists</h2>
+<ul class="ssc-list"><li>Population, sample, parameter and statistic.</li>
+<li>Sampling and non-sampling errors, and the listed designs.</li>
+<li>Point and interval estimation, and the properties of a good estimator.</li>
+<li>Tests using Z, t, chi-square and F, including the idea of a confidence interval.</li></ul>
+<h2>Rules and formulas</h2>
+<div class="rule-grid"><section class="rule"><h3>Designs</h3><div class="formula">Probability designs include simple random, stratified, systematic, cluster, multistage and multiphase sampling.<br>Non-probability designs include purposive, convenience and quota sampling.<br>A sampling error comes from the fact of sampling. A non-sampling error comes from a bad frame, a wrong reply, or a processing mistake, and it can occur even in a census.</div></section><section class="rule"><h3>Estimators</h3><div class="formula">Unbiased: the expected value of the estimator equals the parameter.<br>Consistent: as the sample grows, the estimator settles on the parameter.<br>Efficient: smaller variance among unbiased competitors.<br>Methods named in the syllabus: moments, maximum likelihood, and least squares.</div></section><section class="rule"><h3>Tests</h3><div class="formula">A null hypothesis is the claim you test. A Type I error rejects a true null. A Type II error accepts a false null.<br>Z is the large-sample test when the standard deviation can be treated as known or the sample is large.<br>t is the small-sample test for a mean when the population standard deviation is unknown.<br>Chi-square is used for goodness of fit and for independence in a contingency table.<br>F is a ratio of variances, and it is the statistic of ANOVA.</div></section><section class="rule"><h3>Interval</h3><div class="formula">A confidence interval is a range, built from the sample, that is constructed to cover the parameter with a stated confidence.<br>It is not a probability statement about the parameter after the interval has already been calculated, in the strict reading. For the exam, know that a 95% interval is wider than a 90% interval for the same data, and that a larger sample narrows it.</div></section><section class="rule"><h3>Quick methods</h3><div class="formula">Standard error of the mean = σ/√n. Four times the sample halves the SE.<br>Large-sample intervals: 95% → x̄ ± 1.96 σ/√n. 99% → x̄ ± 2.58 σ/√n.<br>Z for a mean = (x̄ − μ)/(σ/√n).<br>Degrees of freedom: one-sample t, n − 1. Chi-square in an r × c table, (r − 1)(c − 1).<br>Systematic sampling interval k = N/n.</div></section></div>
+<h2>Common traps</h2>
+<div class="traps"><div class="trap"><p>A convenience sample is not a simple random sample.</p></div>
+<div class="trap"><p>Stratified sampling divides the population into groups and samples each group. Cluster sampling picks whole groups.</p></div>
+<div class="trap"><p>Type I and Type II errors are easy to swap. Type I is the false rejection.</p></div>
+<div class="trap"><p>t, not Z, is the small-sample choice when sigma is unknown.</p></div></div>
+<h2>Worked examples</h2>
+<p class="note">Read the solution only after you have tried the question. Options are in exam style.</p>
+<article class="qcard">
+<p class="qstem"><span class="qn">Example 1</span><br>A parameter describes the</p>
+
+<ol class="opts" type="A">
+<li>sample</li>
+<li>population</li>
+<li>chart colour</li>
+<li>typewriter</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>A parameter is a population quantity.</li>
+<li>The matching sample quantity is a statistic.</li></ol>
+<p class="answer">Answer: <strong>B</strong>. The sample mean is a statistic used to estimate the population mean.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 2</span><br>Picking whole villages and then surveying everyone in the picked villages is closest to</p>
+
+<ol class="opts" type="A">
+<li>cluster sampling</li>
+<li>quota sampling</li>
+<li>a pie chart</li>
+<li>a t table</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>The village is the cluster.</li>
+<li>You select clusters, not individuals one by one from the whole list.</li></ol>
+<p class="answer">Answer: <strong>A</strong>. Quota sampling would fill categories without a random mechanism.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 3</span><br>Rejecting a true null hypothesis is a</p>
+
+<ol class="opts" type="A">
+<li>Type I error</li>
+<li>Type II error</li>
+<li>sampling frame</li>
+<li>confidence of 0</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>The null was true and you rejected it.</li>
+<li>That is Type I.</li></ol>
+<p class="answer">Answer: <strong>A</strong>. Type II is failing to reject a false null.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 4</span><br>When the sample is small and the population standard deviation is unknown, a test for the mean uses</p>
+
+<ol class="opts" type="A">
+<li>t</li>
+<li>only a pie chart</li>
+<li>the range as a p-value</li>
+<li>Spearman’s coefficient by default</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>Sigma unknown and n small is the t setting.</li>
+<li>Z wants a known sigma or a large n.</li></ol>
+<p class="answer">Answer: <strong>A</strong>. The degrees of freedom for a single mean are n − 1.</p>
+</div>
+</article>
+<h2>Practice yourself</h2>
+<p class="note">Attempt these without opening the answer. Then check the toggle.</p>
+<article class="practice-item">
+<p class="qstem"><span class="qn">Practice 1</span><br>A sampling error</p>
+
+<ol class="opts" type="A">
+<li>cannot occur in a sample</li>
+<li>arises because a sample is not the whole population</li>
+<li>is the same as a typing error only</li>
+<li>is kurtosis</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. It is the gap that sampling itself can create.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 2</span><br>An estimator whose expected value equals the parameter is</p>
+
+<ol class="opts" type="A">
+<li>biased</li>
+<li>unbiased</li>
+<li>leptokurtic</li>
+<li>secondary</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. Unbiased. Bias is the gap between the expected value and the parameter.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 3</span><br>Chi-square is used for</p>
+
+<ol class="opts" type="A">
+<li>goodness of fit</li>
+<li>typing speed</li>
+<li>the area of a circle</li>
+<li>a DEST passage</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>A</strong>. Goodness of fit, and independence in a contingency table.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 4</span><br>For the same data, a 95% confidence interval is</p>
+
+<ol class="opts" type="A">
+<li>narrower than a 90% interval</li>
+<li>wider than a 90% interval</li>
+<li>always of width 95</li>
+<li>a hypothesis</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. More confidence costs a wider interval.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 5</span><br>σ = 20 and n = 100. The standard error of the mean is</p>
+
+<ol class="opts" type="A">
+<li>0.2</li>
+<li>2</li>
+<li>20</li>
+<li>4</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. 20/√100 = 2.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 6</span><br>The degrees of freedom for chi-square in a 3 × 4 table are</p>
+
+<ol class="opts" type="A">
+<li>6</li>
+<li>7</li>
+<li>12</li>
+<li>5</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>A</strong>. (3 − 1)(4 − 1) = 6.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 7</span><br>A systematic sample of 50 from 1000 units uses an interval of</p>
+
+<ol class="opts" type="A">
+<li>10</li>
+<li>50</li>
+<li>20</li>
+<li>950</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>C</strong>. 1000/50 = 20.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 8</span><br>x̄ = 52, μ = 50, σ = 10, n = 25. Z is</p>
+
+<ol class="opts" type="A">
+<li>0.2</li>
+<li>1</li>
+<li>2</li>
+<li>5</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. 2/(10/5) = 1.</p>
+</details>
+</article>
+<nav class="pager"><a href="stat-probability.html">← Probability and distributions</a><a href="stat-index-anova.html">ANOVA, time series and index numbers →</a></nav>
+</article>
+</main>
+</div>
+<script src="../assets/study.js"></script>
+</body>
+</html>

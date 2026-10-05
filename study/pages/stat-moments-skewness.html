@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#efe8dc">
+<script>document.documentElement.classList.add("js")</script>
+<title>Moments, skewness and kurtosis · SSC CGL Study</title>
+<link rel="stylesheet" href="../assets/study.css">
+</head>
+<body data-subject="stats">
+<header class="topbar">
+<a class="brand" href="../index.html"><strong>SSC CGL Study Desk</strong><span>Open index.html to see the full checklist</span></a>
+<div class="top-actions"><button class="nav-toggle" type="button" aria-controls="topic-nav" aria-expanded="false">Topics</button><label class="done-pill"><input type="checkbox" data-topic="stat-moments-skewness"> Mark done</label></div>
+</header>
+<div class="shell">
+<aside class="side" id="topic-nav"><nav aria-label="Topics">
+<a class="brand" href="../index.html" style="margin-bottom:0.6rem"><strong>All topics</strong><span>Checklist and exam pattern</span></a>
+<input class="nav-filter" id="nav-filter" type="search" placeholder="Find a topic" aria-label="Find a topic">
+<details class="subj"><summary>Quantitative Aptitude</summary>
+<a class="nav-link" href="number-systems.html">Number systems</a>
+<a class="nav-link" href="percentages.html">Percentages</a>
+<a class="nav-link" href="ratio-proportion.html">Ratio and proportion</a>
+<a class="nav-link" href="averages.html">Averages</a>
+<a class="nav-link" href="interest.html">Simple and compound interest</a>
+<a class="nav-link" href="profit-loss.html">Profit, loss and discount</a>
+<a class="nav-link" href="partnership.html">Partnership</a>
+<a class="nav-link" href="mixture-alligation.html">Mixture and alligation</a>
+<a class="nav-link" href="time-speed.html">Time, speed and distance</a>
+<a class="nav-link" href="time-work.html">Time and work</a>
+<a class="nav-link" href="algebra.html">Algebra, surds and linear graphs</a>
+<a class="nav-link" href="geometry.html">Geometry</a>
+<a class="nav-link" href="mensuration.html">Mensuration</a>
+<a class="nav-link" href="trigonometry.html">Trigonometry and heights</a>
+<a class="nav-link" href="data-interpretation.html">Tables, graphs and basic statistics</a>
+<a class="nav-link" href="probability.html">Simple probability</a>
+</details>
+<details class="subj"><summary>Reasoning</summary>
+<a class="nav-link" href="analogy.html">Analogy</a>
+<a class="nav-link" href="classification.html">Classification</a>
+<a class="nav-link" href="series.html">Series</a>
+<a class="nav-link" href="coding-decoding.html">Coding and decoding</a>
+<a class="nav-link" href="blood-relations.html">Blood relations</a>
+<a class="nav-link" href="direction-sense.html">Direction sense</a>
+<a class="nav-link" href="syllogism.html">Syllogism and conclusions</a>
+<a class="nav-link" href="venn-diagrams.html">Venn diagrams</a>
+<a class="nav-link" href="spatial-figures.html">Figures, folding and cubes</a>
+<a class="nav-link" href="problem-solving.html">Ranking, order and arithmetical reasoning</a>
+<a class="nav-link" href="word-operations.html">Word building, signs and matching</a>
+</details>
+<details class="subj"><summary>English</summary>
+<a class="nav-link" href="spot-the-error.html">Spot the error</a>
+<a class="nav-link" href="fill-blanks.html">Fill in the blanks</a>
+<a class="nav-link" href="synonyms-antonyms.html">Synonyms and antonyms</a>
+<a class="nav-link" href="spellings-homonyms.html">Spellings and homonyms</a>
+<a class="nav-link" href="idioms.html">Idioms and phrases</a>
+<a class="nav-link" href="one-word.html">One-word substitution</a>
+<a class="nav-link" href="sentence-improvement.html">Sentence improvement</a>
+<a class="nav-link" href="active-passive.html">Active and passive voice</a>
+<a class="nav-link" href="narration.html">Direct and indirect speech</a>
+<a class="nav-link" href="para-jumbles.html">Para jumbles</a>
+<a class="nav-link" href="cloze.html">Cloze test</a>
+<a class="nav-link" href="reading-comprehension.html">Reading comprehension</a>
+</details>
+<details class="subj"><summary>General Awareness</summary>
+<a class="nav-link" href="polity.html">Indian polity</a>
+<a class="nav-link" href="ancient-medieval.html">Ancient and medieval India</a>
+<a class="nav-link" href="modern-history.html">Modern Indian history</a>
+<a class="nav-link" href="geography.html">Geography</a>
+<a class="nav-link" href="economy.html">Indian economy</a>
+<a class="nav-link" href="physics.html">Physics for General Awareness</a>
+<a class="nav-link" href="chemistry.html">Chemistry for General Awareness</a>
+<a class="nav-link" href="biology.html">Biology for General Awareness</a>
+<a class="nav-link" href="culture-static.html">Culture and static GK</a>
+<a class="nav-link" href="current-affairs.html">Current affairs: how to revise</a>
+</details>
+<details class="subj"><summary>Computer and DEST</summary>
+<a class="nav-link" href="computer-basics.html">Computer basics</a>
+<a class="nav-link" href="ms-office.html">Operating system and MS Office</a>
+<a class="nav-link" href="internet-email.html">Internet and email</a>
+<a class="nav-link" href="networking-security.html">Networking and cyber security</a>
+<a class="nav-link" href="dest.html">Data entry speed test</a>
+</details>
+<details class="subj" open><summary>Statistics</summary>
+<a class="nav-link" href="stat-data.html">Collection and presentation of data</a>
+<a class="nav-link" href="stat-tendency-dispersion.html">Central tendency and dispersion</a>
+<a class="nav-link active" href="stat-moments-skewness.html">Moments, skewness and kurtosis</a>
+<a class="nav-link" href="stat-correlation.html">Correlation and regression</a>
+<a class="nav-link" href="stat-probability.html">Probability and distributions</a>
+<a class="nav-link" href="stat-sampling-inference.html">Sampling and inference</a>
+<a class="nav-link" href="stat-index-anova.html">ANOVA, time series and index numbers</a>
+</details>
+<details class="subj"><summary>Finance and Economics</summary>
+<a class="nav-link" href="accounting-principles.html">Accounting principles</a>
+<a class="nav-link" href="accounts-books.html">Books, errors and final accounts</a>
+<a class="nav-link" href="microeconomics.html">Microeconomics</a>
+<a class="nav-link" href="indian-economy-paper.html">Indian economy</a>
+<a class="nav-link" href="money-governance.html">Money, banking and governance</a>
+</details>
+</nav></aside>
+<main>
+<article class="article">
+<p class="kicker">Statistics (Paper-II) · Tier-II Paper-II, JSO and Statistical Investigator only</p>
+<h1>Moments, skewness and kurtosis</h1>
+<p>Moments summarise a distribution the way a mean and a variance do, and then one step further. Skewness says whether one tail is longer. Kurtosis says whether the peak and the tails are heavier than a normal curve.</p>
+<p>You need the meanings and the standard coefficients, not a long proof.</p>
+<h2>What SSC lists</h2>
+<ul class="ssc-list"><li>Raw and central moments, and the relation between them at the level of the definitions.</li>
+<li>Skewness and its common measures.</li>
+<li>Kurtosis and the normal-curve benchmark.</li>
+<li>The difference between a measure of spread and a measure of shape.</li></ul>
+<h2>Rules and formulas</h2>
+<div class="rule-grid"><section class="rule"><h3>Moments</h3><div class="formula">The first raw moment about zero is the mean.<br>Central moments are taken about the mean. The second central moment is the variance.<br>The third central moment is used for skewness. The fourth is used for kurtosis.</div></section><section class="rule"><h3>Skewness</h3><div class="formula">A longer right tail is positive skew. A longer left tail is negative skew. A symmetric distribution has skewness zero.<br>Karl Pearson’s coefficient = (mean − mode) / standard deviation.<br>The moment coefficient is the third central moment divided by the cube of the standard deviation.<br>Bowley’s measure = (Q3 + Q1 − 2Q2) / (Q3 − Q1).</div></section><section class="rule"><h3>Kurtosis</h3><div class="formula">The moment coefficient β2 = μ4 / μ2².<br>For a normal distribution β2 = 3. That case is mesokurtic.<br>β2 greater than 3 is leptokurtic, a sharper peak and heavier tails in the usual description. β2 less than 3 is platykurtic.</div></section><section class="rule"><h3>What they are not</h3><div class="formula">Skewness is not dispersion. Two distributions can have the same standard deviation and different skewness.</div></section><section class="rule"><h3>Quick methods</h3><div class="formula">From raw moments about any point: μ₂ = μ₂′ − μ₁′², μ₃ = μ₃′ − 3μ₂′μ₁′ + 2μ₁′³.<br>β₁ = μ₃²/μ₂³. γ₁ = √β₁ with the sign of μ₃. Excess kurtosis γ₂ = β₂ − 3.<br>Pearson’s second coefficient (using the median) = 3(mean − median)/SD.<br>Bowley’s coefficient lies between −1 and +1.</div></section></div>
+<h2>Common traps</h2>
+<div class="traps"><div class="trap"><p>Pearson’s skewness uses mean minus mode, not mode minus mean, if you want the sign to match a right tail.</p></div>
+<div class="trap"><p>Bowley’s formula has Q3 + Q1 − 2 × median in the numerator, because Q2 is the median.</p></div>
+<div class="trap"><p>β2 for the normal curve is 3, not 0 and not 1.</p></div>
+<div class="trap"><p>Leptokurtic is the more peaked case in this terminology, the one with β2 above 3.</p></div></div>
+<h2>Worked examples</h2>
+<p class="note">Read the solution only after you have tried the question. Options are in exam style.</p>
+<article class="qcard">
+<p class="qstem"><span class="qn">Example 1</span><br>A distribution with a longer tail on the right has</p>
+
+<ol class="opts" type="A">
+<li>negative skew</li>
+<li>positive skew</li>
+<li>zero variance</li>
+<li>no mean</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>The long tail is the direction of the skew.</li>
+<li>A right tail is positive skew.</li></ol>
+<p class="answer">Answer: <strong>B</strong>. The bulk of the data can still sit on the left.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 2</span><br>Karl Pearson’s skewness is</p>
+
+<ol class="opts" type="A">
+<li>(mean − mode) / standard deviation</li>
+<li>(mode − mean) / variance</li>
+<li>Q3 − Q1</li>
+<li>β2</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>The coefficient uses the gap between mean and mode.</li>
+<li>It is scaled by the standard deviation.</li></ol>
+<p class="answer">Answer: <strong>A</strong>. Q3 − Q1 is a dispersion gap. β2 is kurtosis.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 3</span><br>For a normal distribution, β2 equals</p>
+
+<ol class="opts" type="A">
+<li>0</li>
+<li>1</li>
+<li>3</li>
+<li>n</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>β2 = μ4 / μ2².</li>
+<li>The normal benchmark is 3.</li></ol>
+<p class="answer">Answer: <strong>C</strong>. That benchmark is what mesokurtic refers to.</p>
+</div>
+</article><article class="qcard">
+<p class="qstem"><span class="qn">Example 4</span><br>Bowley’s coefficient uses</p>
+
+<ol class="opts" type="A">
+<li>mean and mode</li>
+<li>quartiles</li>
+<li>only the range</li>
+<li>only β2</li>
+</ol>
+<div class="solution">
+<p class="sol-label">Solution</p>
+<ol class="steps"><li>The formula is (Q3 + Q1 − 2Q2) / (Q3 − Q1).</li>
+<li>It needs no mean.</li></ol>
+<p class="answer">Answer: <strong>B</strong>. It is useful when the distribution is given by quartiles, or when the mean is a poor summary.</p>
+</div>
+</article>
+<h2>Practice yourself</h2>
+<p class="note">Attempt these without opening the answer. Then check the toggle.</p>
+<article class="practice-item">
+<p class="qstem"><span class="qn">Practice 1</span><br>Variance is the</p>
+
+<ol class="opts" type="A">
+<li>first raw moment</li>
+<li>second central moment</li>
+<li>fourth raw moment only</li>
+<li>same as skewness</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. The second central moment.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 2</span><br>β2 greater than 3 is called</p>
+
+<ol class="opts" type="A">
+<li>platykurtic</li>
+<li>mesokurtic</li>
+<li>leptokurtic</li>
+<li>symmetric by definition</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>C</strong>. Leptokurtic. Mesokurtic is the normal benchmark.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 3</span><br>A symmetric distribution has skewness</p>
+
+<ol class="opts" type="A">
+<li>positive</li>
+<li>negative</li>
+<li>zero</li>
+<li>equal to the range</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>C</strong>. The two tails balance, so the skewness coefficient is zero.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 4</span><br>If mean is 20, mode is 14 and standard deviation is 3, Pearson’s skewness is</p>
+
+<ol class="opts" type="A">
+<li>1</li>
+<li>2</li>
+<li>3</li>
+<li>6</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. (20 − 14) / 3 = 2.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 5</span><br>About an assumed origin μ₁′ = 2 and μ₂′ = 10. The variance is</p>
+
+<ol class="opts" type="A">
+<li>6</li>
+<li>8</li>
+<li>10</li>
+<li>14</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>A</strong>. 10 − 2² = 6.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 6</span><br>Mean 40, median 38, SD 6. Pearson’s second coefficient of skewness is</p>
+
+<ol class="opts" type="A">
+<li>0.33</li>
+<li>1</li>
+<li>2</li>
+<li>6</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>B</strong>. 3 × (40 − 38)/6 = 1.</p>
+</details>
+</article><article class="practice-item">
+<p class="qstem"><span class="qn">Practice 7</span><br>β₂ = 3.5. The excess kurtosis γ₂ is</p>
+
+<ol class="opts" type="A">
+<li>−0.5</li>
+<li>3.5</li>
+<li>0.5</li>
+<li>6.5</li>
+</ol>
+<details>
+<summary>Show answer</summary>
+<p class="answer">Answer: <strong>C</strong>. 3.5 − 3 = 0.5, so the curve is slightly leptokurtic.</p>
+</details>
+</article>
+<nav class="pager"><a href="stat-tendency-dispersion.html">← Central tendency and dispersion</a><a href="stat-correlation.html">Correlation and regression →</a></nav>
+</article>
+</main>
+</div>
+<script src="../assets/study.js"></script>
+</body>
+</html>
