@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { personalInfo, responsePromise } from '../data/portfolio';
-import { ArrowUpRight, BookOpen, ChefHat, Linkedin } from 'lucide-react';
+import { ArrowUpRight, BookOpen, ChefHat, Link as LinkIcon, Linkedin } from 'lucide-react';
 import { Mail } from './icons/KoboyoIcons';
 import { motion } from 'framer-motion';
 import { features } from '../config/features';
@@ -143,6 +143,16 @@ const Contact = () => {
                                     <ArrowUpRight size={18} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
                                 </button>
                             )}
+                        </li>
+                        <li className="border-b border-slate-900/10">
+                            <Link
+                                to="/links"
+                                className="group flex items-center gap-4 py-4 font-semibold text-slate-800 transition-colors hover:text-[#249D8F]"
+                            >
+                                <LinkIcon size={20} style={{ color: TEAL }} />
+                                <span className="flex-1">All links</span>
+                                <ArrowUpRight size={18} className="transition-transform group-hover:-translate-y-0.5 group-hover:translate-x-0.5" />
+                            </Link>
                         </li>
                     </ul>
                 </div>

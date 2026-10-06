@@ -4,6 +4,7 @@ import Home from './pages/Home';
 import ThankYou from './pages/ThankYou';
 import PrivacyPolicy from './pages/PrivacyPolicy';
 import NotFound from './pages/NotFound';
+import Links from './pages/Links';
 import GoogleAnalytics from './components/GoogleAnalytics';
 const LetsCook = lazy(() => import('./pages/LetsCook'));
 
@@ -25,6 +26,7 @@ function App() {
       >
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/links" element={<Links />} />
           <Route path="/lets-cook" element={<LetsCook />} />
           <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/privacy-policy" element={<PrivacyPolicy />} />

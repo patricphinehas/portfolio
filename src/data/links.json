@@ -1,0 +1,64 @@
+{
+  "profile": {
+    "initials": "PR",
+    "name": "Patric Phinehas Raj",
+    "role": "Senior Fullstack Developer",
+    "location": "Bengaluru, India"
+  },
+  "links": [
+    {
+      "id": "email",
+      "label": "Email directly",
+      "detail": "patricphinehas@gmail.com",
+      "href": "mailto:patricphinehas@gmail.com",
+      "icon": "mail"
+    },
+    {
+      "id": "linkedin",
+      "label": "LinkedIn",
+      "detail": "Connect with me professionally",
+      "href": "https://www.linkedin.com/in/patricphinehas/",
+      "icon": "linkedin",
+      "external": true
+    },
+    {
+      "id": "lets-cook",
+      "label": "Let's Cook",
+      "detail": "Browse and scale hundreds of recipes",
+      "href": "/lets-cook",
+      "icon": "chef",
+      "internal": true
+    },
+    {
+      "id": "study",
+      "label": "Study desk",
+      "detail": "Private study resources",
+      "icon": "book",
+      "action": "study"
+    },
+    {
+      "id": "instagram",
+      "label": "Instagram",
+      "detail": "Photos and updates",
+      "href": "https://www.instagram.com/finni_d_nomad",
+      "icon": "instagram",
+      "external": true
+    },
+    {
+      "id": "youtube",
+      "label": "YouTube",
+      "detail": "Videos and tutorials",
+      "href": "https://www.youtube.com/@oreyfundhanley3936",
+      "icon": "youtube",
+      "external": true
+    },
+    {
+      "id": "podcast",
+      "label": "Podcast",
+      "detail": "Episodes coming soon",
+      "href": "",
+      "icon": "podcast",
+      "placeholder": true
+    }
+  ]
+}

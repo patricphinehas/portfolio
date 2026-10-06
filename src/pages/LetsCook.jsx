@@ -385,7 +385,6 @@ const LetsCook = () => {
           "Browse hundreds of recipes adapted from Steffi Akka', tribute to the master of bachelor cooking — then scale ingredients by servings or a major ingredient."
         }
         path={selectedRecipe ? `/lets-cook?recipe=${selectedRecipe.id}` : '/lets-cook'}
-        noindex
       />
 
       <header className="sticky top-0 z-40 border-b border-black/5 bg-white/70 backdrop-blur-xl">

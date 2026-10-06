@@ -1,4 +1,4 @@
-import { copyFileSync, cpSync, createReadStream, existsSync, statSync } from 'node:fs'
+import { copyFileSync, cpSync, createReadStream, existsSync, readdirSync, readFileSync, statSync, writeFileSync } from 'node:fs'
 import { extname, relative, resolve } from 'node:path'
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
@@ -36,6 +36,18 @@ function serveStudy(req, res, next) {
   createReadStream(file).pipe(res)
 }
 
+function noindexStudy(root) {
+  for (const entry of readdirSync(root, { withFileTypes: true })) {
+    const file = resolve(root, entry.name)
+    if (entry.isDirectory()) {
+      noindexStudy(file)
+    } else if (entry.name.endsWith('.html')) {
+      const html = readFileSync(file, 'utf8')
+      writeFileSync(file, html.replace('<head>', '<head>\n<meta name="robots" content="noindex, nofollow">'))
+    }
+  }
+}
+
 // GitHub project Pages: https://patricphinehas.github.io/portfolio/
 const base = process.env.VITE_BASE ?? '/portfolio/'
 
@@ -53,7 +65,9 @@ export default defineConfig({
         server.middlewares.use(serveStudy)
       },
       closeBundle() {
-        cpSync(studyRoot, resolve(__dirname, 'dist/study'), { recursive: true })
+        const studyDist = resolve(__dirname, 'dist/study')
+        cpSync(studyRoot, studyDist, { recursive: true })
+        noindexStudy(studyDist)
       },
     },
     {

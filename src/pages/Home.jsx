@@ -40,8 +40,9 @@ const Home = () => {
         <div className="min-h-screen text-slate-800 selection:bg-[#249D8F]/20">
             <Seo
                 title="Senior Fullstack Developer & Digital Consultant"
-                description="Patric Phinehas Raj — Senior Fullstack Developer at Bosch and freelance digital consultant. I build fast, accessible web apps and lead product teams, from B2C marketplaces to healthcare dispatch systems and brand websites."
+                description="Patric Phinehas Raj is a senior fullstack developer in Bengaluru specializing in Angular, React, Node.js, Python, accessible web apps, AI integrations, and engineering leadership."
                 path="/"
+                imageAlt="Patric Phinehas Raj — senior fullstack developer portfolio"
             />
             <PersonJsonLd />
 
