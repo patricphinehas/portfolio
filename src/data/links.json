@@ -56,9 +56,9 @@
       "id": "podcast",
       "label": "Podcast",
       "detail": "Episodes coming soon",
-      "href": "",
+      "href": "https://www.youtube.com/@oreyfundhanley3936/podcasts",
       "icon": "podcast",
-      "placeholder": true
+      "external": true
     }
   ]
 }
