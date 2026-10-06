@@ -1,9 +1,10 @@
-﻿import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { POKEMON } from '../data/pokemon';
 import { usePokedex } from '../lib/pokedex';
 import PokeCard, { staticSprite } from './PokeCard';
 import SectionIntro, { TEAL, CREAM, sectionGrid } from './SectionIntro';
+import { PinnedInCard } from './StackCard';
 
 const dex3 = (n) => String(n).padStart(3, '0');
 
@@ -28,7 +29,7 @@ const Pokedex = () => {
     return (
         <section className="py-10 md:py-14">
             <div className={sectionGrid}>
-                <div className="xl:col-span-4">
+                <PinnedInCard className="xl:col-span-4">
                     <SectionIntro label="Pokédex" title={<>Pokémon<br />you&apos;ve caught</>}>
                         They wander along the bottom of the screen. Tap one as it walks by to catch it and add it here.
                     </SectionIntro>
@@ -50,7 +51,7 @@ const Pokedex = () => {
                         />
                     </div>
                     <p className="mt-3 text-xs text-slate-500">Saved in this browser only.</p>
-                </div>
+                </PinnedInCard>
 
                 <div className="min-w-0 xl:col-span-8">
                     <div className="flex flex-wrap gap-2" role="tablist" aria-label="Region">
