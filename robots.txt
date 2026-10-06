@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /thank-you
+Disallow: /study/
 
 Sitemap: https://patricphinehas.dev/sitemap.xml
