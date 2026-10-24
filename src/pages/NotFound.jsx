@@ -14,7 +14,7 @@ const quickLinks = [
 
 const NotFound = () => {
     return (
-        <div className="min-h-screen text-slate-800 selection:bg-indigo-500/20 flex flex-col">
+        <div className="min-h-screen text-slate-800 selection:bg-[#14635a]/20 flex flex-col">
             <Seo
                 title="Page Not Found"
                 description="The page you're looking for doesn't exist. Head back home or jump to FAQ and contact."
@@ -29,7 +29,7 @@ const NotFound = () => {
                     transition={{ duration: 0.6 }}
                     className="max-w-lg w-full text-center"
                 >
-                    <div className="w-20 h-20 rounded-2xl bg-indigo-500/10 text-indigo-500 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-20 h-20 rounded-2xl bg-[#14635a]/10 text-[#14635a] flex items-center justify-center mx-auto mb-6">
                         <FolderFiles size={40} />
                     </div>
                     <h1 className="text-6xl md:text-8xl font-extrabold mb-4">
@@ -52,7 +52,7 @@ const NotFound = () => {
                             <a
                                 key={link.href}
                                 href={link.href}
-                                className="text-sm font-medium text-gray-500 bg-black/[0.03] hover:bg-black/[0.06] hover:text-indigo-600 px-4 py-2 rounded-full transition-colors"
+                                className="text-sm font-medium text-gray-500 bg-black/[0.03] hover:bg-black/[0.06] hover:text-[#14635a] px-4 py-2 rounded-full transition-colors"
                             >
                                 {link.label}
                             </a>

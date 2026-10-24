@@ -4,6 +4,7 @@ import { personalInfo, responsePromise } from '../data/portfolio';
 import { ArrowUpRight, BookOpen, ChefHat, Download, Github, Link as LinkIcon, Linkedin } from 'lucide-react';
 import { Mail } from './icons/KoboyoIcons';
 import { motion } from 'framer-motion';
+import { features } from '../config/features';
 import SectionIntro, { TEAL, CREAM, sectionGrid } from './SectionIntro';
 
 const FORM_ENDPOINT = import.meta.env.VITE_FORM_ENDPOINT;
@@ -75,7 +76,9 @@ const Contact = () => {
         { label: 'Email directly', href: `mailto:${personalInfo.email}`, Icon: Mail },
         { label: 'GitHub', href: personalInfo.github, Icon: Github, external: true },
         { label: 'LinkedIn', href: personalInfo.linkedin, Icon: Linkedin, external: true },
-        { label: 'Download resume', href: `${import.meta.env.BASE_URL}resume.pdf`, Icon: Download, download: true },
+        ...(features.showResume
+            ? [{ label: 'Download resume', href: `${import.meta.env.BASE_URL}resume.pdf`, Icon: Download, download: true }]
+            : []),
     ];
 
     return (

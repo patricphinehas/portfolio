@@ -55,9 +55,9 @@ const Projects = () => {
                                     className="glass-card flex flex-col h-full group relative overflow-hidden p-0"
                                 >
                                     {/* Card Header */}
-                                    <div className="h-40 bg-gradient-to-br from-indigo-100 to-purple-100 p-6 flex items-start justify-between relative">
+                                    <div className="h-40 bg-gradient-to-br from-[#14635a]/10 to-[#E9C46A]/25 p-6 flex items-start justify-between relative">
                                         <div className="absolute inset-0 bg-grid-black/[0.03]" />
-                                        <div className="relative z-10 p-3 rounded-xl bg-white/70 text-indigo-600 shadow-sm">
+                                        <div className="relative z-10 p-3 rounded-xl bg-white/70 text-[#14635a] shadow-sm">
                                             <IconComponent size={28} />
                                         </div>
 
@@ -77,11 +77,11 @@ const Projects = () => {
 
                                     <div className="p-8 flex flex-col flex-grow">
                                         {project.role && (
-                                            <span className="text-xs font-semibold uppercase tracking-wide text-indigo-500 mb-2">
+                                            <span className="text-xs font-semibold uppercase tracking-wide text-[#14635a] mb-2">
                                                 {project.role}
                                             </span>
                                         )}
-                                        <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-indigo-600 transition-colors flex items-center justify-between gap-2">
+                                        <h3 className="text-xl font-bold mb-3 text-slate-900 group-hover:text-[#14635a] transition-colors flex items-center justify-between gap-2">
                                             <span>{project.title}</span>
                                             <ArrowRight size={18} className="shrink-0 -rotate-45 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300" />
                                         </h3>
@@ -92,7 +92,7 @@ const Projects = () => {
 
                                         <div className="flex flex-wrap gap-2 mt-auto">
                                             {project.tags.map((tag, idx) => (
-                                                <span key={idx} className="text-xs font-medium text-indigo-700 bg-indigo-500/10 px-2 py-1 rounded">
+                                                <span key={idx} className="text-xs font-medium text-[#14635a] bg-[#14635a]/10 px-2 py-1 rounded">
                                                     {tag}
                                                 </span>
                                             ))}

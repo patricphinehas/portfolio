@@ -38,7 +38,7 @@ const Breadcrumbs = ({ items = [] }) => {
                                         {item.label}
                                     </span>
                                 ) : (
-                                    <Link to={item.href} className="hover:text-indigo-600 transition-colors">
+                                    <Link to={item.href} className="hover:text-[#14635a] transition-colors">
                                         {item.label}
                                     </Link>
                                 )}

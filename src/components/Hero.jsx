@@ -283,13 +283,15 @@ const Hero = () => {
                         {positioning}
                     </h1>
 
-                    <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-700">
-                        {personalInfo.availability} Email{' '}
-                        <a className="font-semibold underline" style={{ color: TEAL }} href={`mailto:${personalInfo.email}`}>
-                            {personalInfo.email}
-                        </a>
-                        .
-                    </p>
+                    {features.showAvailability && (
+                        <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-700">
+                            {personalInfo.availability} Email{' '}
+                            <a className="font-semibold underline" style={{ color: TEAL }} href={`mailto:${personalInfo.email}`}>
+                                {personalInfo.email}
+                            </a>
+                            .
+                        </p>
+                    )}
 
                     <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                         <a href="#contact" className="btn btn-primary group relative justify-center">
@@ -301,6 +303,7 @@ const Hero = () => {
                                 View My Work
                             </a>
                         )}
+                        {features.showResume && (
                         <a
                             href={`${import.meta.env.BASE_URL}resume.pdf`}
                             className="btn btn-outline justify-center"
@@ -308,6 +311,7 @@ const Hero = () => {
                         >
                             Download resume
                         </a>
+                        )}
                         <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline justify-center">
                             <Github size={18} /> GitHub
                         </a>

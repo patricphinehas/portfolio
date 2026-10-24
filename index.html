@@ -45,9 +45,85 @@
     content="Senior Frontend / Full Stack Engineer (React, Angular, TypeScript, Python)" />
   <meta name="twitter:image" content="https://patricthedev.in/portfolio/og-image.png" />
   <meta name="twitter:image:alt" content="Patric Phinehas Raj, senior frontend and full stack engineer" />
+
+  <style>
+    /* Page loader: a notebook page rules itself, a pen inks one line, then the leaf lifts away.
+       Lives in index.html so it paints before any JavaScript runs. */
+    #preloader {
+      position: fixed; inset: 0; z-index: 9999;
+      display: flex; align-items: center; justify-content: center;
+      background: #FDF0D5;
+      box-shadow: 0 24px 60px rgba(36, 80, 72, 0.18);
+      transition: transform 0.75s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #preloader.is-done { transform: translateY(-100%); pointer-events: none; }
+    #preloader svg { width: min(72vw, 420px); height: auto; overflow: visible; }
+    #preloader path {
+      fill: none; stroke-linecap: round;
+      stroke-dasharray: 1; stroke-dashoffset: 1;
+      animation: preloader-draw 0.7s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+    }
+    #preloader .margin { stroke: #E76F51; stroke-width: 1.5; stroke-opacity: 0.7; animation-duration: 0.6s; }
+    #preloader .rule { stroke: #14635a; stroke-width: 1; stroke-opacity: 0.22; animation-delay: calc(0.3s + var(--i) * 0.07s); }
+    #preloader .ink { stroke: #14635a; stroke-width: 3; animation-duration: 0.55s; animation-delay: 0.75s; }
+    #preloader .dot {
+      fill: #E76F51; transform-box: fill-box; transform-origin: center; transform: scale(0);
+      animation: preloader-pop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1) 1.25s forwards;
+    }
+    @keyframes preloader-draw { to { stroke-dashoffset: 0; } }
+    @keyframes preloader-pop { to { transform: scale(1); } }
+    html.is-loading { overflow: hidden; }
+    @media (prefers-reduced-motion: reduce) {
+      #preloader { transition: opacity 0.3s ease; }
+      #preloader.is-done { transform: none; opacity: 0; }
+      #preloader path { animation: none; stroke-dashoffset: 0; }
+      #preloader .dot { animation: none; transform: scale(1); }
+    }
+  </style>
+  <noscript><style>#preloader { display: none; }</style></noscript>
 </head>
 
 <body>
+  <div id="preloader" aria-hidden="true">
+    <svg viewBox="58 0 344 260" focusable="false">
+      <path class="margin" pathLength="1" d="M60 0V260" />
+      <path class="rule" style="--i:0" pathLength="1" d="M60 40H400" />
+      <path class="rule" style="--i:1" pathLength="1" d="M60 76H400" />
+      <path class="rule" style="--i:2" pathLength="1" d="M60 112H400" />
+      <path class="rule" style="--i:3" pathLength="1" d="M60 148H400" />
+      <path class="rule" style="--i:4" pathLength="1" d="M60 184H400" />
+      <path class="rule" style="--i:5" pathLength="1" d="M60 220H400" />
+      <path class="ink" pathLength="1" d="M60 112H250" />
+      <circle class="dot" cx="262" cy="112" r="4.5" />
+    </svg>
+  </div>
+  <script>
+    (function () {
+      var el = document.getElementById('preloader');
+      if (!el) return;
+      // Once per 30 minutes across tabs: loads inside that window skip it before first paint.
+      try {
+        var seen = Number(localStorage.getItem('preloader-seen'));
+        if (seen && Date.now() - seen < 30 * 60 * 1000) { el.remove(); return; }
+        localStorage.setItem('preloader-seen', String(Date.now()));
+      } catch (e) { /* storage blocked: show it every time */ }
+      var root = document.documentElement;
+      var min = matchMedia('(prefers-reduced-motion: reduce)').matches ? 400 : 1500;
+      var done = false;
+      root.classList.add('is-loading');
+      function hide() {
+        if (done) return;
+        done = true;
+        el.classList.add('is-done');
+        root.classList.remove('is-loading');
+        setTimeout(function () { el.remove(); }, 900);
+      }
+      function ready() { setTimeout(hide, Math.max(0, min - performance.now())); }
+      if (document.readyState === 'complete') ready();
+      else addEventListener('load', ready, { once: true });
+      setTimeout(hide, 3000);
+    })();
+  </script>
   <div id="root"></div>
   <script type="module" src="/src/main.jsx"></script>
 </body>

@@ -35,13 +35,13 @@ const Navbar = () => {
                 <div className={`container mx-auto px-4 ${scrolled ? 'max-w-5xl' : 'max-w-7xl'} transition-all duration-500`}>
                     <div
                         className={`flex justify-between items-center transition-all duration-300 ${scrolled
-                            ? 'bg-white/80 backdrop-blur-xl rounded-full py-3 px-6 border border-black/5 shadow-2xl shadow-indigo-500/10'
+                            ? 'bg-white/80 backdrop-blur-xl rounded-full py-3 px-6 border border-black/5 shadow-2xl shadow-[#14635a]/10'
                             : 'bg-white/40 backdrop-blur-md rounded-2xl py-4 px-8 border border-black/5'
                             }`}
                     >
 
-                        <a href="#home" className="text-2xl font-bold font-outfit tracking-tighter text-slate-900 hover:text-indigo-600 transition-colors flex items-center gap-1">
-                            Patric<span className="text-indigo-500 text-3xl">.</span>
+                        <a href="#home" className="text-2xl font-bold font-outfit tracking-tighter text-slate-900 hover:text-[#14635a] transition-colors flex items-center gap-1">
+                            Patric<span className="text-[#14635a] text-3xl">.</span>
                         </a>
 
                         {/* Desktop Menu */}
@@ -53,10 +53,10 @@ const Navbar = () => {
                                     className="text-sm font-medium text-gray-600 hover:text-slate-900 relative group py-1"
                                 >
                                     {link.name}
-                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-indigo-500 transition-all duration-300 group-hover:w-full"></span>
+                                    <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-[#14635a] transition-all duration-300 group-hover:w-full"></span>
                                 </a>
                             ))}
-                            <a href="#contact" className="px-6 py-2.5 rounded-full bg-indigo-600 text-white text-sm font-semibold hover:bg-indigo-700 hover:shadow-[0_0_20px_rgba(99,102,241,0.5)] transition-all transform hover:-translate-y-0.5">
+                            <a href="#contact" className="px-6 py-2.5 rounded-full bg-[#14635a] text-white text-sm font-semibold hover:bg-[#1a7e75] hover:shadow-[0_0_20px_rgba(36,157,143,0.5)] transition-all transform hover:-translate-y-0.5">
                                 Get in Touch
                             </a>
                         </div>
@@ -94,7 +94,7 @@ const Navbar = () => {
                             ))}
                             <a
                                 href="#contact"
-                                className="text-3xl font-bold text-indigo-400 hover:text-indigo-300 hover:pl-4 transition-all"
+                                className="text-3xl font-bold text-[#14635a] hover:text-[#1a7e75] hover:pl-4 transition-all"
                                 onClick={() => setIsOpen(false)}
                             >
                                 Contact Me

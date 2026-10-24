@@ -15,7 +15,7 @@ const PrivacyPolicy = () => {
     const lastUpdated = "August 12, 2026";
 
     return (
-        <div className="min-h-screen text-slate-800 selection:bg-indigo-500/20">
+        <div className="min-h-screen text-slate-800 selection:bg-[#14635a]/20">
             <Seo
                 title="Privacy Policy"
                 description="How Patric Phinehas Raj collects, uses, and protects information submitted through this website's contact form and analytics."

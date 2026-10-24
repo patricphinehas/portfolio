@@ -1,19 +1,10 @@
-import React, { createContext, useContext, useLayoutEffect, useRef, useState } from 'react';
-import { motion, motionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion';
+import React, { useLayoutEffect, useRef, useState } from 'react';
+import { motion, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
-const restingY = motionValue(0);
-const ContentYContext = createContext(restingY);
-
-// Cancels the card's content slide on xl screens, so a column stays put while its neighbour scrolls.
-export const PinnedInCard = ({ className = '', children }) => {
-    const contentY = useContext(ContentYContext);
-    const pinY = useTransform(contentY, (v) => `${-v}px`);
-    return (
-        <motion.div style={{ '--pin-y': pinY }} className={`xl:translate-y-[var(--pin-y)] ${className}`}>
-            {children}
-        </motion.div>
-    );
-};
+// Keeps a column in view on xl screens while its neighbour scrolls inside the card.
+export const PinnedInCard = ({ className = '', children }) => (
+    <div className={`xl:sticky xl:top-14 xl:self-start ${className}`}>{children}</div>
+);
 
 const sectionLabel = {
     hero: 'Home',
@@ -58,13 +49,13 @@ const StackCard = ({ id, index, isLast, children }) => {
                 >
                     <div
                         ref={scrollerRef}
-                        className="h-full overflow-y-auto pb-20 lg:pb-0"
+                        className="stack-scroll h-full overflow-y-auto pb-20 lg:pb-0"
                         tabIndex={scrollable ? 0 : undefined}
                         role={scrollable ? 'region' : undefined}
                         aria-label={scrollable ? sectionLabel[id] || id : undefined}
                     >
                         <div className="flex min-h-full flex-col" style={{ justifyContent: 'safe center' }}>
-                            <ContentYContext.Provider value={restingY}>{children}</ContentYContext.Provider>
+                            {children}
                         </div>
                     </div>
                     {!reduceMotion && (

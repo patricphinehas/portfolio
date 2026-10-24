@@ -53,7 +53,7 @@ const LocationMap = () => {
                             href={directionsUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center gap-2 text-indigo-600 font-semibold hover:gap-3 transition-all shrink-0"
+                            className="inline-flex items-center gap-2 text-[#14635a] font-semibold hover:gap-3 transition-all shrink-0"
                         >
                             Get Directions
                             <ArrowRight size={16} />

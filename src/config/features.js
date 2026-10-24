@@ -10,4 +10,8 @@ export const features = {
   showTestimonials: false,
   /** Case Studies section — id="case-studies" */
   showCaseStudies: false,
+  /** Hero line "Open to roles in ..." with the email link */
+  showAvailability: false,
+  /** "Download resume" button in the Hero and the Contact list */
+  showResume: false,
 };

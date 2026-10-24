@@ -8,7 +8,7 @@ import { Sparkles, ArrowRight } from '../components/icons/KoboyoIcons';
 
 const ThankYou = () => {
     return (
-        <div className="min-h-screen text-slate-800 selection:bg-indigo-500/20 flex flex-col">
+        <div className="min-h-screen text-slate-800 selection:bg-[#14635a]/20 flex flex-col">
             <Seo
                 title="Thank You"
                 description="Thanks for reaching out — your message has been received and you'll hear back soon."
@@ -24,7 +24,7 @@ const ThankYou = () => {
                     transition={{ duration: 0.6 }}
                     className="glass-card max-w-lg w-full text-center p-10 md:p-14"
                 >
-                    <div className="w-16 h-16 rounded-2xl bg-indigo-500/10 text-indigo-600 flex items-center justify-center mx-auto mb-6">
+                    <div className="w-16 h-16 rounded-2xl bg-[#14635a]/10 text-[#14635a] flex items-center justify-center mx-auto mb-6">
                         <Sparkles size={32} />
                     </div>
                     <h1 className="text-3xl md:text-4xl font-extrabold mb-4">
