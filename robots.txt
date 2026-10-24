@@ -1,6 +1,8 @@
 User-agent: *
 Allow: /
 Disallow: /thank-you
+Disallow: /portfolio/thank-you
 Disallow: /study/
+Disallow: /portfolio/study/
 
-Sitemap: https://patricphinehas.dev/sitemap.xml
+Sitemap: https://patricthedev.in/portfolio/sitemap.xml
