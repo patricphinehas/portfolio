@@ -1,69 +1,63 @@
-import React, { useLayoutEffect, useRef } from 'react';
+import React, { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import {
     motion,
     useAnimationFrame,
     useInView,
     useMotionValue,
+    useReducedMotion,
     useSpring,
     useTransform,
 } from 'framer-motion';
-import { Linkedin } from 'lucide-react';
+import { Github, Linkedin } from 'lucide-react';
 import {
-    SiReact, SiAngular, SiTypescript, SiJavascript, SiNextdotjs, SiNodedotjs,
-    SiPython, SiVuedotjs, SiTailwindcss, SiExpress, SiFastapi, SiGraphql, SiMongodb, SiPostgresql, SiDocker, SiFigma,
-    SiGit, SiGithub, SiAmazonwebservices, SiFirebase, SiRedis, SiMysql, SiTensorflow, SiPandas, SiThreedotjs,
-    SiJest, SiCypress, SiVite, SiPostman, SiSass,
+    SiReact, SiAngular, SiTypescript, SiJavascript, SiNextdotjs, SiVuedotjs,
+    SiNodedotjs, SiPython, SiFastapi, SiTailwindcss, SiGraphql,
+    SiChartdotjs, SiD3Dotjs, SiThreedotjs, SiLeaflet,
+    SiMongodb, SiPostgresql, SiDocker, SiJest, SiCypress, SiVite, SiGithub, SiFigma,
 } from 'react-icons/si';
-import { personalInfo } from '../data/portfolio';
+import { personalInfo, positioning } from '../data/portfolio';
 import { ArrowRight } from './icons/KoboyoIcons';
 import { features } from '../config/features';
-import { TEAL, CORAL, sectionGrid } from './SectionIntro';
+import { TEAL, sectionGrid } from './SectionIntro';
 
 // radius is a fraction of the field's half-width; speed is radians per second (negative = counter-clockwise).
 const RINGS = [
     {
-        radius: 0.34, speed: 0.22, tile: 60, icon: 30,
+        radius: 0.32, speed: 0.22, tile: 56, icon: 28,
         items: [
             { Icon: SiReact, color: '#61DAFB', name: 'React' },
             { Icon: SiAngular, color: '#DD0031', name: 'Angular' },
             { Icon: SiTypescript, color: '#3178C6', name: 'TypeScript' },
-            { Icon: SiJavascript, color: '#E8C400', name: 'JavaScript' },
+            { Icon: SiJavascript, color: '#F7DF1E', name: 'JavaScript' },
             { Icon: SiNextdotjs, color: '#111111', name: 'Next.js' },
-            { Icon: SiNodedotjs, color: '#339933', name: 'Node.js' },
+            { Icon: SiVuedotjs, color: '#4FC08D', name: 'Vue.js' },
         ],
     },
     {
-        radius: 0.63, speed: -0.14, tile: 54, icon: 26,
+        radius: 0.56, speed: -0.14, tile: 50, icon: 24,
         items: [
+            { Icon: SiNodedotjs, color: '#339933', name: 'Node.js' },
             { Icon: SiPython, color: '#3776AB', name: 'Python' },
-            { Icon: SiVuedotjs, color: '#4FC08D', name: 'Vue.js' },
-            { Icon: SiTailwindcss, color: '#06B6D4', name: 'Tailwind' },
-            { Icon: SiExpress, color: '#111111', name: 'Express' },
             { Icon: SiFastapi, color: '#009688', name: 'FastAPI' },
+            { Icon: SiTailwindcss, color: '#06B6D4', name: 'Tailwind' },
             { Icon: SiGraphql, color: '#E10098', name: 'GraphQL' },
+            { Icon: SiChartdotjs, color: '#FF6384', name: 'Chart.js' },
+            { Icon: SiD3Dotjs, color: '#F9A03C', name: 'D3.js' },
+            { Icon: SiThreedotjs, color: '#111111', name: 'Three.js' },
+        ],
+    },
+    {
+        radius: 0.78, speed: 0.08, tile: 44, icon: 20,
+        items: [
+            { Icon: SiLeaflet, color: '#199900', name: 'Leaflet' },
             { Icon: SiMongodb, color: '#47A248', name: 'MongoDB' },
             { Icon: SiPostgresql, color: '#4169E1', name: 'PostgreSQL' },
             { Icon: SiDocker, color: '#2496ED', name: 'Docker' },
-            { Icon: SiFigma, color: '#F24E1E', name: 'Figma' },
-        ],
-    },
-    {
-        radius: 0.91, speed: 0.08, tile: 48, icon: 22,
-        items: [
-            { Icon: SiGit, color: '#F05032', name: 'Git' },
-            { Icon: SiGithub, color: '#181717', name: 'GitHub' },
-            { Icon: SiAmazonwebservices, color: '#FF9900', name: 'AWS' },
-            { Icon: SiFirebase, color: '#DD2C00', name: 'Firebase' },
-            { Icon: SiRedis, color: '#DC382D', name: 'Redis' },
-            { Icon: SiMysql, color: '#4479A1', name: 'MySQL' },
-            { Icon: SiTensorflow, color: '#FF6F00', name: 'TensorFlow' },
-            { Icon: SiPandas, color: '#150458', name: 'Pandas' },
-            { Icon: SiThreedotjs, color: '#111111', name: 'Three.js' },
             { Icon: SiJest, color: '#C21325', name: 'Jest' },
-            { Icon: SiCypress, color: '#17202C', name: 'Cypress' },
+            { Icon: SiCypress, color: '#69D3A7', name: 'Cypress' },
             { Icon: SiVite, color: '#646CFF', name: 'Vite' },
-            { Icon: SiPostman, color: '#FF6C37', name: 'Postman' },
-            { Icon: SiSass, color: '#CC6699', name: 'Sass' },
+            { Icon: SiGithub, color: '#181717', name: 'GitHub' },
+            { Icon: SiFigma, color: '#F24E1E', name: 'Figma' },
         ],
     },
 ];
@@ -109,7 +103,7 @@ const OrbitTile = ({ tech, ring, slot, index, clock, mouseX, mouseY, influence, 
                 className="group relative flex items-center justify-center rounded-2xl border border-slate-900/5 bg-white shadow-[0_8px_24px_rgba(36,80,72,0.14)]"
                 style={{ width: ring.tile, height: ring.tile }}
             >
-                <tech.Icon size={ring.icon} color={tech.color} />
+                <tech.Icon size={ring.icon} color={tech.color} aria-label={tech.name} />
                 <span className="pointer-events-none absolute top-full z-10 mt-2 whitespace-nowrap rounded-full bg-slate-900 px-2.5 py-1 text-xs font-medium text-white opacity-0 transition-opacity group-hover:opacity-100">
                     {tech.name}
                 </span>
@@ -127,6 +121,7 @@ const OrbitField = () => {
     const mouseY = useSpring(0, MOUSE_SPRING);
     const influence = useSpring(0, { stiffness: 120, damping: 20 });
     const inView = useInView(fieldRef, { margin: '100px' });
+    const reduce = useReducedMotion();
 
     useLayoutEffect(() => {
         const measure = () => {
@@ -139,7 +134,7 @@ const OrbitField = () => {
     }, []);
 
     useAnimationFrame((_, delta) => {
-        if (inView) clock.set(clock.get() + (delta / 1000) * speed.get());
+        if (inView && !reduce) clock.set(clock.get() + (delta / 1000) * speed.get());
     });
 
     const onMove = (e) => {
@@ -180,8 +175,8 @@ const OrbitField = () => {
                 <motion.div
                     className="absolute inset-0 rounded-full"
                     style={{ backgroundColor: TEAL }}
-                    animate={{ scale: [1, 1.6], opacity: [0.35, 0] }}
-                    transition={{ duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
+                    animate={reduce ? undefined : { scale: [1, 1.6], opacity: [0.35, 0] }}
+                    transition={reduce ? undefined : { duration: 2.4, repeat: Infinity, ease: 'easeOut' }}
                 />
                 <div
                     className="relative flex h-28 w-28 flex-col items-center justify-center rounded-full text-white shadow-[0_20px_50px_rgba(36,157,143,0.35)]"
@@ -235,7 +230,7 @@ const MarqueeRows = () => (
                                 title={name}
                                 className="flex h-12 w-12 items-center justify-center rounded-xl border border-slate-900/5 bg-white shadow-sm"
                             >
-                                <Icon size={24} color={color} />
+                                <Icon size={24} color={color} aria-label={name} />
                             </span>
                         </li>
                     ))}
@@ -253,26 +248,21 @@ const stagger = {
 };
 
 const rise = {
-    hidden: { opacity: 0, y: 28, filter: 'blur(6px)' },
-    show: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: EASE } },
+    hidden: { opacity: 1, y: 0 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: EASE } },
 };
-
-const wordUp = {
-    hidden: { y: '110%' },
-    show: { y: '0%', transition: { duration: 0.8, ease: EASE } },
-};
-
-// The mask needs bottom padding so descenders (g) aren't clipped.
-const MaskedWord = ({ children, className = '', style }) => (
-    <span className="-mb-[0.12em] inline-block overflow-hidden pb-[0.12em] align-bottom">
-        <motion.span variants={wordUp} className={`inline-block ${className}`} style={style}>
-            {children}
-        </motion.span>
-    </span>
-);
 
 const Hero = () => {
-    const loop = (animation, transition) => ({ animate: animation, transition });
+    const reduce = useReducedMotion();
+    const [showOrbit, setShowOrbit] = useState(false);
+
+    useEffect(() => {
+        const mq = window.matchMedia('(min-width: 1280px)');
+        const update = () => setShowOrbit(mq.matches);
+        update();
+        mq.addEventListener('change', update);
+        return () => mq.removeEventListener('change', update);
+    }, []);
 
     return (
         <section className="py-12 sm:py-16">
@@ -289,48 +279,20 @@ const Hero = () => {
                         {personalInfo.name}
                     </motion.p>
 
-                    <motion.h1
-                        variants={stagger}
-                        className="mt-4 text-5xl font-extrabold leading-[1.02] tracking-tight text-slate-900 sm:text-6xl xl:text-7xl"
-                    >
-                        <MaskedWord>Building</MaskedWord>
-                        <br />
-                        <span className="relative inline-block">
-                            <MaskedWord style={{ color: TEAL }}>Digital</MaskedWord>{' '}
-                            <MaskedWord style={{ color: TEAL }}>Experiences</MaskedWord>
-                            <motion.span
-                                aria-hidden="true"
-                                className="absolute -bottom-1 left-0 h-1.5 w-full origin-left rounded-full"
-                                style={{ backgroundColor: CORAL }}
-                                initial={{ scaleX: 0 }}
-                                animate={{ scaleX: 1 }}
-                                transition={{ delay: 1, duration: 0.9, ease: EASE }}
-                            >
-                                <motion.span
-                                    className="block h-full w-full rounded-full"
-                                    style={{ backgroundColor: CORAL }}
-                                    {...loop({ opacity: [1, 0.45, 1] }, { duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 2 })}
-                                />
-                            </motion.span>
-                        </span>
-                    </motion.h1>
+                    <h1 className="mt-4 max-w-3xl text-3xl font-extrabold leading-[1.15] tracking-tight text-slate-900 sm:text-4xl xl:text-5xl">
+                        {positioning}
+                    </h1>
 
-                    <motion.p variants={rise} className="mt-7 max-w-xl text-lg leading-relaxed text-gray-600">
-                        {personalInfo.role} focused on accessible, pixel-perfect interfaces.
-                    </motion.p>
+                    <p className="mt-7 max-w-xl text-lg leading-relaxed text-slate-700">
+                        {personalInfo.availability} Email{' '}
+                        <a className="font-semibold underline" style={{ color: TEAL }} href={`mailto:${personalInfo.email}`}>
+                            {personalInfo.email}
+                        </a>
+                        .
+                    </p>
 
-                    <motion.div variants={rise} className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
+                    <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:flex-wrap">
                         <a href="#contact" className="btn btn-primary group relative justify-center">
-                            <motion.span
-                                aria-hidden="true"
-                                className="pointer-events-none absolute inset-0 rounded-full border-2"
-                                style={{ borderColor: TEAL }}
-                                initial={{ opacity: 0 }}
-                                {...loop(
-                                    { scale: [1, 1.18], opacity: [0.7, 0] },
-                                    { duration: 1.6, repeat: Infinity, repeatDelay: 2.4, ease: 'easeOut', delay: 1.6 }
-                                )}
-                            />
                             Get in Touch
                             <ArrowRight size={18} className="transition-transform group-hover:translate-x-1" />
                         </a>
@@ -339,29 +301,44 @@ const Hero = () => {
                                 View My Work
                             </a>
                         )}
+                        <a
+                            href={`${import.meta.env.BASE_URL}resume.pdf`}
+                            className="btn btn-outline justify-center"
+                            download
+                        >
+                            Download resume
+                        </a>
+                        <a href={personalInfo.github} target="_blank" rel="noopener noreferrer" className="btn btn-outline justify-center">
+                            <Github size={18} /> GitHub
+                        </a>
                         <a href={personalInfo.linkedin} target="_blank" rel="noopener noreferrer" className="btn btn-outline justify-center">
                             <Linkedin size={18} /> LinkedIn
                         </a>
-                    </motion.div>
+                    </div>
 
-                    <motion.p variants={rise} className="mt-8 flex items-center gap-2.5 text-sm text-slate-500">
-                        <span className="relative flex h-2 w-2">
-                            <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ backgroundColor: TEAL }} />
-                            <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: TEAL }} />
-                        </span>
-                        <span className="font-medium" style={{ color: TEAL }}>Available for hire</span>
+                    <p className="mt-8 flex items-center gap-2.5 text-sm text-slate-700">
+                        {!reduce && (
+                            <span className="relative flex h-2 w-2">
+                                <span className="absolute inline-flex h-full w-full animate-ping rounded-full opacity-60" style={{ backgroundColor: TEAL }} />
+                                <span className="relative inline-flex h-2 w-2 rounded-full" style={{ backgroundColor: TEAL }} />
+                            </span>
+                        )}
+                        <span className="font-medium" style={{ color: TEAL }}>Open to roles</span>
                         <span aria-hidden="true">·</span>
-                        {personalInfo.location}
-                    </motion.p>
+                        Coimbatore, Bengaluru, and remote
+                    </p>
+                    <p className="mt-3 text-sm text-slate-700">Lighthouse 90+ performance</p>
 
                     <motion.div variants={rise} className="xl:hidden">
                         <MarqueeRows />
                     </motion.div>
                 </motion.div>
 
-                <div className="hidden xl:col-span-6 xl:block">
-                    <OrbitField />
-                </div>
+                {showOrbit && (
+                    <div className="xl:col-span-6">
+                        <OrbitField />
+                    </div>
+                )}
             </div>
         </section>
     );

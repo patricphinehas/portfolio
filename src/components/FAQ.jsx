@@ -1,4 +1,5 @@
 import React, { useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
 import { Helmet } from 'react-helmet-async';
 import { faqs, responsePromise } from '../data/portfolio';
@@ -35,7 +36,7 @@ const FAQ = () => {
             <div className={sectionGrid}>
                 <div className="xl:col-span-4">
                     <SectionIntro label="FAQ" title={<>Frequently asked<br />questions</>}>
-                        The things people usually ask before we start working together.
+                        Stack, location, and availability. Pricing for small-business work is on the <Link to="/freelance" className="font-semibold underline">freelance page</Link>.
                     </SectionIntro>
                     <motion.div
                         ref={sealRowRef}

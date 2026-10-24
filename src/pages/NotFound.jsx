@@ -6,7 +6,7 @@ import { ArrowRight, FolderFiles } from '../components/icons/KoboyoIcons';
 import { features } from '../config/features';
 
 const quickLinks = [
-    features.showSelectedWorks && { label: 'Projects', href: '/#projects' },
+    features.showSelectedWorks && { label: 'Projects', href: `${import.meta.env.BASE_URL}#portfolio` },
     features.showCaseStudies && { label: 'Case Studies', href: '/#case-studies' },
     { label: 'FAQ', href: '/#faq' },
     { label: 'Contact', href: '/#contact' },

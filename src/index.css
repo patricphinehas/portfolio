@@ -1,5 +1,4 @@
 @import "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap');
 
 @layer base {
   :root {
@@ -8,7 +7,7 @@
     --bg-card: rgba(255, 255, 255, 0.8);
     --bg-card-hover: rgba(255, 255, 255, 0.95);
 
-    --primary: #249D8F;
+    --primary: #14635a;
     /* Teal 500 */
     --primary-glow: rgba(36, 157, 143, 0.15);
     --secondary: #E9C46A;
@@ -17,7 +16,7 @@
     /* Coral 500 */
 
     /* Solid Colors */
-    --accent-primary: #249D8F;
+    --accent-primary: #14635a;
     --accent-secondary: #E9C46A;
     --accent-tertiary: #E76F51;
 
@@ -35,10 +34,11 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
   }
 
   body {
-    font-family: 'Outfit', sans-serif;
+    font-family: 'Outfit', system-ui, sans-serif;
     background-color: var(--bg-dark);
     color: #1e293b;
     line-height: 1.7;
@@ -87,6 +87,12 @@
   background: #FFFCF5;
   border-top: 1px solid rgba(36, 157, 143, 0.16);
   box-shadow: 0 -16px 40px rgba(36, 80, 72, 0.14);
+}
+
+/* One reel per section. A fast flick stops on the next screen instead of skipping it. */
+.section-snap {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 .section-title {
@@ -141,9 +147,9 @@
 }
 
 .btn-primary {
-  background: #249D8F;
+  background: #14635a;
   color: white;
-  box-shadow: 0 4px 15px rgba(36, 157, 143, 0.4);
+  box-shadow: 0 4px 15px rgba(20, 99, 90, 0.35);
 }
 
 .btn-primary:hover {
@@ -200,5 +206,290 @@
 
   .section-title {
     font-size: 2rem;
+  }
+}
+
+/* Home System page only: dark futuristic lively background */
+.home-system-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background:
+    radial-gradient(1200px 640px at 14% -8%, rgba(36, 157, 143, 0.28), transparent 62%),
+    radial-gradient(920px 580px at 90% 18%, rgba(233, 196, 106, 0.16), transparent 64%),
+    radial-gradient(960px 620px at 52% 108%, rgba(231, 111, 81, 0.16), transparent 62%),
+    linear-gradient(180deg, #050b0d 0%, #081316 52%, #050a0c 100%);
+}
+
+.home-system-grid {
+  position: absolute;
+  inset: -40% -25% -25% -25%;
+  background-image:
+    linear-gradient(rgba(36, 157, 143, 0.22) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(36, 157, 143, 0.22) 1px, transparent 1px),
+    linear-gradient(rgba(233, 196, 106, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(233, 196, 106, 0.08) 1px, transparent 1px);
+  background-size: 160px 160px, 160px 160px, 32px 32px, 32px 32px;
+  transform: perspective(760px) rotateX(58deg);
+  transform-origin: 50% 62%;
+  -webkit-mask: radial-gradient(ellipse at 50% 68%, #000 18%, rgba(0, 0, 0, 0.55) 54%, transparent 78%);
+  mask: radial-gradient(ellipse at 50% 68%, #000 18%, rgba(0, 0, 0, 0.55) 54%, transparent 78%);
+  animation: home-system-grid-flow 18s linear infinite;
+}
+
+.home-system-mesh {
+  position: absolute;
+  inset: -120px;
+  background-image:
+    radial-gradient(circle at 1px 1px, rgba(94, 234, 212, 0.34) 1.25px, transparent 1.6px),
+    radial-gradient(circle at 29px 29px, rgba(233, 196, 106, 0.28) 1.1px, transparent 1.5px);
+  background-size: 56px 56px;
+  opacity: 0.7;
+  animation: home-system-drift 36s linear infinite;
+}
+
+.home-system-circuits {
+  position: absolute;
+  inset: -160px;
+  background-image:
+    repeating-linear-gradient(125deg,
+      transparent 0 86px,
+      rgba(36, 157, 143, 0.12) 86px 87px,
+      transparent 87px 172px,
+      rgba(233, 196, 106, 0.1) 172px 173px),
+    repeating-linear-gradient(-35deg,
+      transparent 0 118px,
+      rgba(231, 111, 81, 0.09) 118px 119px,
+      transparent 119px 236px);
+  animation: home-system-drift-back 52s linear infinite;
+}
+
+.home-system-orbit,
+.home-system-beam {
+  position: absolute;
+  display: block;
+}
+
+.home-system-orbit {
+  border-radius: 9999px;
+  animation: home-system-spin 64s linear infinite;
+}
+
+.home-system-orbit-a {
+  top: -140px;
+  right: -110px;
+  width: 520px;
+  height: 520px;
+  background: conic-gradient(from 0deg,
+      transparent 0 12%,
+      rgba(45, 212, 191, 0.85) 18%,
+      rgba(233, 196, 106, 0.9) 28%,
+      transparent 36% 58%,
+      rgba(231, 111, 81, 0.75) 68%,
+      rgba(36, 157, 143, 0.8) 78%,
+      transparent 86% 100%);
+  -webkit-mask:
+    radial-gradient(circle,
+      transparent 49.4%,
+      #000 49.8% 50.5%,
+      transparent 50.9% 63.4%,
+      #000 63.8% 64.4%,
+      transparent 64.8%);
+  mask:
+    radial-gradient(circle,
+      transparent 49.4%,
+      #000 49.8% 50.5%,
+      transparent 50.9% 63.4%,
+      #000 63.8% 64.4%,
+      transparent 64.8%);
+  filter: drop-shadow(0 0 18px rgba(45, 212, 191, 0.45));
+}
+
+.home-system-orbit-b {
+  bottom: 4%;
+  left: -170px;
+  width: 460px;
+  height: 460px;
+  animation-duration: 84s;
+  animation-direction: reverse;
+  background: conic-gradient(from 140deg,
+      transparent 0 16%,
+      rgba(36, 157, 143, 0.9) 26%,
+      rgba(233, 196, 106, 0.85) 38%,
+      transparent 48% 70%,
+      rgba(45, 212, 191, 0.75) 82%,
+      transparent 92% 100%);
+  -webkit-mask:
+    radial-gradient(circle,
+      transparent 54%,
+      #000 54.5% 55.2%,
+      transparent 55.7% 69.2%,
+      #000 69.6% 70.2%,
+      transparent 70.6%);
+  mask:
+    radial-gradient(circle,
+      transparent 54%,
+      #000 54.5% 55.2%,
+      transparent 55.7% 69.2%,
+      #000 69.6% 70.2%,
+      transparent 70.6%);
+  filter: drop-shadow(0 0 16px rgba(36, 157, 143, 0.4));
+}
+
+.home-system-orbit-c {
+  top: 38%;
+  right: 4%;
+  width: 260px;
+  height: 260px;
+  animation-duration: 42s;
+  background: conic-gradient(from 60deg,
+      rgba(231, 111, 81, 0.85) 0 22%,
+      transparent 28% 54%,
+      rgba(233, 196, 106, 0.9) 64%,
+      rgba(45, 212, 191, 0.85) 78%,
+      transparent 86% 100%);
+  -webkit-mask: radial-gradient(circle, transparent 62%, #000 62.6% 63.6%, transparent 64.2%);
+  mask: radial-gradient(circle, transparent 62%, #000 62.6% 63.6%, transparent 64.2%);
+  filter: drop-shadow(0 0 14px rgba(233, 196, 106, 0.35));
+}
+
+.home-system-beam {
+  height: 2px;
+  width: 280px;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, rgba(45, 212, 191, 0.9), rgba(233, 196, 106, 0.95), transparent);
+  box-shadow: 0 0 18px rgba(45, 212, 191, 0.65);
+  animation: home-system-pulse-beam 11s ease-in-out infinite;
+}
+
+.home-system-beam-a {
+  top: 22%;
+  left: -60px;
+  transform: rotate(-18deg);
+}
+
+.home-system-beam-b {
+  top: 64%;
+  right: -50px;
+  width: 340px;
+  background: linear-gradient(90deg, transparent, rgba(231, 111, 81, 0.85), rgba(233, 196, 106, 0.9), transparent);
+  box-shadow: 0 0 18px rgba(231, 111, 81, 0.55);
+  transform: rotate(14deg);
+  animation-delay: -4s;
+}
+
+.home-system-beam-c {
+  bottom: 14%;
+  left: 24%;
+  width: 220px;
+  transform: rotate(-8deg);
+  animation-delay: -7.5s;
+}
+
+.home-system-veil {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 24%, rgba(5, 11, 13, 0.18), rgba(5, 11, 13, 0.56) 66%, rgba(5, 11, 13, 0.82) 100%);
+}
+
+@keyframes home-system-grid-flow {
+  from {
+    background-position: 0 0, 0 0, 0 0, 0 0;
+  }
+
+  to {
+    background-position: 0 160px, 160px 0, 0 32px, 32px 0;
+  }
+}
+
+@keyframes home-system-drift {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(-56px, -56px, 0);
+  }
+}
+
+@keyframes home-system-drift-back {
+  from {
+    transform: translate3d(0, 0, 0);
+  }
+
+  to {
+    transform: translate3d(112px, 84px, 0);
+  }
+}
+
+@keyframes home-system-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes home-system-pulse-beam {
+  0%,
+  100% {
+    opacity: 0.25;
+    transform: translate3d(-24px, 0, 0) scaleX(0.85);
+  }
+
+  50% {
+    opacity: 0.95;
+    transform: translate3d(36px, -10px, 0) scaleX(1.15);
+  }
+}
+
+@media (max-width: 720px) {
+  .home-system-orbit-a {
+    right: -220px;
+    opacity: 0.7;
+  }
+
+  .home-system-orbit-b {
+    left: -240px;
+  }
+
+  .home-system-orbit-c {
+    right: -90px;
+    opacity: 0.65;
+  }
+
+  .home-system-beam-b,
+  .home-system-beam-c {
+    opacity: 0.5;
+  }
+}
+
+/* slate-500 and gray-500 are about 4.2:1 on cream #FDF0D5. Body text needs 4.5:1. */
+.text-slate-400,
+.text-slate-500,
+.text-gray-500 {
+  color: #3e4c5e;
+}
+
+:focus-visible {
+  outline: 3px solid #14635a;
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+  }
+
+  .marquee-track,
+  .animate-ping,
+  .home-system-grid,
+  .home-system-mesh,
+  .home-system-circuits,
+  .home-system-orbit,
+  .home-system-beam {
+    animation: none !important;
   }
 }

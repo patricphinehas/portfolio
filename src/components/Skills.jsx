@@ -3,8 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { skills } from '../data/portfolio';
 import SectionIntro, { TEAL, CORAL, CREAM, sectionGrid, pad } from './SectionIntro';
 
-const totalTools = skills.reduce((n, g) => n + g.items.length, 0);
-
 const Skills = () => {
     const [active, setActive] = useState(0);
     const group = skills[active];
@@ -14,7 +12,7 @@ const Skills = () => {
             <div className={sectionGrid}>
                 <div className="min-w-0 xl:col-span-5">
                     <SectionIntro label="Skills" title={<>Technical<br />Competencies</>}>
-                        {skills.length} disciplines · {totalTools} tools I work with day to day.
+                        Web engineering, from interface to API. Charts and maps included. Data science is left off for now.
                     </SectionIntro>
 
                     {/* Phones: one swipeable row bleeding to the card edges. Tablets: wrapped rows. xl: the list below. */}
@@ -78,7 +76,7 @@ const Skills = () => {
                     <AnimatePresence mode="wait">
                         <motion.div
                             key={group.category}
-                            initial={{ opacity: 0, y: 24 }}
+                            initial={{ opacity: 1, y: 0 }}
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -16 }}
                             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
@@ -96,7 +94,7 @@ const Skills = () => {
                                 {group.items.map((item, i) => (
                                     <motion.li
                                         key={item}
-                                        initial={{ opacity: 0, x: -12 }}
+                                        initial={{ opacity: 1, x: 0 }}
                                         animate={{ opacity: 1, x: 0 }}
                                         transition={{ delay: 0.05 + i * 0.04, duration: 0.3 }}
                                         className="flex items-center gap-3 border-b border-slate-900/10 py-3"

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { motion, animate, AnimatePresence } from 'framer-motion';
 import {
   ChevronLeft, ChevronRight, House, Code, Award, Briefcase, GraduationCap,
-  LayoutGrid, FileText, Quote, CircleHelp, Mail, Menu, X, Gamepad2,
+  LayoutGrid, CircleHelp, Mail, Menu, X, Github,
 } from 'lucide-react';
 import { personalInfo } from '../data/portfolio';
 
@@ -11,15 +11,12 @@ const MENU_ORIGIN = 'calc(100% - 3.5rem) calc(100% - 3.5rem)';
 
 const ALL_SECTIONS = [
   { id: 'hero', label: 'Home', icon: House },
+  { id: 'portfolio', label: 'Projects', icon: LayoutGrid },
   { id: 'skills', label: 'Skills', icon: Code },
   { id: 'certifications', label: 'Certifications', icon: Award },
   { id: 'experience', label: 'Experience', icon: Briefcase },
   { id: 'education', label: 'Education', icon: GraduationCap },
-  { id: 'portfolio', label: 'Portfolio', icon: LayoutGrid },
-  { id: 'case-studies', label: 'Case Studies', icon: FileText },
-  { id: 'testimonials', label: 'Testimonials', icon: Quote },
   { id: 'faq', label: 'FAQ', icon: CircleHelp },
-  { id: 'pokedex', label: 'Pokédex', icon: Gamepad2 },
   { id: 'contact', label: 'Contact', icon: Mail },
 ];
 
@@ -27,7 +24,9 @@ const PageSidebar = ({ sectionIds }) => {
   const [activeSection, setActiveSection] = useState('hero');
   const [isMinimized, setIsMinimized] = useState(true);
 
-  const sections = ALL_SECTIONS.filter((s) => sectionIds.includes(s.id));
+  const sections = sectionIds
+    .map((id) => ALL_SECTIONS.find((s) => s.id === id))
+    .filter(Boolean);
 
   // Cards are pinned, so track the in-flow anchors instead of observing the cards themselves.
   useEffect(() => {
@@ -127,7 +126,7 @@ const PageSidebar = ({ sectionIds }) => {
             >
               <p
                 className="text-sm font-bold leading-tight"
-                style={{ color: '#249D8F' }}
+                style={{ color: '#14635a' }}
               >
                 Patric
               </p>
@@ -141,7 +140,7 @@ const PageSidebar = ({ sectionIds }) => {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
             className="p-2 rounded-lg hover:bg-white/50 transition-colors ml-auto"
-            style={{ color: '#249D8F' }}
+            style={{ color: '#14635a' }}
           >
             {isMinimized ? (
               <ChevronRight size={18} />
@@ -169,13 +168,13 @@ const PageSidebar = ({ sectionIds }) => {
                 whileTap={{ scale: 0.96 }}
                 className={`group relative flex w-full items-center gap-3 rounded-xl text-left text-sm font-medium transition-colors ${
                   isMinimized ? 'justify-center p-3' : 'px-4 py-3'
-                } ${isActive ? 'text-white' : 'text-slate-600 hover:bg-[#249D8F]/10 hover:text-[#249D8F]'}`}
+                } ${isActive ? 'text-white' : 'text-slate-600 hover:bg-[#14635a]/10 hover:text-[#14635a]'}`}
               >
                 {isActive && (
                   <motion.span
                     layoutId="sidebar-active"
                     className="absolute inset-0 rounded-xl shadow-[0_6px_16px_rgba(36,157,143,0.28)]"
-                    style={{ backgroundColor: '#249D8F' }}
+                    style={{ backgroundColor: '#14635a' }}
                     transition={{ type: 'spring', stiffness: 380, damping: 32 }}
                   />
                 )}
@@ -186,6 +185,20 @@ const PageSidebar = ({ sectionIds }) => {
           })}
         </nav>
 
+        <a
+          href={personalInfo.github}
+          target="_blank"
+          rel="noopener noreferrer"
+          title="GitHub"
+          aria-label="GitHub"
+          className={`mx-3 mb-4 flex items-center gap-3 rounded-xl text-sm font-medium text-slate-700 hover:bg-[#14635a]/10 hover:text-[#14635a] ${
+            isMinimized ? 'justify-center p-3' : 'px-4 py-3'
+          }`}
+        >
+          <Github size={19} strokeWidth={1.75} className="shrink-0" />
+          {!isMinimized && <span>GitHub</span>}
+        </a>
+
         {/* Bottom Accent - Solid color */}
         {!isMinimized && (
           <motion.div
@@ -194,7 +207,7 @@ const PageSidebar = ({ sectionIds }) => {
             transition={{ delay: 0.4, duration: 0.8 }}
             className="mt-8 mb-6 h-1 w-12"
             style={{
-              backgroundColor: '#249D8F',
+              backgroundColor: '#14635a',
               transformOrigin: 'left',
             }}
           />
@@ -215,7 +228,7 @@ const PageSidebar = ({ sectionIds }) => {
               transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
             >
               <p className="flex items-center gap-3 text-sm font-semibold uppercase tracking-[0.22em] text-slate-500">
-                <span className="inline-block h-px w-10" style={{ backgroundColor: '#249D8F' }} />
+                <span className="inline-block h-px w-10" style={{ backgroundColor: '#14635a' }} />
                 {personalInfo.name}
               </p>
               <nav className="mt-8 border-t border-slate-900/10">
@@ -234,7 +247,7 @@ const PageSidebar = ({ sectionIds }) => {
                       <span className="font-mono text-xs text-slate-500">{String(idx + 1).padStart(2, '0')}</span>
                       <span
                         className={`flex-1 text-2xl font-bold tracking-tight ${isActive ? '' : 'text-slate-900'}`}
-                        style={isActive ? { color: '#249D8F' } : undefined}
+                        style={isActive ? { color: '#14635a' } : undefined}
                       >
                         {section.label}
                       </span>
@@ -267,7 +280,7 @@ const PageSidebar = ({ sectionIds }) => {
           animate={{ opacity: 1, scale: 1 }}
           whileTap={{ scale: 0.92 }}
           className="fixed bottom-5 right-5 z-[60] flex h-14 w-14 items-center justify-center rounded-full text-white shadow-[0_10px_30px_rgba(36,157,143,0.4)]"
-          style={{ backgroundColor: '#249D8F' }}
+          style={{ backgroundColor: '#14635a' }}
         >
           <AnimatePresence mode="wait" initial={false}>
             <motion.span

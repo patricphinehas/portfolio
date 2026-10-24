@@ -19,7 +19,7 @@ const Navbar = () => {
         { name: 'Home', href: '#home' },
         { name: 'Skills', href: '#skills' },
         { name: 'Experience', href: '#experience' },
-        features.showSelectedWorks && { name: 'Projects', href: '#projects' },
+        features.showSelectedWorks && { name: 'Projects', href: '#portfolio' },
         features.showCaseStudies && { name: 'Case Studies', href: '#case-studies' },
         { name: 'FAQ', href: '#faq' },
     ].filter(Boolean);

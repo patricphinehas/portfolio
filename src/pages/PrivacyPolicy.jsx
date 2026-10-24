@@ -64,7 +64,7 @@ const PrivacyPolicy = () => {
                             href="https://tools.google.com/dlpage/gaoptout"
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="text-indigo-600 hover:underline"
+                            className="font-semibold text-[#14635a] underline"
                         >
                             Google Analytics Opt-out Browser Add-on
                         </a>.
@@ -82,7 +82,7 @@ const PrivacyPolicy = () => {
                     <p>
                         You may request access to, correction of, or deletion of any personal information you've
                         submitted by emailing{' '}
-                        <a href={`mailto:${personalInfo.email}`} className="text-indigo-600 hover:underline">
+                        <a href={`mailto:${personalInfo.email}`} className="font-semibold text-[#14635a] underline">
                             {personalInfo.email}
                         </a>.
                     </p>
@@ -98,13 +98,13 @@ const PrivacyPolicy = () => {
                 <Section title="8. Contact">
                     <p>
                         Questions about this policy can be directed to{' '}
-                        <a href={`mailto:${personalInfo.email}`} className="text-indigo-600 hover:underline">
+                        <a href={`mailto:${personalInfo.email}`} className="font-semibold text-[#14635a] underline">
                             {personalInfo.email}
                         </a>.
                     </p>
                 </Section>
 
-                <Link to="/" className="text-indigo-600 font-semibold hover:underline">
+                <Link to="/" className="font-semibold text-[#14635a] underline">
                     ← Back to homepage
                 </Link>
             </main>

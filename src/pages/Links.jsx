@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ArrowLeft, ArrowUpRight, BookOpen, ChefHat, Instagram, Linkedin, MapPin, Mic2, Youtube } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, BookOpen, ChefHat, Github, House, Instagram, Linkedin, MapPin, Mic2, Youtube } from 'lucide-react';
 import Seo from '../components/Seo';
 import { Mail } from '../components/icons/KoboyoIcons';
 import linksData from '../data/links.json';
@@ -8,7 +8,9 @@ import { TEAL } from '../components/SectionIntro';
 
 const icons = {
     mail: Mail,
+    github: Github,
     linkedin: Linkedin,
+    house: House,
     chef: ChefHat,
     book: BookOpen,
     instagram: Instagram,
@@ -70,7 +72,7 @@ const Links = () => {
                                 <Icon size={22} style={{ color: TEAL }} />
                                 <span className="min-w-0 flex-1">
                                     <span className="block font-bold text-slate-900">{item.label}</span>
-                                    <span className="block truncate text-sm text-slate-500">{item.detail}</span>
+                                    <span className="block text-sm text-slate-700">{item.detail}</span>
                                 </span>
                             </>
                         );

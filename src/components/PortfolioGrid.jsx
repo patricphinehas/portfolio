@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { Github, ExternalLink } from 'lucide-react';
+import { Github, House } from 'lucide-react';
 import { projects } from '../data/portfolio';
 import { ArrowRight, Sprout, Ambulance, Sparkles, Warehouse, SolarPanel, Bot, LayoutDashboard, AudioLines, FolderFiles } from './icons/KoboyoIcons';
 
 const iconMap = {
+  home: House,
   vegroute: Sprout,
   ambulance: Ambulance,
   clinic: Sparkles,
@@ -36,14 +38,48 @@ const PortfolioGrid = () => {
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-16"
+            className="mb-10"
           >
-            <h2 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: '#1e293b' }}>
-              Selected <span style={{ color: '#249D8F' }}>Works</span>
-            </h2>
-            <p className="text-gray-600 text-lg max-w-2xl">
-              From leading product teams to strategic brand & growth consulting — a look at what I've shipped.
-            </p>
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="text-5xl md:text-6xl font-bold mb-4" style={{ color: '#1e293b' }}>
+                  Selected <span style={{ color: '#249D8F' }}>Works</span>
+                </h2>
+                <p className="text-gray-600 text-lg max-w-2xl">
+                  From leading product teams to strategic brand & growth consulting — a look at what I've shipped.
+                </p>
+              </div>
+              {selectedTag !== 'All' && (
+                <button
+                  type="button"
+                  onClick={() => setSelectedTag('All')}
+                  className="inline-flex items-center gap-2 rounded-full border border-[#249D8F]/30 bg-white/80 px-4 py-2 text-xs font-semibold text-slate-800 shadow-sm transition hover:border-[#249D8F] hover:text-[#249D8F]"
+                >
+                  Showing: <span style={{ color: '#249D8F' }}>{selectedTag}</span> · Show all ({projects.length})
+                </button>
+              )}
+            </div>
+
+            <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter projects by tag">
+              {allTags.map((tag) => {
+                const active = selectedTag === tag;
+                return (
+                  <button
+                    key={tag}
+                    type="button"
+                    aria-pressed={active}
+                    onClick={() => setSelectedTag(tag)}
+                    className={`rounded-full px-3.5 py-1.5 text-xs font-semibold transition ${
+                      active
+                        ? 'bg-[#249D8F] text-white shadow-sm'
+                        : 'border border-slate-900/10 bg-white/70 text-slate-700 hover:border-[#249D8F]/40 hover:text-[#249D8F]'
+                    }`}
+                  >
+                    {tag}
+                  </button>
+                );
+              })}
+            </div>
           </motion.div>
 
           {/* Cards Grid */}
@@ -79,6 +115,14 @@ const PortfolioGrid = () => {
 
                     {/* Content */}
                     <div className="relative z-10">
+                      {project.page && (
+                        <Link
+                          to={project.page}
+                          className="absolute inset-0 z-10 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#14635a]"
+                          aria-label={`${project.title} project page`}
+                        />
+                      )}
+
                       {/* Icon and Links Row */}
                       <div className="flex items-start justify-between mb-5">
                         <div
@@ -87,20 +131,17 @@ const PortfolioGrid = () => {
                         >
                           <IconComponent size={24} />
                         </div>
-                        <div className="flex gap-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                        {project.github && (
                           <a
-                            href={project.github || '#'}
-                            className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700"
+                            href={project.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            aria-label={`${project.title} on GitHub`}
+                            className="relative z-20 p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700"
                           >
                             <Github size={18} />
                           </a>
-                          <a
-                            href={project.link || '#'}
-                            className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700"
-                          >
-                            <ExternalLink size={18} />
-                          </a>
-                        </div>
+                        )}
                       </div>
 
                       {/* Role Badge */}
@@ -118,11 +159,13 @@ const PortfolioGrid = () => {
                       {/* Title */}
                       <h3 className="text-xl font-bold mb-3 text-slate-900 flex items-center justify-between gap-2">
                         <span className="group-hover:text-[#249D8F] transition-colors">{project.title}</span>
-                        <ArrowRight
-                          size={18}
-                          className="shrink-0 -rotate-45 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300"
-                          style={{ color: '#249D8F' }}
-                        />
+                        {project.page && (
+                          <ArrowRight
+                            size={18}
+                            className="shrink-0 -rotate-45 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300"
+                            style={{ color: '#249D8F' }}
+                          />
+                        )}
                       </h3>
 
                       {/* Description */}
@@ -138,7 +181,7 @@ const PortfolioGrid = () => {
                             initial={{ opacity: 0, scale: 0.9 }}
                             whileInView={{ opacity: 1, scale: 1 }}
                             transition={{ delay: tagIdx * 0.05 }}
-                            className="text-xs font-medium rounded-full px-3 py-1 cursor-pointer hover:scale-105 transition-transform"
+                            className="relative z-20 text-xs font-medium rounded-full px-3 py-1 cursor-pointer hover:scale-105 transition-transform"
                             style={{
                               backgroundColor: 'rgba(36, 157, 143, 0.1)',
                               color: '#249D8F',

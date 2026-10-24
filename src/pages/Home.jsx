@@ -1,4 +1,5 @@
-import React, { Suspense, lazy } from 'react';
+import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import Seo from '../components/Seo';
 import PageSidebar from '../components/PageSidebar';
 import StackCard from '../components/StackCard';
@@ -8,41 +9,47 @@ import Certifications from '../components/Certifications';
 import Experience from '../components/Experience';
 import Education from '../components/Education';
 import PortfolioGrid from '../components/PortfolioGrid';
-import CaseStudies from '../components/CaseStudies';
-import Testimonials from '../components/Testimonials';
 import FAQ from '../components/FAQ';
 import Contact from '../components/Contact';
 import PersonJsonLd from '../components/PersonJsonLd';
-
-// Loaded separately so the ~450-entry list and card code stay out of the first page load.
-const PokeParade = lazy(() => import('../components/PokeParade'));
-const Pokedex = lazy(() => import('../components/Pokedex'));
-import { features } from '../config/features';
+import { positioning } from '../data/portfolio';
 
 const sections = [
     { id: 'hero', Component: Hero },
+    { id: 'portfolio', Component: PortfolioGrid },
     { id: 'skills', Component: Skills },
     { id: 'certifications', Component: Certifications },
     { id: 'experience', Component: Experience },
     { id: 'education', Component: Education },
-    features.showSelectedWorks && { id: 'portfolio', Component: PortfolioGrid },
-    features.showCaseStudies && { id: 'case-studies', Component: CaseStudies },
-    features.showTestimonials && { id: 'testimonials', Component: Testimonials },
     { id: 'faq', Component: FAQ },
-    { id: 'pokedex', Component: Pokedex },
     { id: 'contact', Component: Contact },
-].filter(Boolean);
+];
 
 const sectionIds = sections.map(({ id }) => id);
 
 const Home = () => {
+    const { hash } = useLocation();
+
+    useEffect(() => {
+        const id = hash.replace(/^#/, '');
+        if (!id) return undefined;
+        const scroll = () => document.getElementById(id)?.scrollIntoView({ block: 'start' });
+        const frame = requestAnimationFrame(scroll);
+        const timer = setTimeout(scroll, 80);
+        return () => {
+            cancelAnimationFrame(frame);
+            clearTimeout(timer);
+        };
+    }, [hash]);
+
     return (
-        <div className="min-h-screen text-slate-800 selection:bg-[#249D8F]/20">
+        <div className="min-h-screen text-slate-800 selection:bg-[#14635a]/20">
             <Seo
-                title="Senior Fullstack Developer & Digital Consultant"
-                description="Patric Phinehas Raj is a senior fullstack developer in Bengaluru specializing in Angular, React, Node.js, Python, accessible web apps, AI integrations, and engineering leadership."
+                title={positioning}
+                description={positioning}
                 path="/"
-                imageAlt="Patric Phinehas Raj — senior fullstack developer portfolio"
+                exactTitle
+                imageAlt="Patric Phinehas Raj, senior frontend and full stack engineer"
             />
             <PersonJsonLd />
 
@@ -50,15 +57,10 @@ const Home = () => {
             <main className="relative transition-[margin] duration-300 lg:ml-[var(--sidebar-w,80px)]">
                 {sections.map(({ id, Component }, index) => (
                     <StackCard key={id} id={id} index={index} isLast={index === sections.length - 1}>
-                        <Suspense fallback={<div className="min-h-[60vh]" />}>
-                            <Component />
-                        </Suspense>
+                        <Component />
                     </StackCard>
                 ))}
             </main>
-            <Suspense fallback={null}>
-                <PokeParade />
-            </Suspense>
 
             <div
                 className="fixed inset-0 pointer-events-none opacity-[0.03] z-[100]"

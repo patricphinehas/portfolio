@@ -1,6 +1,6 @@
 import React from 'react';
 
-export const TEAL = '#249D8F';
+export const TEAL = '#14635a';
 export const CORAL = '#E76F51';
 export const CREAM = '#FDF0D5';
 export const sectionGrid = 'grid w-full gap-10 px-5 sm:px-10 lg:px-16 xl:grid-cols-12 xl:gap-16 xl:px-24';

@@ -9,7 +9,7 @@ const Experience = () => (
         <div className={sectionGrid}>
             <PinnedInCard className="xl:col-span-4">
                 <SectionIntro label="Experience" title={<>Where I&apos;ve<br />worked</>}>
-                    {experience.length} roles, most recent first.
+                    Led a team of 8 frontend and 2 iOS developers, and mentored 4 UX interns.
                 </SectionIntro>
             </PinnedInCard>
 
@@ -30,6 +30,7 @@ const Experience = () => (
                         <div>
                             <h3 className="text-2xl font-bold tracking-tight text-slate-900">{job.role}</h3>
                             <p className="mt-1 font-medium" style={{ color: TEAL }}>{job.company}</p>
+                            {job.location && <p className="mt-1 text-sm text-slate-700">{job.location}</p>}
                             <ul className="mt-5 space-y-2.5">
                                 {job.description.map((desc) => (
                                     <li key={desc} className="flex gap-3 leading-relaxed text-gray-600">

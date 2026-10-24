@@ -5,7 +5,7 @@
  */
 export const features = {
   /** Projects section ("Selected Works") — id="projects" */
-  showSelectedWorks: false,
+  showSelectedWorks: true,
   /** Testimonials section ("What Clients Say") — id="testimonials" */
   showTestimonials: false,
   /** Case Studies section — id="case-studies" */

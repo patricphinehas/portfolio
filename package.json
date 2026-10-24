@@ -5,10 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
+    "build": "vite build && node scripts/prerender.mjs",
     "lint": "eslint .",
     "preview": "vite preview",
-    "deploy": "vite build && npx gh-pages -d dist -b gh-pages -m \"Deploy production build\""
+    "deploy": "npm run build && npx gh-pages -d dist -b gh-pages -m \"Deploy production build\""
   },
   "dependencies": {
     "embla-carousel-autoplay": "^8.6.0",
@@ -21,6 +21,7 @@
     "react-router-dom": "^7.18.2"
   },
   "devDependencies": {
+    "@axe-core/puppeteer": "^4.14.0",
     "@eslint/js": "^9.39.1",
     "@tailwindcss/postcss": "^4.1.18",
     "@tailwindcss/typography": "^0.5.19",
@@ -36,6 +37,7 @@
     "framer-motion": "^12.29.2",
     "globals": "^16.5.0",
     "postcss": "^8.5.6",
+    "puppeteer-core": "^25.16.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss": "^4.1.18",
     "vite": "^7.2.4"

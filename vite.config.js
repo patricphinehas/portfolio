@@ -71,6 +71,13 @@ export default defineConfig({
       },
     },
     {
+      // GitHub project Pages returns HTTP 404 for extensionless routes unless a
+      // real file exists. closeBundle copies the SPA shell to 404.html so unknown
+      // paths still boot the client router. `npm run build` then runs
+      // scripts/prerender.mjs, which writes dist/<route>/index.html (HTTP 200)
+      // for /links, /privacy-policy, /lets-cook, /projects/home-system,
+      // /thank-you, /freelance, and /pokedex, and refreshes 404.html from the
+      // rendered NotFound page. In-app navigation stays on React Router.
       name: 'spa-github-pages-fallback',
       closeBundle() {
         const dist = resolve(__dirname, 'dist')

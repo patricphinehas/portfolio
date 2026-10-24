@@ -3,7 +3,7 @@ import useEmblaCarousel from 'embla-carousel-react';
 import Autoplay from 'embla-carousel-autoplay';
 import { ChevronLeft, ChevronRight } from '../icons/KoboyoIcons';
 
-export const Carousel = ({ children, autoplay = false, delay = 5000, className = '' }) => {
+export const Carousel = ({ children, autoplay = false, delay = 5000, dark = false, className = '' }) => {
     const plugins = autoplay ? [Autoplay({ delay, stopOnInteraction: true, stopOnMouseEnter: true })] : [];
     const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: 'start' }, plugins);
     const [selectedIndex, setSelectedIndex] = useState(0);
@@ -25,6 +25,13 @@ export const Carousel = ({ children, autoplay = false, delay = 5000, className =
         emblaApi.on('reInit', onSelect);
     }, [emblaApi, onSelect]);
 
+    const navBtn = dark
+        ? 'p-3 rounded-full bg-white/10 border border-white/15 shadow-md hover:bg-[#249D8F] hover:text-white hover:border-[#249D8F] transition-all text-slate-200'
+        : 'p-3 rounded-full bg-white/80 border border-black/5 shadow-md hover:bg-[#249D8F] hover:text-white hover:border-[#249D8F] transition-all text-slate-700';
+    const inactiveDot = dark
+        ? 'w-2 bg-white/25 hover:bg-white/45'
+        : 'w-2 bg-black/15 hover:bg-black/25';
+
     return (
         <div className={`relative ${className}`}>
             <div className="overflow-hidden -mx-4 px-4 md:-mx-6 md:px-6" ref={emblaRef}>
@@ -37,7 +44,7 @@ export const Carousel = ({ children, autoplay = false, delay = 5000, className =
                 <button
                     onClick={scrollPrev}
                     aria-label="Previous slide"
-                    className="p-3 rounded-full bg-white/80 border border-black/5 shadow-md hover:bg-[#249D8F] hover:text-white hover:border-[#249D8F] transition-all text-slate-700"
+                    className={navBtn}
                 >
                     <ChevronLeft size={20} />
                 </button>
@@ -48,7 +55,7 @@ export const Carousel = ({ children, autoplay = false, delay = 5000, className =
                             key={index}
                             onClick={() => scrollTo(index)}
                             aria-label={`Go to slide ${index + 1}`}
-                            className={`h-2 rounded-full transition-all duration-300 ${index === selectedIndex ? 'w-8 bg-[#249D8F]' : 'w-2 bg-black/15 hover:bg-black/25'
+                            className={`h-2 rounded-full transition-all duration-300 ${index === selectedIndex ? 'w-8 bg-[#249D8F]' : inactiveDot
                                 }`}
                         />
                     ))}
@@ -57,7 +64,7 @@ export const Carousel = ({ children, autoplay = false, delay = 5000, className =
                 <button
                     onClick={scrollNext}
                     aria-label="Next slide"
-                    className="p-3 rounded-full bg-white/80 border border-black/5 shadow-md hover:bg-[#249D8F] hover:text-white hover:border-[#249D8F] transition-all text-slate-700"
+                    className={navBtn}
                 >
                     <ChevronRight size={20} />
                 </button>

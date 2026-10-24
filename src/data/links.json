@@ -2,8 +2,8 @@
   "profile": {
     "initials": "PR",
     "name": "Patric Phinehas Raj",
-    "role": "Senior Fullstack Developer",
-    "location": "Bengaluru, India"
+    "role": "Senior Frontend / Full Stack Engineer (React, Angular, TypeScript, Python)",
+    "location": "Coimbatore, India"
   },
   "links": [
     {
@@ -14,12 +14,28 @@
       "icon": "mail"
     },
     {
+      "id": "github",
+      "label": "GitHub",
+      "detail": "github.com/patricphinehas",
+      "href": "https://github.com/patricphinehas",
+      "icon": "github",
+      "external": true
+    },
+    {
       "id": "linkedin",
       "label": "LinkedIn",
       "detail": "Connect with me professionally",
       "href": "https://www.linkedin.com/in/patricphinehas/",
       "icon": "linkedin",
       "external": true
+    },
+    {
+      "id": "home-system",
+      "label": "Home System",
+      "detail": "Self-hosted inventory, bills, and calendar",
+      "href": "/projects/home-system",
+      "icon": "house",
+      "internal": true
     },
     {
       "id": "lets-cook",
@@ -32,7 +48,7 @@
     {
       "id": "study",
       "label": "Study desk",
-      "detail": "Private study resources",
+      "detail": "Private page, not for recruiters",
       "icon": "book",
       "action": "study"
     },

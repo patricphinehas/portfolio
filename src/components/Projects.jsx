@@ -1,11 +1,13 @@
 import React from 'react';
 import { projects } from '../data/portfolio';
-import { Github } from 'lucide-react';
+import { Link } from 'react-router-dom';
+import { Github, House } from 'lucide-react';
 import { ExternalLink, ArrowRight, Sprout, Ambulance, Sparkles, Warehouse, SolarPanel, Bot, LayoutDashboard, AudioLines, FolderFiles } from './icons/KoboyoIcons';
 import { motion } from 'framer-motion';
 import { Carousel, CarouselSlide } from './ui/Carousel';
 
 const iconMap = {
+    home: House,
     vegroute: Sprout,
     ambulance: Ambulance,
     clinic: Sparkles,
@@ -59,13 +61,17 @@ const Projects = () => {
                                             <IconComponent size={28} />
                                         </div>
 
-                                        <div className="flex gap-3 relative z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                                            <a href="#" className="p-2 bg-white/70 rounded-full hover:bg-white/90 text-slate-900 transition-colors">
-                                                <Github size={18} />
-                                            </a>
-                                            <a href="#" className="p-2 bg-white/70 rounded-full hover:bg-white/90 text-slate-900 transition-colors">
-                                                <ExternalLink size={18} />
-                                            </a>
+                                        <div className="flex gap-3 relative z-20 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                                            {project.github && (
+                                                <a href={project.github} target="_blank" rel="noopener noreferrer" aria-label={`${project.title} on GitHub`} className="p-2 bg-white/70 rounded-full hover:bg-white/90 text-slate-900 transition-colors">
+                                                    <Github size={18} />
+                                                </a>
+                                            )}
+                                            {project.page && (
+                                                <Link to={project.page} aria-label={`${project.title} project page`} className="p-2 bg-white/70 rounded-full hover:bg-white/90 text-slate-900 transition-colors">
+                                                    <ExternalLink size={18} />
+                                                </Link>
+                                            )}
                                         </div>
                                     </div>
 
