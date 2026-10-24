@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useRef } from 'react';
+import React, { createContext, useContext, useLayoutEffect, useRef, useState } from 'react';
 import { motion, motionValue, useReducedMotion, useScroll, useTransform } from 'framer-motion';
 
 const restingY = motionValue(0);
@@ -15,8 +15,32 @@ export const PinnedInCard = ({ className = '', children }) => {
     );
 };
 
+const sectionLabel = {
+    hero: 'Home',
+    portfolio: 'Projects',
+    skills: 'Skills',
+    certifications: 'Certifications',
+    experience: 'Experience',
+    education: 'Education',
+    faq: 'FAQ',
+    contact: 'Contact',
+};
+
 const StackCard = ({ id, index, isLast, children }) => {
     const reduceMotion = useReducedMotion();
+    const scrollerRef = useRef(null);
+    const [scrollable, setScrollable] = useState(false);
+
+    useLayoutEffect(() => {
+        const el = scrollerRef.current;
+        if (!el) return undefined;
+        const update = () => setScrollable(el.scrollHeight > el.clientHeight + 1);
+        update();
+        const observer = new ResizeObserver(update);
+        observer.observe(el);
+        if (el.firstElementChild) observer.observe(el.firstElementChild);
+        return () => observer.disconnect();
+    }, []);
 
     // Once this screen has finished, the next card slides straight over it.
     const endRef = useRef(null);
@@ -32,7 +56,13 @@ const StackCard = ({ id, index, isLast, children }) => {
                     className="stack-card relative h-full w-full origin-top overflow-hidden"
                     style={{ scale: reduceMotion ? 1 : scale }}
                 >
-                    <div className="h-full overflow-y-auto pb-20 lg:pb-0">
+                    <div
+                        ref={scrollerRef}
+                        className="h-full overflow-y-auto pb-20 lg:pb-0"
+                        tabIndex={scrollable ? 0 : undefined}
+                        role={scrollable ? 'region' : undefined}
+                        aria-label={scrollable ? sectionLabel[id] || id : undefined}
+                    >
                         <div className="flex min-h-full flex-col" style={{ justifyContent: 'safe center' }}>
                             <ContentYContext.Provider value={restingY}>{children}</ContentYContext.Provider>
                         </div>

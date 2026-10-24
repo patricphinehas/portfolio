@@ -11,7 +11,6 @@ function ScrollToTop() {
   const navigationType = useNavigationType();
 
   useLayoutEffect(() => {
-    window.__scrollDebug = { navigationType, pathname, hash, scrollY: window.scrollY };
     if (navigationType === 'POP' || hash) return undefined;
     const root = document.documentElement;
     const previous = root.style.scrollBehavior;
