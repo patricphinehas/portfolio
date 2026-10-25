@@ -41,7 +41,7 @@ const StackCard = ({ id, index, isLast, children }) => {
 
     return (
         <>
-            <div id={id} className="section-snap" aria-hidden="true" />
+            <div id={id} aria-hidden="true" />
             <div className="sticky top-0 h-[100svh]" style={{ zIndex: index + 1 }}>
                 <motion.div
                     className="stack-card relative h-full w-full origin-top overflow-hidden"
