@@ -34,6 +34,7 @@
 
   html {
     scroll-behavior: smooth;
+    scroll-snap-type: y mandatory;
   }
 
   body {
@@ -86,6 +87,12 @@
   background: #FFFCF5;
   border-top: 1px solid rgba(36, 157, 143, 0.16);
   box-shadow: 0 -16px 40px rgba(36, 80, 72, 0.14);
+}
+
+/* One reel per section. Touch and keyboard snap natively; the mouse wheel is handled by useWheelSnap. */
+.section-snap {
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
 /* Themed scrollbar for a card whose content outgrows the screen. */
@@ -479,6 +486,7 @@
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
+    scroll-snap-type: none;
   }
 
   .marquee-track,

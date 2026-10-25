@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Seo from '../components/Seo';
 import PageSidebar from '../components/PageSidebar';
-import StackCard from '../components/StackCard';
+import StackCard, { useWheelSnap } from '../components/StackCard';
 import Hero from '../components/Hero';
 import Skills from '../components/Skills';
 import Certifications from '../components/Certifications';
@@ -29,6 +29,7 @@ const sectionIds = sections.map(({ id }) => id);
 
 const Home = () => {
     const { hash } = useLocation();
+    useWheelSnap();
 
     useEffect(() => {
         const id = hash.replace(/^#/, '');
