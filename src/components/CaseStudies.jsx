@@ -133,7 +133,7 @@ function ProjectPanel({ project, index, total, isActive, selectedTag, onSelectTa
                             <span aria-hidden="true">→</span>
                             <span className="rounded-lg border border-slate-900/10 px-3 py-2">Express :4000</span>
                             <span aria-hidden="true">→</span>
-                            <span className="rounded-lg border border-slate-900/10 px-3 py-2">MongoDB or Postgres</span>
+                            <span className="rounded-lg border border-slate-900/10 px-3 py-2">SQLite, MongoDB, or Postgres</span>
                         </div>
                         <p className="mt-3 text-sm leading-relaxed text-slate-700">No public live demo yet.</p>
                     </div>

@@ -122,14 +122,15 @@ export const projects = [
         status: "In progress",
         featured: true,
         icon: "home",
-        description: "Self-hosted household operations: inventory, grocery bills, spend analytics, and a shared family calendar.",
-        problem: "Household inventory, grocery bills, spend analytics, and a shared family calendar need one self-hosted app, so that data is not handed to a hosted product.",
-        approach: "The browser talks only to Next.js on port 3000. Next.js rewrites /api to Express on port 4000, and Express is the only process that talks to MongoDB or Postgres via DB_SELECT.",
+        description: "A self-hosted app that works out a household's own inflation rate from its receipts, then keeps inventory, bills, subscriptions, and a shared calendar around that number.",
+        problem: "A published inflation figure averages a basket somebody else chose. A household needs its own rate, weighted by what it actually buys and traceable to the receipts, without handing that data to a hosted product.",
+        approach: "The browser talks only to Next.js on port 3000. Next.js rewrites /api to Express on port 4000, and Express is the only process that talks to SQLite, MongoDB, or Postgres via DB_SELECT.",
         outcome: "No measured results yet. The app is still in progress, so there is no live demo and no usage figure.",
         tradeoffs: "Keeping the database behind Express means two processes to run. The browser never opens a database connection.",
         results: "No measured results yet. The app is still in progress.",
         highlights: [
-            "Browser -> Next.js (:3000) -> Express (:4000) -> MongoDB or Postgres",
+            "Spend-weighted basket index from entered bills, with last prices carried forward through quiet months",
+            "Browser -> Next.js (:3000) -> Express (:4000) -> SQLite, MongoDB, or Postgres",
             "Per-unit bill pricing (kg, litre, piece) with historical price comparisons",
             "MCP tool exposure plus local or hosted LLM chat (Ollama, NIM, OpenRouter)"
         ],
@@ -185,6 +186,7 @@ export const projects = [
             "Performance-tuned pages built for mobile patient discovery"
         ],
         tags: ["Website", "Calendly Integration", "Healthcare", "UX"],
+        url: "https://www.aestheticsandwellness.uk/",
     },
     {
         id: 4,
@@ -217,6 +219,7 @@ export const projects = [
             "Lead-capture funnels tailored for solar site-survey enquiries"
         ],
         tags: ["Branding", "Website", "SEO / AEO / GEO", "Growth Strategy"],
+        url: "https://www.aadhisolar.com/en",
     },
 ];
 
@@ -275,9 +278,9 @@ export const caseStudies = [
         title: "Home System",
         status: "In progress",
         role: "Solo project. I design and build the app.",
-        problem: "Household inventory, grocery bills, spend analytics, and a shared family calendar need one self-hosted app, so that data is not handed to a hosted product.",
-        stack: ["Next.js", "Express", "MongoDB or Postgres"],
-        tradeoffs: "The browser talks only to Next.js. Next.js rewrites /api to Express, and Express is the only process that talks to the database. DB_SELECT picks MongoDB or Postgres, including a Supabase-compatible Postgres URL. That keeps the database off the public port. The cost is two processes to run.",
+        problem: "A published inflation figure averages a basket somebody else chose. A household needs its own rate, weighted by what it actually buys and traceable to the receipts, without handing that data to a hosted product.",
+        stack: ["Next.js", "Express", "SQLite, MongoDB, or Postgres"],
+        tradeoffs: "The browser talks only to Next.js. Next.js rewrites /api to Express, and Express is the only process that talks to the database. DB_SELECT picks SQLite, MongoDB, or Postgres, including a Supabase-compatible Postgres URL. That keeps the database off the public port. The cost is two processes to run. SQLite is one file and needs no extra service.",
         results: "No measured results yet. The app is still in progress, so there is no live demo and no usage figure.",
         github: "https://github.com/patricphinehas/HomeSystem1_0",
         live: null,

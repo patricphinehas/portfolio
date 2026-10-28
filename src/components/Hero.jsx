@@ -12,7 +12,7 @@ import { Github, Linkedin } from 'lucide-react';
 import {
     SiReact, SiAngular, SiTypescript, SiJavascript, SiNextdotjs, SiVuedotjs,
     SiNodedotjs, SiPython, SiFastapi, SiTailwindcss, SiGraphql,
-    SiChartdotjs, SiD3Dotjs, SiThreedotjs, SiLeaflet,
+    SiChartdotjs, SiD3, SiThreedotjs, SiLeaflet,
     SiMongodb, SiPostgresql, SiDocker, SiJest, SiCypress, SiVite, SiGithub, SiFigma,
 } from 'react-icons/si';
 import { personalInfo, positioning } from '../data/portfolio';
@@ -42,7 +42,7 @@ const RINGS = [
             { Icon: SiTailwindcss, color: '#06B6D4', name: 'Tailwind' },
             { Icon: SiGraphql, color: '#E10098', name: 'GraphQL' },
             { Icon: SiChartdotjs, color: '#FF6384', name: 'Chart.js' },
-            { Icon: SiD3Dotjs, color: '#F9A03C', name: 'D3.js' },
+            { Icon: SiD3, color: '#F9A03C', name: 'D3.js' },
             { Icon: SiThreedotjs, color: '#111111', name: 'Three.js' },
         ],
     },

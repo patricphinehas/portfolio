@@ -5,7 +5,7 @@
  * exists. This opens the built SPA in headless Chrome and saves each route.
  * React Router still handles in-app navigation after the scripts load.
  *
- * Requires Chrome. Set CHROME_PATH when it is not in a default location.
+ * Requires Chrome, or Edge on Windows. Set CHROME_PATH when it is not in a default location.
  */
 import { createReadStream, existsSync, mkdirSync, statSync, writeFileSync } from 'node:fs'
 import { createServer } from 'node:http'
@@ -77,6 +77,9 @@ function listen() {
 }
 
 function chromePath() {
+  const programFiles = process.env.PROGRAMFILES
+  const programFilesX86 = process.env['PROGRAMFILES(X86)']
+  const localAppData = process.env.LOCALAPPDATA
   const candidates = [
     process.env.CHROME_PATH,
     '/Applications/Google Chrome.app/Contents/MacOS/Google Chrome',
@@ -84,6 +87,11 @@ function chromePath() {
     '/usr/bin/google-chrome-stable',
     '/usr/bin/chromium',
     '/usr/bin/chromium-browser',
+    programFiles && join(programFiles, 'Google/Chrome/Application/chrome.exe'),
+    localAppData && join(localAppData, 'Google/Chrome/Application/chrome.exe'),
+    programFilesX86 && join(programFilesX86, 'Google/Chrome/Application/chrome.exe'),
+    programFilesX86 && join(programFilesX86, 'Microsoft/Edge/Application/msedge.exe'),
+    programFiles && join(programFiles, 'Microsoft/Edge/Application/msedge.exe'),
   ].filter(Boolean)
   return candidates.find((path) => existsSync(path))
 }

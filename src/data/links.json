@@ -32,7 +32,7 @@
     {
       "id": "home-system",
       "label": "Home System",
-      "detail": "Self-hosted inventory, bills, and calendar",
+      "detail": "Your own inflation rate, from your receipts",
       "href": "/projects/home-system",
       "icon": "house",
       "internal": true

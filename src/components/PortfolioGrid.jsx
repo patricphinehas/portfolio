@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Github, House } from 'lucide-react';
+import { Github, Globe, House } from 'lucide-react';
 import { projects } from '../data/portfolio';
 import { PinnedInCard } from './StackCard';
 import SectionIntro, { sectionGrid } from './SectionIntro';
@@ -60,13 +60,21 @@ const PortfolioGrid = () => {
 
                     {/* Content */}
                     <div className="relative z-10">
-                      {project.page && (
+                      {project.page ? (
                         <Link
                           to={project.page}
                           className="absolute inset-0 z-10 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#14635a]"
                           aria-label={`${project.title} project page`}
                         />
-                      )}
+                      ) : project.url ? (
+                        <a
+                          href={project.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="absolute inset-0 z-10 rounded-2xl focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#14635a]"
+                          aria-label={`${project.title} website, opens in a new tab`}
+                        />
+                      ) : null}
 
                       {/* Icon and Links Row */}
                       <div className="flex items-start justify-between mb-5">
@@ -76,16 +84,31 @@ const PortfolioGrid = () => {
                         >
                           <IconComponent size={24} />
                         </div>
-                        {project.github && (
-                          <a
-                            href={project.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            aria-label={`${project.title} on GitHub`}
-                            className="relative z-20 p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700"
-                          >
-                            <Github size={18} />
-                          </a>
+                        {(project.url || project.github) && (
+                          <div className="relative z-20 flex items-center gap-1">
+                            {project.url && (
+                              <a
+                                href={project.url}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${project.title} website`}
+                                className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700"
+                              >
+                                <Globe size={18} />
+                              </a>
+                            )}
+                            {project.github && (
+                              <a
+                                href={project.github}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                aria-label={`${project.title} on GitHub`}
+                                className="p-2 rounded-full hover:bg-gray-100 transition-colors text-gray-700"
+                              >
+                                <Github size={18} />
+                              </a>
+                            )}
+                          </div>
                         )}
                       </div>
 
@@ -104,7 +127,7 @@ const PortfolioGrid = () => {
                       {/* Title */}
                       <h3 className="text-xl font-bold mb-3 text-slate-900 flex items-center justify-between gap-2">
                         <span className="group-hover:text-[#249D8F] transition-colors">{project.title}</span>
-                        {project.page && (
+                        {(project.page || project.url) && (
                           <ArrowRight
                             size={18}
                             className="shrink-0 -rotate-45 opacity-0 group-hover:opacity-100 -translate-x-2 group-hover:translate-x-0 transition-all duration-300"
